@@ -29,10 +29,10 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
-      - name: Create config.properties
-        run: |
-          echo "key=${{ secrets.key }}" > src/test/resources/config.properties
-          echo "token=${{ secrets.token }}" >> src/test/resources/config.properties
+#      - name: Create config.properties
+#        run: |
+#          echo "key=${{ secrets.key }}" > src/test/resources/config.properties
+#          echo "token=${{ secrets.token }}" >> src/test/resources/config.properties
     
 
 
