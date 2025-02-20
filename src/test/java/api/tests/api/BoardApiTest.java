@@ -28,7 +28,7 @@ public class BoardApiTest extends BaseTest {
 
     @Test(priority = 1, description = "Create Board Validation")
     @Story("Verify created board")
-    @Description("Get list of user")
+    @Description("Create board")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() {
         Response response = boardSteps.createBoard("Api Board");
