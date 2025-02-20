@@ -1,0 +1,2 @@
+## Trello Boards API Integration with Java and RestAssured
+### This project demonstrates how to interact with the Trello REST API, specifically the Boards API group, using Java and RestAssured. It provides examples of creating, retrieving, updating, and deleting boards programmatically.
