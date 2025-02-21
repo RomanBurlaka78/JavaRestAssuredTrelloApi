@@ -1,0 +1,1 @@
+[{"uid":"b7c4b3c52c86da98","name":"Create Board Validation","time":{"start":1740146347461,"stop":1740146350018,"duration":2557},"status":"passed","severity":"critical"},{"uid":"ef6bc9424ddec5cc","name":"testDeleteBoard","time":{"start":1740146350105,"stop":1740146352352,"duration":2247},"status":"passed","severity":"normal"}]
