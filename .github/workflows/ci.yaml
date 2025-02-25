@@ -79,3 +79,20 @@ jobs:
       - name: Stop Docker Compose services
         if: always()
         run: docker-compose down
+
+      - name: Send Allure results to InfluxDB
+        run: |
+          echo "Checking id influxdb data exists in gh-pages"
+          if [ -f "gh-pages/${{ env.LATEST_RUN_ID}}/export/influxDbData.txt" ]; then
+          echo "InfluxDb found. Prepare  sending yo InfluxDB base"
+          
+          curl -XPOST "http://172.17.0.3:8086/write?org=Home&bucket=TrelloApi&precision=ns"\
+          --header "Authorization: Token ${{ secrets.INFLUXDB_TOKEN }}"\
+          --data-binary @"gh-pages/${{ env.LATEST_RUN_ID}}/export/influxDBData.txt"
+          
+            echo "InfluxDB data send ."
+          else
+          
+            echo "No InfluxDB data found."
+          
+          fi
