@@ -15,10 +15,6 @@ public class ApiClient {
 
     private ApiClient() {
         logger.info("Creating ApiClient instance");
-        requestSpec = RestAssured.given()
-                // Используем RequestSpecification, установленный в BaseTest
-                .spec(specification.installRequest())
-                .contentType("application/json");
     }
 
     public static ApiClient getInstance() {
@@ -27,6 +23,15 @@ public class ApiClient {
             instance = new ApiClient();
         }
         return instance;
+    }
+
+    public RequestSpecification getRequestSpec() {
+        requestSpec = RestAssured.given()
+                // Используем RequestSpecification, установленный в BaseTest
+                .spec(specification.installRequest())
+                .contentType("application/json");
+
+        return requestSpec;
     }
 
     public Response get(String path) {
