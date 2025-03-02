@@ -1,12 +1,8 @@
 package api.steps;
 
-import api.base.TestData;
 import api.utils.ApiClient;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.notNullValue;
 
 public class BoardSteps {
     private ApiClient apiClient = ApiClient.getInstance();
