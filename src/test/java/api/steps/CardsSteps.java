@@ -9,11 +9,6 @@ public class CardsSteps {
 
     private ApiClient apiClient = ApiClient.getInstance();
 
-    @Step("Create board with name: {name}")
-    public Response createBoard(String name) {
-        return apiClient.postWithOutBody("boards", name);
-    }
-
     @Step("Create a new Card: ")
     public Response createCard() {
 
