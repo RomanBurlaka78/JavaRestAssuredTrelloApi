@@ -30,8 +30,9 @@ public class ApiClient {
     public void getRequestSpec() {
 
         requestSpec = RestAssured.given()
-                .spec(specification.installRequest())
-                .contentType("application/json");
+                .spec(specification.installRequest());
+
+        specification.installResponse();
     }
 
     public Response get(String path) {

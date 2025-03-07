@@ -1,7 +1,6 @@
 package api.utils;
 
 import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -25,11 +24,6 @@ public class Specification {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    {
-        RestAssured.requestSpecification = installRequest();
-        RestAssured.responseSpecification = installResponse();
     }
 
     public RequestSpecification installRequest() {
