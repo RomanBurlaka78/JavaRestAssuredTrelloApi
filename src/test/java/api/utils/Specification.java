@@ -1,28 +1,21 @@
 package api.utils;
 
-import groovyjarjarpicocli.CommandLine;
 import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import api.utils.ConfigLoader;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.restassured.RestAssured.expect;
-
-
 public class Specification {
 
-    private  String key;
-    private String token;
+    private static String key;
+    private static String token;
 
     {
         try {
@@ -33,10 +26,7 @@ public class Specification {
         }
     }
 
-    public Specification() {
-    }
-
-    public  RequestSpecification installRequest() {
+    public RequestSpecification installRequest() {
         Map<String, String> authoriazing = new HashMap<>();
         authoriazing.put("key", key);
         authoriazing.put("token", token);
@@ -50,19 +40,11 @@ public class Specification {
                 .build();
     }
 
-    public static ResponseSpecification responseSpec(int statusCode) {
-        return expect()
-                .statusCode(statusCode)
-                .log().all();
+    public ResponseSpecification installResponse() {
+        return new ResponseSpecBuilder()
+                .log(LogDetail.ALL)
+                .build();
     }
-
-    public void installSpec() {
-        RestAssured.requestSpecification =installRequest();
-    }
-
-
-
-
 }
 
 
