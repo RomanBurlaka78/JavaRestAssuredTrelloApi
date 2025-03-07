@@ -15,7 +15,7 @@ public class BoardApiTest extends BaseTest {
 
     private BoardSteps boardSteps = new BoardSteps();
 
-    @Test(priority = 1, description = "Create Board Validation")
+    @Test(priority = 1, description = "Create Board Validation", groups = "Created_Board_and_List")
     @Story("Verify created board")
     @Description("Get list of user")
     @Severity(SeverityLevel.CRITICAL)
@@ -49,7 +49,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Api Board");
     }
 
-    @Test(priority = 3, dependsOnMethods = "testCreateBoard")
+    @Test(priority = 50, dependsOnMethods = "testCreateBoard")
     @Story("Verify update board")
     @Description("Update board")
     @Severity(SeverityLevel.NORMAL)
@@ -79,6 +79,17 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetLabelsOnBoard() {
         Response response = boardSteps.getLabelOnBoard(TestData.boardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test(priority = 3, dependsOnMethods = "testCreateBoard", groups = "Created_Board_and_List")
+    @Story("Verify List on a Board")
+    @Description("Create a List on a Board")
+    @Severity(SeverityLevel.NORMAL)
+    public void testCreateListOnBoard() {
+        Response response = boardSteps.createListOnBoard(TestData.boardId, "List test API");
+        TestData.idList = response.path("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
