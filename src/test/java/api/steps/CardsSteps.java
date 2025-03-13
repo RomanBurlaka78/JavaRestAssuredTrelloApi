@@ -9,15 +9,30 @@ public class CardsSteps {
 
     private ApiClient apiClient = ApiClient.getInstance();
 
-    @Step("Create a new Card: ")
-    public Response createCard() {
+    @Step("Create a new Card: id list = {idList}")
+    public Response createCard(String idList) {
+
+        return apiClient.post("cards/?idList=" + idList, "");
+    }
+
+    @Step("Get a card: id card = {cardId}")
+    public Response getCard(String cardId) {
+
+        return apiClient.get("cards/" + cardId);
+    }
+
+    @Step("Update a card: id card = {cardID}, name = {name}")
+    public Response updateCard(String cardID, String name) {
 
         String body = String.format("""
-                {
-                "idList" = "%s"
-                }
-                """, TestData.idList);
+                {"name" : "%s"}
+                """, name);
 
-        return apiClient.post("cards/?idList=" + TestData.idList, "");
+        return apiClient.put("cards/" + TestData.cardId, body);
+    }
+
+    @Step("Delete a card: id card = {cardID}")
+    public Response deleteCard(String cardID) {
+        return apiClient.delete("cards/" + TestData.cardId);
     }
 }
