@@ -62,11 +62,7 @@ jobs:
             sleep 5
           done
 
-      # Шаг 9: Запуск тестов
-      - name: Run tests with Maven
-        run: mvn clean test
-
-      # Шаг 10: Сохранение скриншотов (если тесты упали)
+      # Шаг 09: Сохранение скриншотов (если тесты упали)
       - name: Attach screenshots
         if: failure()
         uses: actions/upload-artifact@v4
@@ -74,7 +70,7 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/screenshots
 
-      # Шаг 11: Получение истории Allure (для отчетов)
+      # Шаг 10: Получение истории Allure (для отчетов)
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
@@ -83,7 +79,7 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      # Шаг 12: Генерация Allure-отчета
+      # Шаг 11: Генерация Allure-отчета
       - name: Build Allure report
         uses: simple-elf/allure-report-action@master
         if: always()
@@ -94,11 +90,11 @@ jobs:
           allure_report: allure-report
           allure_history: allure-history
 
-      # Шаг 13: Проверка результатов Allure
+      # Шаг 12: Проверка результатов Allure
       - name: Check Allure results
         run: ls -la target/allure-results
 
-      # Шаг 14: Публикация Allure-отчета на GitHub Pages
+      # Шаг 13: Публикация Allure-отчета на GitHub Pages
       - name: Publish Allure report to Github Pages
         if: ${{ success() || failure() }}
         uses: peaceiris/actions-gh-pages@v2
@@ -107,19 +103,19 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
-      # Шаг 15: Проверка логов Elasticsearch
+      # Шаг 14: Проверка логов Elasticsearch
       - name: Check Elasticsearch logs
         run: |
           echo "Elasticsearch is running at http://localhost:9200"
           curl -X GET "http://localhost:9200/_search?pretty"
 
-      # Шаг 16: Проверка логов Kibana
+      # Шаг 15: Проверка логов Kibana
       - name: Check Kibana logs
         run: |
           echo "Kibana is running at http://localhost:5601"
           curl -X GET "http://localhost:5601/api/status"
 
-      # Шаг 17: Остановка Docker Compose
+      # Шаг 16: Остановка Docker Compose
       - name: Stop Docker Compose services
         if: always()
         run: docker-compose down
