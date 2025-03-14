@@ -53,7 +53,12 @@ jobs:
           echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
           sudo apt update && sudo apt install ngrok
 
-      # Шаг 8: Запуск ngrok для Elasticsearch
+      # Шаг 8: Установка authtoken для ngrok
+      - name: Set ngrok authtoken
+        run: |
+          ngrok authtoken ${{ secrets.NGROK_AUTHTOKEN }}
+
+      # Шаг 9: Запуск ngrok для Elasticsearch
       - name: Start ngrok for Elasticsearch
         run: |
           ngrok http 9200 > /dev/null &
@@ -61,7 +66,7 @@ jobs:
           curl -s localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url' > elasticsearch_url.txt
           echo "Elasticsearch URL: $(cat elasticsearch_url.txt)"
 
-      # Шаг 9: Запуск ngrok для Kibana
+      # Шаг 10: Запуск ngrok для Kibana
       - name: Start ngrok for Kibana
         run: |
           ngrok http 5601 > /dev/null &
@@ -69,7 +74,7 @@ jobs:
           curl -s localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url' > kibana_url.txt
           echo "Kibana URL: $(cat kibana_url.txt)"
 
-      # Шаг 10: Сохранение ngrok URLs как артефактов
+      # Шаг 11: Сохранение ngrok URLs как артефактов
       - name: Upload ngrok URLs
         uses: actions/upload-artifact@v4
         with:
@@ -78,7 +83,7 @@ jobs:
             elasticsearch_url.txt
             kibana_url.txt
 
-      # Шаг 11: Сохранение скриншотов (если тесты упали)
+      # Шаг 12: Сохранение скриншотов (если тесты упали)
       - name: Attach screenshots
         if: failure()
         uses: actions/upload-artifact@v4
@@ -86,7 +91,7 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/screenshots
 
-      # Шаг 12: Получение истории Allure (для отчетов)
+      # Шаг 13: Получение истории Allure (для отчетов)
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
@@ -95,7 +100,7 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      # Шаг 13: Генерация Allure-отчета
+      # Шаг 14: Генерация Allure-отчета
       - name: Build Allure report
         uses: simple-elf/allure-report-action@master
         if: always()
@@ -106,11 +111,11 @@ jobs:
           allure_report: allure-report
           allure_history: allure-history
 
-      # Шаг 14: Проверка результатов Allure
+      # Шаг 15: Проверка результатов Allure
       - name: Check Allure results
         run: ls -la target/allure-results
 
-      # Шаг 15: Публикация Allure-отчета на GitHub Pages
+      # Шаг 16: Публикация Allure-отчета на GitHub Pages
       - name: Publish Allure report to Github Pages
         if: ${{ success() || failure() }}
         uses: peaceiris/actions-gh-pages@v2
@@ -119,19 +124,8 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
-      # Шаг 16: Проверка логов Elasticsearch
-      - name: Check Elasticsearch logs
-        run: |
-          echo "Elasticsearch is running at http://localhost:9200"
-          curl -X GET "http://localhost:9200/_search?pretty"
 
-      # Шаг 17: Проверка логов Kibana
-      - name: Check Kibana logs
-        run: |
-          echo "Kibana is running at http://localhost:5601"
-          curl -X GET "http://localhost:5601/api/status"
-
-      # Шаг 18: Остановка Docker Compose
+      # Шаг 17: Остановка Docker Compose
       - name: Stop Docker Compose services
         if: always()
         run: docker-compose down
