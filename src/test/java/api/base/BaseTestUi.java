@@ -104,7 +104,7 @@ public abstract class BaseTestUi {
 
         try {
             createDriver();
-            getWeb();
+//            getWeb();
 
         } catch (Exception e) {
             closeDriver();
