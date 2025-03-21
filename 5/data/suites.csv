@@ -1,3 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"Delete board","1240","testDeleteBoard","Surefire suite","Fri Feb 21 13:40:38 GMT 2025","passed","Fri Feb 21 13:40:39 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testDeleteBoard"
-"Get list of user","2618","Create Board Validation","Surefire suite","Fri Feb 21 13:40:35 GMT 2025","passed","Fri Feb 21 13:40:38 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testCreateBoard"
