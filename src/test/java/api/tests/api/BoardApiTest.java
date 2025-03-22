@@ -112,9 +112,10 @@ public class BoardApiTest extends BaseTest {
     @Story("Bord")
     @Severity(SeverityLevel.NORMAL)
     public void testGetActionsFromABoard() {
+
         Response response = boardSteps.getActions( TestData.boardId,  "/actions");
-        List arrayList = new ArrayList();
-        arrayList = response.jsonPath().getList("id");
+        List arrayList = response.jsonPath().getList("id");
+
         Assert.assertEquals(arrayList.size(), 3);
 
         //Любое действие произведённое на доске щитается actions и имеет свои cridentials, изначально
@@ -146,7 +147,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.body().asString(), expectedResult);
     }
 
-    @Test(priority = 5,description = "Get all existed cards from a bord")
+    @Test(priority = 5,description = "Get all existed filtered cards from a bord")
     @Story("Bord")
     @Severity(SeverityLevel.NORMAL)
     public void testGetFilteredCardsOnABoard() {
@@ -156,6 +157,55 @@ public class BoardApiTest extends BaseTest {
 
         Assert.assertEquals(response.getStatusCode(),200);
         Assert.assertEquals(response.body().asString(), expectedResult);
+    }
+
+    @Test(priority = 5,description = "Get all existed custom fields from a bord")
+    @Story("Bord")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetCustomFieldsForABoard() {
+
+        String expectedResult = "[]";
+        Response response = boardSteps.getCustomFieldsForABoard(TestData.boardId, "/customFields");
+
+        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(response.body().asString(), expectedResult);
+    }
+
+    @Test(priority = 5,description = "Get all existed lists from a bord")
+    @Story("Bord")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetListsOfABoard() {
+
+        Response response = boardSteps.getListsOfABoard(TestData.boardId, "/lists");
+        List arrayList = response.jsonPath().getList("id");
+
+        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(arrayList.size(), 4);
+    }
+
+    @Test(priority = 5,description = "Get closed lists from a bord")
+    @Story("Bord")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetClosedListOfABoard() {
+
+        String expectedResult = "[]";
+        Response response = boardSteps.getSpecificListOfABoard(TestData.boardId, "/lists", "/closed");
+
+        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(response.body().asString(), expectedResult);
+    }
+
+    @Test(priority = 5,description = "Get members of a bord")
+    @Story("Bord")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheMembersOfABoard() {
+
+        Response response = boardSteps.getMembersOfABoard(TestData.boardId, "/members");
+
+        List arrayList = response.jsonPath().getList("id");
+
+        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(arrayList.size(), 1);
     }
 
 

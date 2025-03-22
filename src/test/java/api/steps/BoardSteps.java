@@ -49,28 +49,54 @@ public class BoardSteps {
         return apiClient.post(basePath + boardId + "/lists", body);
     }
 
-    @Step("getting a field - {field}, from a bord which id is - {idOfABord}")
+    @Step("getting a field - {field}, from a bord which id is - {boardId}")
     public Response getAField(String boardId, String field) {
 
         return apiClient.get(basePath +boardId + "/" + field);
     }
 
+    @Step("Get all actions existed on a board")
     public Response getActions(String boardId, String actions) {
 
         return apiClient.get(basePath + boardId + actions);
     }
 
+    @Step("Get checklists presented on a board")
     public Response getChecklists(String boardId, String checklistsEndPoint) {
         return apiClient.get(basePath + boardId + checklistsEndPoint);
     }
 
+    @Step("Get cards presented on a board")
     public Response getCards(String boardId, String cardsEndPoint) {
 
         return apiClient.get(basePath + boardId + cardsEndPoint);
     }
 
-    public Response getFilteredCards(String boardId, String cardsEndPoint, String filterName) {
+    @Step("Get filtered cards presented on a board")
+    public Response getFilteredCards(String boardId, String filtereCardsEndPoint, String filterName) {
 
-        return apiClient.get(basePath + boardId + cardsEndPoint + filterName);
+        return apiClient.get(basePath + boardId + filtereCardsEndPoint + filterName);
+    }
+
+    @Step("Get custom fields presented on a board")
+    public Response getCustomFieldsForABoard(String boardId, String customFieldsEndPoint) {
+
+        return apiClient.get(basePath + boardId + customFieldsEndPoint);
+    }
+
+    @Step("Get lists presented on a board")
+    public Response getListsOfABoard(String boardId, String listsEndPoint) {
+
+        return apiClient.get(basePath + boardId + listsEndPoint);
+    }
+
+    public Response getSpecificListOfABoard(String boardId, String listsEndPoint, String filter) {
+
+        return apiClient.get(basePath + boardId + listsEndPoint + filter);
+    }
+
+    public Response getMembersOfABoard(String boardId, String membersEndPoint) {
+
+        return apiClient.get(basePath + boardId + membersEndPoint);
     }
 }
