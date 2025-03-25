@@ -13,7 +13,7 @@ public class ListsApiTest {
 
     ListsSteps listsSteps = new ListsSteps();
 
-    @Test(priority = 4, dependsOnGroups = "Created_Board_and_List")
+    @Test(priority = 7, dependsOnGroups = "Created_Board_and_List")
     @Story("Verify lists")
     @Description("Create a new List on a Board")
     @Severity(SeverityLevel.CRITICAL)
