@@ -17,7 +17,7 @@ public class Specification {
     private static String key;
     private static String token;
 
-    {
+    static {
         try {
             key = ConfigLoader.getProperty("key");
             token = ConfigLoader.getProperty("token");
@@ -26,7 +26,7 @@ public class Specification {
         }
     }
 
-    public RequestSpecification installRequest() {
+    public static RequestSpecification installRequest() {
         Map<String, String> authoriazing = new HashMap<>();
         authoriazing.put("key", key);
         authoriazing.put("token", token);
@@ -40,7 +40,7 @@ public class Specification {
                 .build();
     }
 
-    public ResponseSpecification installResponse() {
+    public static ResponseSpecification installResponse() {
         return new ResponseSpecBuilder()
                 .log(LogDetail.ALL)
                 .build();
