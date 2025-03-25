@@ -1,6 +1,5 @@
 package api.tests.api;
 
-import api.base.BaseTest;
 import api.base.TestData;
 import api.steps.CardsSteps;
 import io.qameta.allure.*;
@@ -11,7 +10,7 @@ import org.testng.annotations.Test;
 @Epic("API Tests")
 @Feature("Cards Validation")
 @Owner("Group JavaForwardToOffer")
-public class CardsApiTest extends BaseTest {
+public class CardsApiTest {
 
     CardsSteps cardsSteps = new CardsSteps();
 
