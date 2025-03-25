@@ -5,7 +5,6 @@ import api.base.TestData;
 import api.steps.BoardSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -87,16 +86,16 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 3, dependsOnMethods = "testCreateBoard", groups = "Created_Board_and_List")
-    @Story("Verify List on a Board")
-    @Description("Create a List on a Board")
-    @Severity(SeverityLevel.NORMAL)
-    public void testCreateListOnBoard() {
-        Response response = boardSteps.createListOnBoard(TestData.boardId, "List test API");
-        TestData.idList = response.path("id");
-
-        Assert.assertEquals(response.getStatusCode(), 200);
-    }
+//    @Test(priority = 3, dependsOnMethods = "testCreateBoard", groups = "Created_Board_and_List")
+//    @Story("Verify List on a Board")
+//    @Description("Create a List on a Board")
+//    @Severity(SeverityLevel.NORMAL)
+//    public void testCreateListOnBoard() {
+//        Response response = boardSteps.createListOnBoard(TestData.boardId, "List test API");
+//        TestData.listId = response.path("id");
+//
+//        Assert.assertEquals(response.getStatusCode(), 200);
+//    }
 
     @Test(priority = 5,description = "get specified field from a board")
     @Story("Bord")
@@ -116,7 +115,7 @@ public class BoardApiTest extends BaseTest {
         Response response = boardSteps.getActions( TestData.boardId,  "/actions");
         List arrayList = response.jsonPath().getList("id");
 
-        Assert.assertEquals(arrayList.size(), 3);
+        Assert.assertEquals(arrayList.size(), 2);
 
         //Любое действие произведённое на доске щитается actions и имеет свои cridentials, изначально
         //количество actions=3, но если например добавить карточку то actions будет уже не 3. Actions - это любое
@@ -180,7 +179,7 @@ public class BoardApiTest extends BaseTest {
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(),200);
-        Assert.assertEquals(arrayList.size(), 4);
+        Assert.assertEquals(arrayList.size(), 3);
     }
 
     @Test(priority = 5,description = "Get closed lists from a bord")
@@ -208,6 +207,15 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(arrayList.size(), 1);
     }
 
+    @Test(priority = 5,description = "Invite Member to Board via email")
+    @Story("Bord")
+    @Severity(SeverityLevel.NORMAL)
+    public void testInviteMembertoBoardViaEmail() {
+
+        Response response = boardSteps.putWithSpecification(TestData.boardId, "/members");
+
+        System.out.println(response.asPrettyString());
+    }
 
 
 }

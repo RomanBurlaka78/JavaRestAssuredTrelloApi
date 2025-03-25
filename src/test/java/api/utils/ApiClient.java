@@ -6,6 +6,8 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static io.restassured.RestAssured.given;
+
 public class ApiClient {
 
     private static ApiClient instance;
@@ -35,28 +37,34 @@ public class ApiClient {
         specification.installResponse();
     }
 
-    public Response get(String path) {
+    public Response get(String path, RequestSpecification requestSpecification) {
         logger.info("Executing GET request to: " + path);
 
-        return requestSpec.get(path);
+        return requestSpecification.get(path);
     }
 
-    public Response post(String path, String body) {
+    public Response post(String path, RequestSpecification requestSpecification) {
         logger.info("Executing POST request to: " + path);
 
-        return requestSpec.body(body).post(path);
+        return requestSpecification.post(path);
     }
 
-    public Response postWithOutBody(String path, String name) {
-        logger.info("Executing POST request to: " + path);
+//    public Response postWithOutBody(String path, RequestSpecification requestSpecification) {
+//        logger.info("Executing POST request to: " + path);
+//
+//        return requestSpecification.post(path);
+//    }
 
-        return requestSpec.queryParam("name", name).post(path);
-    }
+//    public Response put(String path, String body) {
+//        logger.info("Executing PUT request to: " + path);
+//
+//        return requestSpec.body(body).put(path);
+//    }
 
-    public Response put(String path, String body) {
+    public Response putWithSpecification(String path, RequestSpecification requestSpecification) {
         logger.info("Executing PUT request to: " + path);
 
-        return requestSpec.body(body).put(path);
+        return requestSpecification.put(path);
     }
 
     public Response patch(String path, String body) {
@@ -65,9 +73,9 @@ public class ApiClient {
         return requestSpec.body(body).patch(path);
     }
 
-    public Response delete(String path) {
+    public Response delete(String path, RequestSpecification requestSpecification) {
         logger.info("Executing DELETE request to: " + path);
 
-        return requestSpec.delete(path);
+        return requestSpecification.delete(path);
     }
 }
