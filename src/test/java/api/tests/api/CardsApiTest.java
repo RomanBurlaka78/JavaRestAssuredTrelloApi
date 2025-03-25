@@ -14,7 +14,7 @@ public class CardsApiTest {
 
     CardsSteps cardsSteps = new CardsSteps();
 
-    @Test(priority = 4, dependsOnGroups = "Created_Board_and_List")
+    @Test(priority = 6, dependsOnGroups = "Created_Board_and_List")
     @Story("Verify cards")
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
@@ -25,7 +25,7 @@ public class CardsApiTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 5, dependsOnMethods = "testCreateNewCard")
+    @Test(priority = 8, dependsOnMethods = "testCreateNewCard")
     @Story("Verify cards")
     @Description("Get a card")
     @Severity(SeverityLevel.NORMAL)
@@ -35,7 +35,7 @@ public class CardsApiTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 5, dependsOnMethods = "testCreateNewCard")
+    @Test(priority = 8, dependsOnMethods = "testCreateNewCard")
     @Story("Verify cards")
     @Description("Update a card")
     @Severity(SeverityLevel.NORMAL)
@@ -47,7 +47,7 @@ public class CardsApiTest {
         Assert.assertEquals(response.path("name"), nameCard);
     }
 
-    @Test(priority = 6, dependsOnMethods = "testCreateNewCard")
+    @Test(priority = 9, dependsOnMethods = "testCreateNewCard")
     @Story("Verify cards")
     @Description("Delete a card")
     @Severity(SeverityLevel.CRITICAL)
