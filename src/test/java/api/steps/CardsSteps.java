@@ -16,10 +16,11 @@ import static io.restassured.RestAssured.given;
 
 public class CardsSteps {
 
-    private ApiClient apiClient = ApiClient.getInstance();
+    private final ApiClient apiClient = ApiClient.getInstance();
     private final Specification specification = new Specification();
     private RequestSpecification requestSpecification;
     private final String basePath = "/cards/";
+    private String temporaryBoardId;
 
 
     {
@@ -29,10 +30,11 @@ public class CardsSteps {
     public void createABord(){
         requestSpecification.queryParam("name", "Board for cards");
         Response response = apiClient.post("boards/", requestSpecification);
-        TestData.boardId =  response.path("id").toString();
+//        TestData.boardId =  response.path("id").toString();
+        temporaryBoardId =  response.path("id").toString();
 
 
-        Response resp = apiClient.get("boards/"+TestData.boardId+ "/lists", requestSpecification);
+        Response resp = apiClient.get("boards/"+temporaryBoardId+ "/lists", requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
         TestData.listId = (String) arrayList.get(0);
         requestSpecification = given(specification.installRequest());
@@ -40,7 +42,7 @@ public class CardsSteps {
     }
 
     public void deleteBoard() {
-        apiClient.delete(basePath + TestData.boardId, requestSpecification);
+        apiClient.delete(basePath + temporaryBoardId, requestSpecification);
         requestSpecification = given(specification.installRequest());
 
     }
@@ -49,9 +51,7 @@ public class CardsSteps {
     public Response createCard(String idList) {
         requestSpecification.queryParam("idList", idList);
         Response response = apiClient.post(basePath, requestSpecification);
-
-        System.out.println(response.asPrettyString());
-        TestData.cardId = response.jsonPath().get("id");
+//        TestData.cardId = response.jsonPath().get("id");
         requestSpecification = given(specification.installRequest());
         return response;
     }
@@ -59,7 +59,7 @@ public class CardsSteps {
     @Step("Get a card: id card = {cardId}")
     public Response getCard(String cardId) {
 
-        Response response = apiClient.get("cards/" + cardId, requestSpecification);
+        Response response = apiClient.get(basePath + cardId, requestSpecification);
         requestSpecification = given(specification.installRequest());
         return response;
     }
