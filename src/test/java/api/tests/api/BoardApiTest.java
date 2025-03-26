@@ -227,5 +227,49 @@ public class BoardApiTest extends BaseTest {
         System.out.println(response.asPrettyString());
     }
 
+    @Test(priority = 12, dependsOnMethods = "testCreateBoard")
+    @Story("Verify get boardStars on a board")
+    @Description("Get boardStars on a Board")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetBoardStarsOnBoard() {
+        Response response = boardSteps.getBoardStarsOnBoard(TestData.boardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test(priority = 9, dependsOnMethods = "testCreateBoard", groups = "Created_Board_and_List")
+    @Story("Verify get memberships on a board")
+    @Description("Get memberships on a Board")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetMembershipsOnBoard() {
+        Response response = boardSteps.getMembershipsOnBoard(TestData.boardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+
+    @Test(priority = 9, dependsOnMethods = "testCreateBoard", groups = "Created_Board_and_List")
+    @Story("Verify add member from board")
+    @Description("Add member from board")
+    @Severity(SeverityLevel.NORMAL)
+    public void testAddMemberFromBoard() {
+        Response response = boardSteps.addMemberToBoard(TestData.boardId, "ggg.user@gmail.com", "normal");
+        TestData.memberId = response.jsonPath().getString("id");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test(priority = 15, dependsOnMethods = "testAddMemberFromBoard", groups = "Created_Board_and_List")
+    @Story("Verify remove member from board")
+    @Description("Remove member from board")
+    @Severity(SeverityLevel.NORMAL)
+    public void testRemoveMemberFromBoard() {
+        Response membersResponse = boardSteps.getMembersOfABoard(TestData.boardId, "/members");
+        List<String> memberIds = membersResponse.jsonPath().getList("id"); // ИЛИ "members.id"
+        String memberIdToRemove = memberIds.get(0);
+        Response response = boardSteps.removeMemberFromBoard(TestData.boardId, memberIdToRemove);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
 
 }
