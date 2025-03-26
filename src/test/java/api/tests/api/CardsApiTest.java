@@ -1,7 +1,7 @@
 package api.tests.api;
 
 import api.base.BaseTest;
-import api.base.TestData;
+import api.base.ApiPathData;
 import api.steps.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
@@ -13,7 +13,8 @@ import org.testng.annotations.*;
 @Owner("Group JavaForwardToOffer")
 public class CardsApiTest extends BaseTest {
 
-    CardsSteps cardsSteps = new CardsSteps();
+    private CardsSteps cardsSteps = new CardsSteps();
+    private String cardId;
 
     @BeforeClass
     public void setUp(){
@@ -31,7 +32,7 @@ public class CardsApiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewCard() {
         Response response = cardsSteps.createCard();
-
+        cardId = response.jsonPath().get("id");
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
@@ -40,7 +41,7 @@ public class CardsApiTest extends BaseTest {
     @Description("Get a card")
     @Severity(SeverityLevel.NORMAL)
     public void testGetCard() {
-        Response response = cardsSteps.getCard();
+        Response response = cardsSteps.getCard(cardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -50,11 +51,11 @@ public class CardsApiTest extends BaseTest {
     @Description("Update a card")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateCard() {
-        String nameCard = "NewCardName";
-        Response response = cardsSteps.updateCard(nameCard);
+        String newCardName = "NewCardName";
+        Response response = cardsSteps.updateCard(cardId, newCardName);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.path("name"), nameCard);
+        Assert.assertEquals(response.path("name"), newCardName);
     }
 
     @Test(priority = 6)
@@ -62,7 +63,7 @@ public class CardsApiTest extends BaseTest {
     @Description("Delete a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testDeleteCard() {
-        Response response = cardsSteps.deleteCard(TestData.cardId);
+        Response response = cardsSteps.deleteCard(cardId);
 
         Assert.assertEquals(response.getStatusCode(),200);
     }

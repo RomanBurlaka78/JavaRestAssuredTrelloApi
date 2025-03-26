@@ -1,14 +1,12 @@
 package api.steps;
 
-import api.base.TestData;
+import api.base.ApiPathData;
 import api.utils.ApiClient;
 import api.utils.Specification;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.get;
@@ -20,7 +18,7 @@ public class CardsSteps {
     private final Specification specification = new Specification();
     private RequestSpecification requestSpecification;
     private String temporaryBoardId;
-    private String tepmoraryCardId;
+//    private String tepmoraryCardId;
     private String tepmoraryListId;
 
     private final String BOARD_NAME = "Board for cards";
@@ -34,11 +32,11 @@ public class CardsSteps {
 
         requestSpecification.queryParam("name", BOARD_NAME);
 
-        Response response = apiClient.post(TestData.BOARD_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(ApiPathData.BOARD_BASE_PATH, requestSpecification);
         temporaryBoardId =  response.jsonPath().getString("id");
 
 
-        Response resp = apiClient.get(TestData.BOARD_BASE_PATH + temporaryBoardId+ "/lists", requestSpecification);
+        Response resp = apiClient.get(ApiPathData.BOARD_BASE_PATH + temporaryBoardId+ "/lists", requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
         tepmoraryListId = (String) arrayList.get(0);
         requestSpecification = given(specification.installRequest());
@@ -46,7 +44,7 @@ public class CardsSteps {
     }
 
     public void deleteBoard() {
-        apiClient.delete(TestData.BOARD_BASE_PATH + temporaryBoardId, requestSpecification);
+        apiClient.delete(ApiPathData.BOARD_BASE_PATH + temporaryBoardId, requestSpecification);
 
     }
 
@@ -54,32 +52,31 @@ public class CardsSteps {
     public Response createCard() {
 
         requestSpecification.queryParam("idList", tepmoraryListId);
-        Response response = apiClient.post(TestData.CARDS_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(ApiPathData.CARDS_BASE_PATH, requestSpecification);
 
-        tepmoraryCardId = response.jsonPath().get("id");
         requestSpecification = given(specification.installRequest());
         return response;
     }
 
     @Step("Get a card: id card = {cardId}")
-    public Response getCard() {
+    public Response getCard(String cardId) {
 
-        Response response = apiClient.get(TestData.CARDS_BASE_PATH + tepmoraryCardId, requestSpecification);
+        Response response = apiClient.get(ApiPathData.CARDS_BASE_PATH + cardId, requestSpecification);
         return response;
     }
 
     @Step("Update a card: id card = {cardID}, name = {name}")
-    public Response updateCard(String newCardName) {
+    public Response updateCard(String cardId, String newCardName) {
 
         requestSpecification.queryParam("name", newCardName);
-        Response response = apiClient.putWithSpecification(TestData.CARDS_BASE_PATH + tepmoraryCardId, requestSpecification);
+        Response response = apiClient.putWithSpecification(ApiPathData.CARDS_BASE_PATH + cardId, requestSpecification);
         requestSpecification = given(specification.installRequest());
         return response;
     }
 
     @Step("Delete a card: id card = {cardID}")
     public Response deleteCard(String cardID) {
-        Response response = apiClient.delete(TestData.CARDS_BASE_PATH + tepmoraryCardId, requestSpecification);
+        Response response = apiClient.delete(ApiPathData.CARDS_BASE_PATH + cardID, requestSpecification);
         requestSpecification = given(specification.installRequest());
         return response;
     }
