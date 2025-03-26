@@ -6,4 +6,5 @@ public class TestData {
     public static String idList;
     public static String labelId;
     public static String cardId;
+    public static String memberId;
 }
