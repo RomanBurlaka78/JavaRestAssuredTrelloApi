@@ -30,17 +30,17 @@ public class CardsApiTest extends BaseTest {
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewCard() {
-        Response response = cardsSteps.createCard(TestData.listId);
+        Response response = cardsSteps.createCard();
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 5)
+    @Test(priority = 1)
     @Story("Verify cards")
     @Description("Get a card")
     @Severity(SeverityLevel.NORMAL)
     public void testGetCard() {
-        Response response = cardsSteps.getCard(TestData.cardId);
+        Response response = cardsSteps.getCard();
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
