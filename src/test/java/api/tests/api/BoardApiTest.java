@@ -56,7 +56,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), bordName);
     }
 
-    @Test(priority = 50, dependsOnMethods = "testCreateBoard")
+    @Test(priority = 6, dependsOnMethods = "testCreateBoard")
     @Story("Verify update board")
     @Description("Update board")
     @Severity(SeverityLevel.NORMAL)
