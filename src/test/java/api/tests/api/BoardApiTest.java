@@ -232,7 +232,7 @@ public class BoardApiTest {
     @Description("Add member from board")
     @Severity(SeverityLevel.NORMAL)
     public void testAddMemberFromBoard() {
-        Response response = boardSteps.addMemberToBoard(TestData.boardId, "ggg.user@gmail.com", "normal");
+        Response response = boardSteps.addMemberToBoard(TestData.boardId, "user@gmail.com", "normal");
         TestData.memberId = response.jsonPath().getString("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
