@@ -4,6 +4,8 @@ import api.steps.ListsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Epic("API Tests")
@@ -11,17 +13,28 @@ import org.testng.annotations.Test;
 @Owner("Group JavaForwardToOffer")
 public class ListsApiTest {
 
-    ListsSteps listsSteps = new ListsSteps();
+    private ListsSteps listsSteps = new ListsSteps();
+    private String bordName = "Board for lists";
 
-    @Test(priority = 7, dependsOnGroups = "Created_Board_and_List")
-    @Story("Verify lists")
+    @BeforeClass
+    public void setUp(){
+        listsSteps.createABord(bordName);
+    }
+
+    @AfterClass
+    public void tearDown(){
+        listsSteps.deleteBoard();
+    }
+
+    @Test(priority = 0)
+    @Story("lists")
     @Description("Create a new List on a Board")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewList() {
-        String nameList = "List from API";
-        Response response = listsSteps.createList(nameList);
+        String nameOfTheList = "List from API";
+        Response response = listsSteps.createList(nameOfTheList);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.path("name"), nameList);
+        Assert.assertEquals(response.path("name"), nameOfTheList);
     }
 }
