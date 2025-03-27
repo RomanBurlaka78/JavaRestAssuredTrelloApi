@@ -9,5 +9,6 @@ public class ApiPathData {
     public final static String LISTS_BASE_PATH = "/lists/";
     public final static String MEMBERS_BASE_PATH = "/members/";
     public final static String CHECKLISTS_BASE_PATH = "/checklists";
+    public final static String LABLES_BASE_PATH = "/labels";
 
 }

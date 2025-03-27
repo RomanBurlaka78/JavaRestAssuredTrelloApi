@@ -8,13 +8,14 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.sql.ResultSet;
+
 public class BoardSteps {
 
     private final Specification specification = new Specification();
     private RequestSpecification requestSpecification;
     private ApiClient apiClient = ApiClient.getInstance();
 
-    private final String lableEndPoint = "/labels";
 
     {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
@@ -44,21 +45,23 @@ public class BoardSteps {
     @Step("Update Board: id board = {boardId}, new name board = {bordName}")
     public Response updateBoard(String boardId, String bordName) {
         requestSpecification.param("name", bordName);
-        return apiClient.putWithSpecification(ApiPathData.BOARD_BASE_PATH + boardId, requestSpecification);
+        Response response = apiClient.putWithSpecification(ApiPathData.BOARD_BASE_PATH + boardId, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        return response;
     }
 
     @Step("Create a Label on a Board: id board = {boardId}, label name = {nameOfLabel}, label color = {color}")
     public Response createLabelOnBoard(String boardId, String nameOfLabel, String color) {
         requestSpecification.queryParam("name", nameOfLabel);
         requestSpecification.queryParam("color", color);
-        Response respone = apiClient.post(ApiPathData.BOARD_BASE_PATH + boardId + lableEndPoint, requestSpecification);
+        Response respone = apiClient.post(ApiPathData.BOARD_BASE_PATH + boardId + ApiPathData.LABLES_BASE_PATH, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
         return respone;
     }
 
     @Step("Get Labels on a Board: id board = {boardId}")
     public Response getLabelOnBoard(String boardId) {
-        return apiClient.get(ApiPathData.BOARD_BASE_PATH + boardId + lableEndPoint, requestSpecification);
+        return apiClient.get(ApiPathData.BOARD_BASE_PATH + boardId + ApiPathData.LABLES_BASE_PATH, requestSpecification);
     }
 
     @Step("Create a List on a Board: id board = {boardId}, list name = {nameForList}")
@@ -123,5 +126,31 @@ public class BoardSteps {
     public Response putWithSpecification(String boardId, String membersEndPoint) {
         requestSpecification.param("email", "ironman-968-privet-test@ya.ru");
         return apiClient.putWithSpecification(ApiPathData.BOARD_BASE_PATH + boardId + membersEndPoint, requestSpecification);
+    }
+
+    @Step("Get boardStars on a Board: id board = {boardId}")
+    public Response getBoardStarsOnBoard(String boardId, String boardStarsEnPoint) {
+        return apiClient.get(ApiPathData.BOARD_BASE_PATH + boardId + "/boardStars", requestSpecification);
+    }
+
+    @Step("Get memberships on a Board: id board = {boardId}")
+    public Response getMembershipsOnBoard(String boardId) {
+        return apiClient.get(ApiPathData.BOARD_BASE_PATH + boardId + "/memberships", requestSpecification);
+    }
+
+    @Step("Add member to Board: boardId = {boardId}, email = {email}, memberType = {memberType}")
+    public Response addMemberToBoard(String boardId, String memBerId, String memberType) {
+        requestSpecification.queryParam("type", memberType);
+        Response response = apiClient.putWithSpecification(ApiPathData.BOARD_BASE_PATH + boardId + ApiPathData.MEMBERS_BASE_PATH + memBerId, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        return response;
+    }
+
+    @Step("Remove member from Board: boardId = {boardId}, memberId = {memberId}")
+    public Response removeMemberFromBoard(String boardId, String memberId) {
+
+        return ApiClient.getInstance().delete(ApiPathData.BOARD_BASE_PATH + boardId +
+                ApiPathData.MEMBERS_BASE_PATH + memberId, requestSpecification);
+
     }
 }

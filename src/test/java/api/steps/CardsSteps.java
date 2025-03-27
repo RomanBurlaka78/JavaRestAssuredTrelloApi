@@ -4,6 +4,7 @@ import api.base.ApiPathData;
 import api.utils.ApiClient;
 import api.utils.Specification;
 import io.qameta.allure.Step;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -18,22 +19,19 @@ public class CardsSteps {
     private final Specification specification = new Specification();
     private RequestSpecification requestSpecification;
     private String temporaryBoardId;
-//    private String tepmoraryCardId;
     private String tepmoraryListId;
 
-    private final String BOARD_NAME = "Board for cards";
-
-
     {
-        requestSpecification = given(specification.installRequest());
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
     }
 
-    public void createABord(){
+    public void createABord(String boardName){
 
-        requestSpecification.queryParam("name", BOARD_NAME);
+        requestSpecification.queryParam("name", boardName);
 
         Response response = apiClient.post(ApiPathData.BOARD_BASE_PATH, requestSpecification);
         temporaryBoardId =  response.jsonPath().getString("id");
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
 
 
         Response resp = apiClient.get(ApiPathData.BOARD_BASE_PATH + temporaryBoardId+ "/lists", requestSpecification);

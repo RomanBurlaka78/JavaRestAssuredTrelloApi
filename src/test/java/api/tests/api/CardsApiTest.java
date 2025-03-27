@@ -15,10 +15,11 @@ public class CardsApiTest extends BaseTest {
 
     private CardsSteps cardsSteps = new CardsSteps();
     private String cardId;
+    private String bordName = "Board for cards";
 
     @BeforeClass
     public void setUp(){
-        cardsSteps.createABord();
+        cardsSteps.createABord(bordName);
     }
 
     @AfterClass
