@@ -44,7 +44,7 @@ public class BoardSteps {
     @Step("Update Board: id board = {boardId}, new name board = {bordName}")
     public Response updateBoard(String boardId, String bordName) {
         requestSpecification.param("name", bordName);
-        Response response = apiClient.putWithSpecification(PathParameters.BOARD_BASE_PATH + boardId, requestSpecification);
+        Response response = apiClient.put(PathParameters.BOARD_BASE_PATH + boardId, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
         return response;
     }
@@ -124,7 +124,7 @@ public class BoardSteps {
 
     public Response putWithSpecification(String boardId, String membersEndPoint) {
         requestSpecification.param("email", "ironman-968-privet-test@ya.ru");
-        return apiClient.putWithSpecification(PathParameters.BOARD_BASE_PATH + boardId + membersEndPoint, requestSpecification);
+        return apiClient.put(PathParameters.BOARD_BASE_PATH + boardId + membersEndPoint, requestSpecification);
     }
 
     @Step("Get boardStars on a Board: id board = {boardId}")
@@ -140,7 +140,7 @@ public class BoardSteps {
     @Step("Add member to Board: boardId = {boardId}, email = {email}, memberType = {memberType}")
     public Response addMemberToBoard(String boardId, String memBerId, String memberType) {
         requestSpecification.queryParam("type", memberType);
-        Response response = apiClient.putWithSpecification(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.MEMBERS_BASE_PATH + memBerId, requestSpecification);
+        Response response = apiClient.put(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.MEMBERS_BASE_PATH + memBerId, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
         return response;
     }

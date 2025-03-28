@@ -67,7 +67,7 @@ public class CardsSteps {
     public Response updateCard(String cardId, String newCardName) {
 
         requestSpecification.queryParam("name", newCardName);
-        Response response = apiClient.putWithSpecification(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
+        Response response = apiClient.put(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
         requestSpecification = given(specification.installRequest());
         return response;
     }

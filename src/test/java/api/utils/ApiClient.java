@@ -49,19 +49,7 @@ public class ApiClient {
         return requestSpecification.post(path);
     }
 
-//    public Response postWithOutBody(String path, RequestSpecification requestSpecification) {
-//        logger.info("Executing POST request to: " + path);
-//
-//        return requestSpecification.post(path);
-//    }
-
-//    public Response put(String path, String body) {
-//        logger.info("Executing PUT request to: " + path);
-//
-//        return requestSpec.body(body).put(path);
-//    }
-
-    public Response putWithSpecification(String path, RequestSpecification requestSpecification) {
+    public Response put(String path, RequestSpecification requestSpecification) {
         logger.info("Executing PUT request to: " + path);
 
         return requestSpecification.put(path);
