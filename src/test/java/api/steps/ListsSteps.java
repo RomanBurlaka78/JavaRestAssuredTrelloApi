@@ -17,6 +17,7 @@ public class ListsSteps {
     private final Specification specification = new Specification();
     private RequestSpecification requestSpecification;
     private ApiClient apiClient = ApiClient.getInstance();
+    private String archiveEndPoint = "/archiveAllCards";
 
     {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
@@ -34,7 +35,6 @@ public class ListsSteps {
     public String getListsId(String boardId){
         Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId+ PathParameters.LISTS_BASE_PATH, requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
-//        tepmoraryListId = (String) arrayList.get(0);
         requestSpecification = given(specification.installRequest());
         return (String) arrayList.get(0);
     }
@@ -60,5 +60,23 @@ public class ListsSteps {
         Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + listId, requestSpecification );
         requestSpecification = RestAssured.given().spec(specification.installRequest());
         return response;
+    }
+
+    public Response getAList(String listId) {
+
+        return apiClient.get(PathParameters.LISTS_BASE_PATH + listId, requestSpecification);
+    }
+
+    public void createACard(String listId) {
+        requestSpecification.queryParam("idList", listId);
+        requestSpecification.queryParam("name", "nameForCard");
+
+        apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+    }
+
+    public Response archiveACardOnTheList(String listId) {
+
+        return apiClient.post(PathParameters.LISTS_BASE_PATH + listId + archiveEndPoint, requestSpecification);
     }
 }

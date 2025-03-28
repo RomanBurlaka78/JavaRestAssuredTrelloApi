@@ -4,7 +4,6 @@ import api.steps.ListsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -17,6 +16,8 @@ public class ListsApiTest {
     private String bordName = "Board for lists";
     private String boardId;
     private String listId;
+    private String newNameForTheList = "Updated name for the list";
+
 
     @BeforeClass
     public void setUp(){
@@ -24,10 +25,10 @@ public class ListsApiTest {
         listId = listsSteps.getListsId(boardId);
     }
 
-    @AfterClass
-    public void tearDown(){
-        listsSteps.deleteBoard(boardId);
-    }
+//    @AfterClass
+//    public void tearDown(){
+//        listsSteps.deleteBoard(boardId);
+//    }
 
     @Test(priority = 0)
     @Story("lists")
@@ -44,14 +45,40 @@ public class ListsApiTest {
 
     @Test(priority = 1)
     @Story("lists")
-    @Description("Create a new List on a Board")
+    @Description("Update a name of the list")
     @Severity(SeverityLevel.CRITICAL)
     public void tesUpdateANameForList() {
 
-        String newNameForTheList = "Updated name for the list";
         Response response = listsSteps.updateANameForList(listId, newNameForTheList);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.jsonPath().getString("name"), newNameForTheList);
     }
+
+    @Test(priority = 2)
+    @Story("lists")
+    @Description("Create a new List on a Board")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetAList() {
+
+        Response response = listsSteps.getAList(listId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.jsonPath().getString("name"), newNameForTheList);
+    }
+
+    @Test(priority = 2)
+    @Story("lists")
+    @Description("Create a new List on a Board")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testArchiveAllCardOnTheList() {
+
+        listsSteps.createACard(listId);
+
+        Response response = listsSteps.archiveACardOnTheList(listId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        //Проверить, что кард был заархивирован можно только в UI -> Menu -> Archived items. Но для этого не удаляй доску.
+    }
+
 }
