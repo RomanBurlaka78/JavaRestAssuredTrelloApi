@@ -1,6 +1,6 @@
 package api.steps;
 
-import api.base.ApiPathData;
+import api.base.PathParameters;
 import api.utils.ApiClient;
 import api.utils.Specification;
 import io.qameta.allure.Step;
@@ -29,12 +29,12 @@ public class ListsSteps {
 
         requestSpecification.queryParam("name", boardName);
 
-        Response response = apiClient.post(ApiPathData.BOARD_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(PathParameters.BOARD_BASE_PATH, requestSpecification);
         temporaryBoardId =  response.jsonPath().getString("id");
         requestSpecification = RestAssured.given().spec(specification.installRequest());
 
 
-        Response resp = apiClient.get(ApiPathData.BOARD_BASE_PATH + temporaryBoardId+ "/lists", requestSpecification);
+        Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + temporaryBoardId+ "/lists", requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
         tepmoraryListId = (String) arrayList.get(0);
         requestSpecification = given(specification.installRequest());
@@ -42,7 +42,7 @@ public class ListsSteps {
     }
 
     public void deleteBoard() {
-        apiClient.delete(ApiPathData.BOARD_BASE_PATH + temporaryBoardId, requestSpecification);
+        apiClient.delete(PathParameters.BOARD_BASE_PATH + temporaryBoardId, requestSpecification);
 
     }
 
@@ -50,7 +50,7 @@ public class ListsSteps {
     public Response createList(String nameOfTheList) {
         requestSpecification.queryParam("name", nameOfTheList);
         requestSpecification.queryParam("idBoard", temporaryBoardId);
-        Response response = apiClient.post(ApiPathData.LISTS_BASE_PATH, requestSpecification );
+        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH, requestSpecification );
         requestSpecification = RestAssured.given().spec(specification.installRequest());
         return response;
     }

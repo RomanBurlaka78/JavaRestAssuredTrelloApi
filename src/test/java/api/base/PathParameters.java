@@ -1,6 +1,6 @@
 package api.base;
 
-public class ApiPathData {
+public class PathParameters {
 
     public final static String BOARD_BASE_PATH = "boards/";
     public final static String CARDS_BASE_PATH = "/cards/";

@@ -1,7 +1,6 @@
 package api.tests.api;
 
 import api.base.BaseTest;
-import api.base.ApiPathData;
 import api.steps.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
