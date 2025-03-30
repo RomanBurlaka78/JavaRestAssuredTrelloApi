@@ -1,42 +1,50 @@
-package api.tests.api;
+package api.tests;
 
+import api.base.BaseTest;
 import api.base.TestData;
-import api.steps.BoardSteps;
+import api.controllers.BoardSteps;
+import api.controllers.ui.UiBoardSteps;
+
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.io.IOException;
 import java.util.*;
 
 @Epic("API Tests")
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
-public class BoardApiTest {
-
+public class BoardApiTest extends BaseTest {
     private BoardSteps boardSteps = new BoardSteps();
+    private UiBoardSteps uiBoardSteps = new UiBoardSteps();
 
 
     @Test(priority = 1, description = "Create Board Validation", groups = "Created_Board_and_List")
     @Story("Verify created board")
     @Description("Get list of user")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCreateBoard() {
+    public void testCreateBoard() throws IOException, InterruptedException {
         Response response = boardSteps.createBoard(TestData.bordName);
         TestData.boardId = response.path("id").toString();
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
         Assert.assertEquals(response.getStatusCode(), 200);
+        uiBoardSteps.verifyLoginInUI();
+
     }
+
 
     @Test(priority = 111, dependsOnMethods = "testCreateBoard")
     @Story("Verify delete board")
     @Description("Delete board")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeleteBoard() {
+    public void testDeleteBoard() throws InterruptedException {
         Response response = boardSteps.deleteBoardStep(TestData.boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
+        uiBoardSteps.closeBrowserAndDriver();
     }
 
     @Test(priority = 2, dependsOnMethods = "testCreateBoard")
@@ -49,6 +57,8 @@ public class BoardApiTest {
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().get("id").toString(), TestData.boardId);
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Api Board");
+
+        uiBoardSteps.getBoardNameUI();
     }
 
     @Test(priority = 50, dependsOnMethods = "testCreateBoard")
@@ -60,6 +70,8 @@ public class BoardApiTest {
 
         Assert.assertEquals(response.body().jsonPath().get("id").toString(), TestData.boardId);
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), "New Api Board");
+
+        uiBoardSteps.getUINewBoardName();
     }
 
     @Test(priority = 4, dependsOnMethods = "testCreateBoard")
@@ -116,7 +128,7 @@ public class BoardApiTest {
 
         Assert.assertEquals(arrayList.size(), 3);
 
-        //Любое действие произведённое на доске щитается actions и имеет свои cridentials, изначально
+        //Любое действие произведённое на доске считается actions и имеет свои cridentials, изначально
         //количество actions=3, но если например добавить карточку то actions будет уже не 3. Actions - это любое
         //действие на доске
     }
