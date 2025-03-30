@@ -4,6 +4,7 @@ import api.steps.ListsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -25,10 +26,10 @@ public class ListsApiTest {
         listId = listsSteps.getListsId(boardId);
     }
 
-//    @AfterClass
-//    public void tearDown(){
-//        listsSteps.deleteBoard(boardId);
-//    }
+    @AfterClass
+    public void tearDown(){
+        listsSteps.deleteBoard(boardId);
+    }
 
     @Test(priority = 0)
     @Story("lists")
