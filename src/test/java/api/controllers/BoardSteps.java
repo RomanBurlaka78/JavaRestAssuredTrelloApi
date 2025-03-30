@@ -1,4 +1,4 @@
-package api.steps;
+package api.controllers;
 
 import api.utils.ApiClient;
 import io.qameta.allure.Step;
