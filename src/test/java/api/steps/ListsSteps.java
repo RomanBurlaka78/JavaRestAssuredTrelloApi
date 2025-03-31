@@ -25,6 +25,7 @@ public class ListsSteps {
     private final String subscribedFieldEndPoint = "/subscribed";
     private final String posFieldEndPoint = "/pos";
     private final String actionsEndPoint = "/actions";
+    private final String boardEndPoint = "/board";
 
     {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
@@ -118,12 +119,13 @@ public class ListsSteps {
         return response;
     }
 
+    @Step("Get a cards from a list with id {idOfTheList}")
+    public Response getCardsOnAList(String idOfTheList) {
 
-    public Response getCardsOnAList(String toDoListId) {
-
-        return apiClient.get(PathParameters.LISTS_BASE_PATH + toDoListId + cardsEndPoint, requestSpecification);
+        return apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + cardsEndPoint, requestSpecification);
     }
 
+    @Step("Move list from one board to another board with id {idOfABoardToMoveListTo}")
     public Response moveListFromOneBoardToAnother(String idOfTheList, String idOfABoardToMoveListTo) {
         requestSpecification.queryParam("value", idOfABoardToMoveListTo);
 
@@ -132,7 +134,8 @@ public class ListsSteps {
         return response;
     }
 
-        public Response updateSubscribedFieldOfAList(String idOfAList, boolean valueForSubscribedField) {
+    @Step("Update the subscribed field of a list wit id = {idOfAList} ")
+    public Response updateSubscribedFieldOfAList(String idOfAList, boolean valueForSubscribedField) {
         requestSpecification.queryParam("value", valueForSubscribedField);
 
         Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfAList + subscribedFieldEndPoint, requestSpecification);
@@ -140,8 +143,14 @@ public class ListsSteps {
         return response;
     }
 
+    @Step("Get the actions of a list")
     public Response getActionsofAList(String idOfTheList) {
 
         return apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + actionsEndPoint, requestSpecification);
+    }
+
+    @Step("Get the boar id the list is on")
+    public Response getABoardAListIsOn(String idOfTheList) {
+        return apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + boardEndPoint, requestSpecification);
     }
 }

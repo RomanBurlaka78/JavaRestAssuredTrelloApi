@@ -175,5 +175,18 @@ public class ListsApiTest {
 
     }
 
+    @Test(priority = 6)
+    @Story("lists")
+    @Description("Get the Board a List is on")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetABoardAListIsOn() {
+
+        Response response = listsSteps.getABoardAListIsOn(newCreatedListId);
+        System.out.println(response.asPrettyString());
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.jsonPath().getString("id"), boardId);
+
+    }
+
 
 }
