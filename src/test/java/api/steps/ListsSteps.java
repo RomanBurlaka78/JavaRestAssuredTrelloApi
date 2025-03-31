@@ -21,6 +21,10 @@ public class ListsSteps {
     private final String moveAllCardsEndPoint = "/moveAllCards";
     private final String archiveAListEndPoint = "/closed";
     private final String cardsEndPoint = "/cards";
+    private final String idBoardEndPoint = "/idBoard";
+    private final String subscribedFieldEndPoint = "/subscribed";
+    private final String posFieldEndPoint = "/pos";
+    private final String actionsEndPoint = "/actions";
 
     {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
@@ -118,5 +122,26 @@ public class ListsSteps {
     public Response getCardsOnAList(String toDoListId) {
 
         return apiClient.get(PathParameters.LISTS_BASE_PATH + toDoListId + cardsEndPoint, requestSpecification);
+    }
+
+    public Response moveListFromOneBoardToAnother(String idOfTheList, String idOfABoardToMoveListTo) {
+        requestSpecification.queryParam("value", idOfABoardToMoveListTo);
+
+        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheList + idBoardEndPoint, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        return response;
+    }
+
+        public Response updateSubscribedFieldOfAList(String idOfAList, boolean valueForSubscribedField) {
+        requestSpecification.queryParam("value", valueForSubscribedField);
+
+        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfAList + subscribedFieldEndPoint, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        return response;
+    }
+
+    public Response getActionsofAList(String idOfTheList) {
+
+        return apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + actionsEndPoint, requestSpecification);
     }
 }

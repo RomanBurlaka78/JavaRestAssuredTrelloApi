@@ -22,7 +22,6 @@ public class ListsApiTest {
     private String newCreatedListId;
     private String newNameForTheList = "List with Updated name";
 
-
     @BeforeClass
     public void setUp(){
         boardId = listsSteps.createABord(bordName);
@@ -108,7 +107,6 @@ public class ListsApiTest {
     public void testArchiveAList() {
 
         Response response = listsSteps.archiveAList(toDoListId);
-
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
@@ -125,7 +123,7 @@ public class ListsApiTest {
 
     @Test(priority = 5)
     @Story("lists")
-    @Description("Unarchived a list on a board")
+    @Description("Get all cards available on a list")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetCardsInAList() {
 
@@ -135,6 +133,46 @@ public class ListsApiTest {
         List arrayList = response.jsonPath().getList("id");
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(arrayList.size(),2);
+    }
+
+    @Test(priority = 5)
+    @Story("lists")
+    @Description("Move list from one board to another")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testMoveListFromOneBoardToAnother() {
+        String nameForSecondBoard = "Board_for_moving_lists";
+        String idOfTheSecondBoard = listsSteps.createABord(nameForSecondBoard);
+
+        Response response = listsSteps.moveListFromOneBoardToAnother(toDoListId, idOfTheSecondBoard);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        //Assert can be done with -> Get the Board a List is on
+        listsSteps.deleteBoard(idOfTheSecondBoard);
+    }
+
+    @Test(priority = 5)
+    @Story("lists")
+    @Description("Update subscribed field of a list")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testUpdateASubscribedFieldOfAList() {
+        boolean subscribeValue = true;
+
+        Response response = listsSteps.updateSubscribedFieldOfAList(newCreatedListId, subscribeValue);
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test(priority = 6)
+    @Story("lists")
+    @Description("Update subscribed field of a list")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetActionsOfAList() {
+
+        Response response = listsSteps.getActionsofAList(newCreatedListId);
+        List arrayList = response.jsonPath().getList("id");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(arrayList.size(), 3);
+
     }
 
 
