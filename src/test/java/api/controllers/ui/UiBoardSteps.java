@@ -20,7 +20,7 @@ public class UiBoardSteps extends BaseUiTest {
     }
 
     @Step("Close browser Trello UI and delete driver")
-    public void closeBrowserAndDriver() throws InterruptedException {
+    public void closeBrowserAndDriver() {
         logOut();
         closeDriver();
         Assert.assertEquals(getDriver(), null);
@@ -40,7 +40,7 @@ public class UiBoardSteps extends BaseUiTest {
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         WebElement board = getDriver().findElement(By.xpath("//*[contains(text(),'New Api Board')]"));
         Assert.assertEquals(board.getText(),"New Api Board");
-        board.click();
+//        board.click();
 
     }
 

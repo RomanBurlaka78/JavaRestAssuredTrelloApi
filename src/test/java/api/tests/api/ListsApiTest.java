@@ -1,4 +1,4 @@
-package api.tests;
+package api.tests.api;
 
 import api.base.BaseTest;
 import api.controllers.ListsSteps;

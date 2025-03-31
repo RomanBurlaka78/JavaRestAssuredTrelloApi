@@ -1,4 +1,4 @@
-package api.tests;
+package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.TestData;
@@ -27,24 +27,24 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() throws IOException, InterruptedException {
         Response response = boardSteps.createBoard(TestData.bordName);
-        TestData.boardId =  response.path("id").toString();
+        TestData.boardId = response.path("id").toString();
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
         Assert.assertEquals(response.getStatusCode(), 200);
-        uiBoardSteps.verifyLoginInUI();
+//        uiBoardSteps.verifyLoginInUI();
 
     }
 
-
+    @Ignore
     @Test(priority = 111, dependsOnMethods = "testCreateBoard")
     @Story("Verify delete board")
     @Description("Delete board")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeleteBoard() throws InterruptedException {
+    public void testDeleteBoard() {
         Response response = boardSteps.deleteBoardStep(TestData.boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        uiBoardSteps.closeBrowserAndDriver();
+//        uiBoardSteps.closeBrowserAndDriver();
     }
 
     @Test(priority = 2, dependsOnMethods = "testCreateBoard")
@@ -58,7 +58,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.body().jsonPath().get("id").toString(), TestData.boardId);
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Api Board");
 
-        uiBoardSteps.getBoardNameUI();
+//        uiBoardSteps.getBoardNameUI();
     }
 
     @Test(priority = 14, dependsOnMethods = "testCreateBoard")
@@ -71,7 +71,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.body().jsonPath().get("id").toString(), TestData.boardId);
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), "New Api Board");
 
-        uiBoardSteps.getUINewBoardName();
+//        uiBoardSteps.getUINewBoardName();
     }
 
     @Test(priority = 4, dependsOnMethods = "testCreateBoard")

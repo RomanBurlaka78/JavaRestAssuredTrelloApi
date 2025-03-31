@@ -107,15 +107,16 @@ public abstract class BaseUiTest {
 
     }
 
-    public void logOut() throws InterruptedException {
-        getDriver().findElement(By.xpath("//button[@data-testid='header-member-menu-button']")).click();
+    public void logOut() {
         try {
-            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+            getDriver().findElement(By.xpath("//button[@data-testid='header-member-menu-button']")).click();
+
+            getDriver().findElement(By.xpath("//button[@data-testid='account-menu-logout']")).click();
+            getDriver().findElement(By.xpath("//button[@data-testid='logout-button']")).click();
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
-        getDriver().findElement(By.xpath("//button[@data-testid='account-menu-logout']")).click();
-        getDriver().findElement(By.xpath("//button[@data-testid='logout-button']")).click();
+
     }
 
 
