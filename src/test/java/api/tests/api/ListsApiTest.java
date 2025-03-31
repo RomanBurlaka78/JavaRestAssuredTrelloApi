@@ -99,4 +99,25 @@ public class ListsApiTest {
         //можно добавить ассерт из теста "Get Cards in a List" который в данный момент не реализован. (последний в API разделе)
     }
 
+    @Test(priority = 3)
+    @Story("lists")
+    @Description("Archive a list on a board")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testArchiveAList() {
+
+        Response response = listsSteps.archiveAList(toDoListId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test(priority = 4)
+    @Story("lists")
+    @Description("Unarchived a list on a board")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testUnArchiveAList() {
+
+        Response response = listsSteps.unArchiveAList(toDoListId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
 }

@@ -8,8 +8,8 @@ import api.utils.ListeningConfig;
 @Listeners(ListeningConfig.class)
 public class BaseTest {
 
-    @BeforeMethod
-    public void setUp() {
-        ApiClient.getInstance().getRequestSpec();
-    }
+//    @BeforeMethod
+//    public void setUp() {
+//        ApiClient.getInstance().getRequestSpec();
+//    }
 }

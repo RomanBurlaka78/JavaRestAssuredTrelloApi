@@ -19,6 +19,7 @@ public class ListsSteps {
     private ApiClient apiClient = ApiClient.getInstance();
     private String archiveEndPoint = "/archiveAllCards";
     private String moveAllCardsEndPoint = "/moveAllCards";
+    private String archiveAListEndPoint = "/closed";
 
     {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
@@ -55,6 +56,7 @@ public class ListsSteps {
         return response;
     }
 
+    @Step("Update a neme for the list with value = {newNameForTheList}")
     public Response updateANameForList(String listId, String newNameForTheList) {
 
         requestSpecification.queryParam("name", newNameForTheList);
@@ -63,11 +65,13 @@ public class ListsSteps {
         return response;
     }
 
+    @Step("Get the list with id = {listId}")
     public Response getAList(String listId) {
 
         return apiClient.get(PathParameters.LISTS_BASE_PATH + listId, requestSpecification);
     }
 
+    @Step("Create a card for list with id = {listId}")
     public void createACard(String listId) {
         requestSpecification.queryParam("idList", listId);
         requestSpecification.queryParam("name", "nameForCard");
@@ -75,12 +79,13 @@ public class ListsSteps {
         apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
     }
-
+    @Step("Archive all existed cards on a list with id = {listId}")
     public Response archiveAllCardOnTheList(String listId) {
 
         return apiClient.post(PathParameters.LISTS_BASE_PATH + listId + archiveEndPoint, requestSpecification);
     }
 
+    @Step("Move all cards from the list with id = {newCreatedListId} to the list with id = {IdOfTheListThatTheCardsShouldBeMovedTo}")
     public Response moveAllCardsFromOneListToAnother(String newCreatedListId, String boardId, String IdOfTheListThatTheCardsShouldBeMovedTo) {
         requestSpecification.queryParam("idBoard", boardId);
         requestSpecification.queryParam("idList",IdOfTheListThatTheCardsShouldBeMovedTo);
@@ -89,4 +94,24 @@ public class ListsSteps {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
         return response;
     }
+
+    @Step("Archive a list with id = {idOfTheListToArchive}")
+    public Response archiveAList(String idOfTheListToArchive) {
+        requestSpecification.queryParam("value", "true");
+
+        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheListToArchive + archiveAListEndPoint, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        return response;
+    }
+
+    @Step("Unarchive a list with id = {idOfTheListToUnArchive}")
+    public Response unArchiveAList(String idOfTheListToUnArchive) {
+        requestSpecification.queryParam("value", "false");
+
+        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheListToUnArchive + archiveAListEndPoint, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        return response;
+    }
+
+
 }

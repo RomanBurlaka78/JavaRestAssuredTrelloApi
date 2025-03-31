@@ -11,13 +11,7 @@ import static io.restassured.RestAssured.given;
 public class ApiClient {
 
     private static ApiClient instance;
-    private static RequestSpecification requestSpec;
-    private static Specification specification = new Specification();
     private static final Logger logger = LogManager.getLogger(ApiClient.class);
-
-    private ApiClient() {
-        logger.info("Creating ApiClient instance");
-    }
 
     public static ApiClient getInstance() {
 
@@ -27,14 +21,6 @@ public class ApiClient {
         }
 
         return instance;
-    }
-
-    public void getRequestSpec() {
-
-        requestSpec = RestAssured.given()
-                .spec(specification.installRequest());
-
-        specification.installResponse();
     }
 
     public Response get(String path, RequestSpecification requestSpecification) {
@@ -55,10 +41,10 @@ public class ApiClient {
         return requestSpecification.put(path);
     }
 
-    public Response patch(String path, String body) {
+    public Response patch(String path, RequestSpecification requestSpecification) {
         logger.info("Executing PUT request to: " + path);
 
-        return requestSpec.body(body).patch(path);
+        return requestSpecification.patch(path);
     }
 
     public Response delete(String path, RequestSpecification requestSpecification) {
