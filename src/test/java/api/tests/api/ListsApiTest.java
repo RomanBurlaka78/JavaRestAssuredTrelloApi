@@ -8,6 +8,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 @Epic("API Tests")
 @Feature("Lists Validation")
 @Owner("Group JavaForwardToOffer")
@@ -96,7 +98,7 @@ public class ListsApiTest {
         Response response = listsSteps.moveAllCardsFromOneListToAnother(newCreatedListId, boardId, toDoListId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        //можно добавить ассерт из теста "Get Cards in a List" который в данный момент не реализован. (последний в API разделе)
+        //можно добавить ассерт из теста "Get Cards in a List"
     }
 
     @Test(priority = 3)
@@ -120,4 +122,20 @@ public class ListsApiTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
+
+    @Test(priority = 5)
+    @Story("lists")
+    @Description("Unarchived a list on a board")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetCardsInAList() {
+
+        Response response = listsSteps.getCardsOnAList(toDoListId);
+
+        System.out.println(response.asPrettyString());
+        List arrayList = response.jsonPath().getList("id");
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(arrayList.size(),2);
+    }
+
+
 }

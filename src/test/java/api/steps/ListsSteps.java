@@ -16,10 +16,11 @@ public class ListsSteps {
 
     private final Specification specification = new Specification();
     private RequestSpecification requestSpecification;
-    private ApiClient apiClient = ApiClient.getInstance();
-    private String archiveEndPoint = "/archiveAllCards";
-    private String moveAllCardsEndPoint = "/moveAllCards";
-    private String archiveAListEndPoint = "/closed";
+    private final ApiClient apiClient = ApiClient.getInstance();
+    private final String archiveEndPoint = "/archiveAllCards";
+    private final String moveAllCardsEndPoint = "/moveAllCards";
+    private final String archiveAListEndPoint = "/closed";
+    private final String cardsEndPoint = "/cards";
 
     {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
@@ -114,4 +115,8 @@ public class ListsSteps {
     }
 
 
+    public Response getCardsOnAList(String toDoListId) {
+
+        return apiClient.get(PathParameters.LISTS_BASE_PATH + toDoListId + cardsEndPoint, requestSpecification);
+    }
 }
