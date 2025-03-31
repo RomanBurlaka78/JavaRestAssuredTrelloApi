@@ -18,6 +18,7 @@ public class ListsSteps {
     private RequestSpecification requestSpecification;
     private ApiClient apiClient = ApiClient.getInstance();
     private String archiveEndPoint = "/archiveAllCards";
+    private String moveAllCardsEndPoint = "/moveAllCards";
 
     {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
@@ -32,8 +33,8 @@ public class ListsSteps {
         return response.jsonPath().getString("id");
     }
 
-    public String getListsId(String boardId){
-        Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId+ PathParameters.LISTS_BASE_PATH, requestSpecification);
+    public String getTheFirstListsId(String boardId){
+        Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
         requestSpecification = given(specification.installRequest());
         return (String) arrayList.get(0);
@@ -75,8 +76,17 @@ public class ListsSteps {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
     }
 
-    public Response archiveACardOnTheList(String listId) {
+    public Response archiveAllCardOnTheList(String listId) {
 
         return apiClient.post(PathParameters.LISTS_BASE_PATH + listId + archiveEndPoint, requestSpecification);
+    }
+
+    public Response moveAllCardsFromOneListToAnother(String newCreatedListId, String boardId, String IdOfTheListThatTheCardsShouldBeMovedTo) {
+        requestSpecification.queryParam("idBoard", boardId);
+        requestSpecification.queryParam("idList",IdOfTheListThatTheCardsShouldBeMovedTo);
+
+        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH + newCreatedListId + moveAllCardsEndPoint, requestSpecification);
+        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        return response;
     }
 }
