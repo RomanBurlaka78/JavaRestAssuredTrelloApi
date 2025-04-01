@@ -18,17 +18,15 @@ public class ListsApiTest extends BaseTest {
     UiBoardSteps uiBoardSteps = new UiBoardSteps();
     UiListSteps uiListSteps = new UiListSteps();
 
-    @Test(priority = 7, dependsOnGroups = "Created_Board_and_List")
+    @Test(priority = 47, dependsOnGroups = "Created_Board_and_List")
     @Story("Verify lists")
     @Description("Create a new List on a Board")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCreateNewList() throws InterruptedException {
+    public void testCreateNewList() {
         String nameList = "List from API";
         Response response = listsSteps.createList(nameList);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.path("name"), nameList);
-
-//        uiListSteps.getNameOfList();
     }
 }
