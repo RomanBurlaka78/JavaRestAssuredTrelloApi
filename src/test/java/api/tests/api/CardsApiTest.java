@@ -52,7 +52,7 @@ public class CardsApiTest extends BaseTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.path("name"), nameCard);
-//        uiCardSteps.verifyCardUpdatedName();
+        uiCardSteps.verifyCardUpdatedName();
     }
 
 
