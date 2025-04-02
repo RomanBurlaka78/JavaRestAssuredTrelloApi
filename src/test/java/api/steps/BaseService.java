@@ -21,6 +21,7 @@ public abstract class BaseService {
         initRequestSpecification();
     }
 
+    @Step("Create a board with a name {'boardName'}")
     public String createABord(String boardName){
 
         requestSpecification.queryParam("name", boardName);
@@ -30,13 +31,14 @@ public abstract class BaseService {
         return response.jsonPath().getString("id");
     }
 
+    @Step("Delete a board with id = {boardId}")
     public void deleteBoard(String boardId) {
 
         apiClient.delete(PathParameters.BOARD_BASE_PATH + boardId, requestSpecification);
-
     }
 
-    public String getTheFirstListsId(String boardId){
+    @Step("Get id of the first list on a board")
+    public String getIdOfTheFirstListOnABoard(String boardId){
 
         Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
@@ -44,7 +46,8 @@ public abstract class BaseService {
         return (String) arrayList.get(0);
     }
 
-    public String getTheFirestActionOnABoard(String boardId) {
+    @Step("Get id of the first action on a board with id = {boardId}")
+    public String getIdOfTheFirestActionOnABoard(String boardId) {
         Response response = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
 
         List list = response.jsonPath().getList("id");
@@ -61,6 +64,14 @@ public abstract class BaseService {
         requestSpecification.queryParams(queryParamMap);
         Response response = apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
 
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Add a comment {'commentForAnAction'} to a card with id ={cardId}")
+    public Response addNewComentToACard(String cardId, String commentForAnAction, String commentsEnpoint) {
+        requestSpecification.queryParams("text", commentForAnAction);
+        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ACTIONS_BASE_PATH + commentsEnpoint, requestSpecification);
         initRequestSpecification();
         return response;
     }

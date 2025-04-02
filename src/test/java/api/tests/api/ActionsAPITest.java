@@ -4,7 +4,6 @@ import api.steps.ActionsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -18,6 +17,7 @@ public class ActionsAPITest {
 
     private ActionsSteps actionsSteps = new ActionsSteps();
 
+    private String commentsEnpoint = "comments";
     private String bordName = "Board for Actions";
     private String boardId;
     private String toDoListId;
@@ -28,8 +28,8 @@ public class ActionsAPITest {
     @BeforeClass
     public void setUp(){
         boardId = actionsSteps.createABord(bordName);
-        toDoListId = actionsSteps.getTheFirstListsId(boardId);
-        actiontId = actionsSteps.getTheFirestActionOnABoard(boardId);
+        toDoListId = actionsSteps.getIdOfTheFirstListOnABoard(boardId);
+        actiontId = actionsSteps.getIdOfTheFirestActionOnABoard(boardId);
     }
 
 //    @AfterClass
@@ -49,7 +49,7 @@ public class ActionsAPITest {
 
     @Test(priority = 1)
     @Story("Actions")
-    @Description("Get the action from a board")
+    @Description("Update a comment of the action of ")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateACommentOfTheAction(){
         String commentForAnAction = "Some comment, that was send from JavaRestAssured project";
@@ -60,11 +60,21 @@ public class ActionsAPITest {
 
         cardId = actionsSteps.createACard(queryParametersForRequestSpec).jsonPath().getString("id");
 
-        actiondIdAfterCreatingACard = actionsSteps.addNewComentToCard(cardId, commentForAnAction).jsonPath().getString("id");
+        actiondIdAfterCreatingACard = actionsSteps.addNewComentToACard(cardId, commentForAnAction, commentsEnpoint).jsonPath().getString("id");
 
         Response response = actionsSteps.updateACommentOfTheAction(actiondIdAfterCreatingACard, updatedCommentForAnAction);
-        System.out.println(response.asPrettyString());
     }
 
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Delete an action via id, and make sure it is deleted by trying to get the same action back")
+    @Severity(SeverityLevel.NORMAL)
+    public void testDeleteAnAction(){
+        String responseMessageForDeletedAction = "The requested resource was not found.";
+        Response response = actionsSteps.deleteAnAction(actiondIdAfterCreatingACard);
 
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(actionsSteps.getAnAction(actiondIdAfterCreatingACard).asPrettyString(), responseMessageForDeletedAction);
+
+    }
 }

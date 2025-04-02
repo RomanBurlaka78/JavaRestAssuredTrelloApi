@@ -26,7 +26,7 @@ public class CardsApiTest extends BaseTest {
     @BeforeClass
     public void setUp(){
         boardId = cardsSteps.createABord(bordName);
-        listId = cardsSteps.getTheFirstListsId(boardId);
+        listId = cardsSteps.getIdOfTheFirstListOnABoard(boardId);
     }
 
     @AfterClass

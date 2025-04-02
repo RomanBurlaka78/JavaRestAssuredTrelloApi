@@ -27,7 +27,7 @@ public class ListsApiTest {
     @BeforeClass
     public void setUp(){
         boardId = listsSteps.createABord(bordName);
-        toDoListId = listsSteps.getTheFirstListsId(boardId);
+        toDoListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
     }
 
     @AfterClass
@@ -43,7 +43,7 @@ public class ListsApiTest {
 
         String nameOfTheList = "List from API";
         Response response = listsSteps.createList(nameOfTheList, boardId);
-        newCreatedListId = listsSteps.getTheFirstListsId(boardId);
+        newCreatedListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.path("name"), nameOfTheList);
