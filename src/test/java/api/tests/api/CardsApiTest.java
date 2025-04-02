@@ -7,6 +7,9 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Epic("API Tests")
 @Feature("Cards Validation")
 @Owner("Group JavaForwardToOffer")
@@ -36,7 +39,10 @@ public class CardsApiTest extends BaseTest {
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewCard() {
-        Response response = cardsSteps.createCard(listId);
+        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList",listId);
+
+        Response response = cardsSteps.createACard(queryParametersForRequestSpec);
         cardId = response.jsonPath().get("id");
         Assert.assertEquals(response.getStatusCode(), 200);
     }

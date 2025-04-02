@@ -15,15 +15,6 @@ import static io.restassured.RestAssured.given;
 
 public class CardsSteps extends BaseService{
 
-    @Step("Create a new Card: id list = {idList}")
-    public Response createCard(String listId) {
-        requestSpecification.queryParam("idList", listId);
-        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
-
-        initRequestSpecification();
-        return response;
-    }
-
     @Step("Get a card: id card = {cardId}")
     public Response getCard(String cardId) {
 

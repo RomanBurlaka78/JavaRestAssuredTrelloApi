@@ -19,6 +19,7 @@ public class BoardSteps extends BaseService{
         return response;
     }
 
+
     @Step("Delete board {boardId}")
     public Response deleteABoardFromService(String boardId) {
 

@@ -8,7 +8,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Epic("API Tests")
 @Feature("Lists Validation")
@@ -77,7 +79,11 @@ public class ListsApiTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testArchiveAllCardsOnTheList() {
 
-        listsSteps.createACard(toDoListId);
+        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList", toDoListId);
+        queryParametersForRequestSpec.put("name", "nameForCard");
+
+        listsSteps.createACard(queryParametersForRequestSpec);
 
         Response response = listsSteps.archiveAllCardOnTheList(toDoListId);
 
@@ -90,14 +96,16 @@ public class ListsApiTest {
     @Description("Move all cards from one list to another")
     @Severity(SeverityLevel.CRITICAL)
     public void testMoveAllCardsFromOneListToAnother() {
+        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList", newCreatedListId);
+        queryParametersForRequestSpec.put("name", "nameForCard");
 
-        listsSteps.createACard(newCreatedListId);
-        listsSteps.createACard(newCreatedListId);
+        listsSteps.createACard(queryParametersForRequestSpec);
+        listsSteps.createACard(queryParametersForRequestSpec);
 
         Response response = listsSteps.moveAllCardsFromOneListToAnother(newCreatedListId, boardId, toDoListId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        //можно добавить ассерт из теста "Get Cards in a List"
     }
 
     @Test(priority = 3)

@@ -3,16 +3,13 @@ package api.steps;
 import api.base.PathParameters;
 import api.utils.ApiClient;
 import api.utils.Specification;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 
 import java.util.List;
-
-import static io.restassured.RestAssured.given;
+import java.util.Map;
 
 public abstract class BaseService {
 
@@ -21,7 +18,6 @@ public abstract class BaseService {
     protected ApiClient apiClient = ApiClient.getInstance();
 
     {
-//        requestSpecification = RestAssured.given().spec(specification.installRequest());
         initRequestSpecification();
     }
 
@@ -48,11 +44,26 @@ public abstract class BaseService {
         return (String) arrayList.get(0);
     }
 
+    public String getTheFirestActionOnABoard(String boardId) {
+        Response response = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
+
+        List list = response.jsonPath().getList("id");
+        return list.get(0).toString();
+    }
+
     protected void initRequestSpecification(){
         requestSpecification = RestAssured.given().spec(specification.installRequest());
 
     }
 
+    @Step("Create a card for list with id = {listId}")
+    public Response createACard(Map queryParamMap) {
+        requestSpecification.queryParams(queryParamMap);
+        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
+
+        initRequestSpecification();
+        return response;
+    }
 
 
 }

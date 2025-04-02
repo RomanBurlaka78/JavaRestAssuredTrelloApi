@@ -51,15 +51,6 @@ public class ListsSteps extends BaseService{
         return response;
     }
 
-    @Step("Create a card for list with id = {listId}")
-    public void createACard(String listId) {
-        requestSpecification.queryParam("idList", listId);
-        requestSpecification.queryParam("name", "nameForCard");
-
-        apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
-        initRequestSpecification();
-    }
-
     @Step("Archive all existed cards on a list with id = {listId}")
     public Response archiveAllCardOnTheList(String listId) {
 

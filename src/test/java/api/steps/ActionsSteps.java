@@ -1,34 +1,33 @@
 package api.steps;
 
 import api.base.PathParameters;
-import api.utils.ApiClient;
-import api.utils.Specification;
-import io.restassured.RestAssured;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
-public class ActionsSteps {
+public class ActionsSteps extends BaseService{
 
-    private final Specification specification = new Specification();
-    private RequestSpecification requestSpecification;
-    private final ApiClient apiClient = ApiClient.getInstance();
-    private final String archiveEndPoint = "/archiveAllCards";
+    private String textEndPoint ="/text";
+    private String commentsEnpoint = "comments";
 
-    {
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+    @Step("Get an action with id = {actiontId} from a board")
+    public Response getAnAction(String actiontId) {
+        Response response = apiClient.get(PathParameters.ACTIONS_BASE_PATH + actiontId, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
-    public String createABord(String boardName){
-
-        requestSpecification.queryParam("name", boardName);
-
-        Response response = apiClient.post(PathParameters.BOARD_BASE_PATH, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
-        return response.jsonPath().getString("id");
+    @Step("Add a comment {'commentForAnAction'} to a card with id ={cardId}")
+    public Response addNewComentToCard(String cardId, String commentForAnAction) {
+        requestSpecification.queryParams("text", commentForAnAction);
+        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ACTIONS_BASE_PATH + commentsEnpoint, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
-    public void deleteBoard(String boardId) {
-        apiClient.delete(PathParameters.BOARD_BASE_PATH + boardId, requestSpecification);
-
+    public Response updateACommentOfTheAction(String actiontId, String commentForAnAction) {
+        requestSpecification.queryParam("value", commentForAnAction);
+        Response response = apiClient.put(PathParameters.ACTIONS_BASE_PATH + actiontId + textEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 }
