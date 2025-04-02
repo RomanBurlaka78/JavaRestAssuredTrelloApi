@@ -15,12 +15,12 @@ import java.util.List;
 @Owner("Group JavaForwardToOffer")
 public class ListsApiTest {
 
-    private ListsSteps listsSteps = new ListsSteps();
+    private final ListsSteps listsSteps = new ListsSteps();
     private String bordName = "Board for lists";
     private String boardId;
     private String toDoListId;
     private String newCreatedListId;
-    private String newNameForTheList = "List with Updated name";
+    private final String newNameForTheList = "List with Updated name";
 
     @BeforeClass
     public void setUp(){

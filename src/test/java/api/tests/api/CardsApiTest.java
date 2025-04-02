@@ -15,15 +15,20 @@ public class CardsApiTest extends BaseTest {
     private CardsSteps cardsSteps = new CardsSteps();
     private String cardId;
     private String bordName = "Board for cards";
+    private String boardId;
+    private String listId;
+
+
 
     @BeforeClass
     public void setUp(){
-        cardsSteps.createABord(bordName);
+        boardId = cardsSteps.createABord(bordName);
+        listId = cardsSteps.getTheFirstListsId(boardId);
     }
 
     @AfterClass
     public void tearDown(){
-        cardsSteps.deleteBoard();
+        cardsSteps.deleteBoard(boardId);
     }
 
     @Test(priority = 0)
@@ -31,7 +36,7 @@ public class CardsApiTest extends BaseTest {
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewCard() {
-        Response response = cardsSteps.createCard();
+        Response response = cardsSteps.createCard(listId);
         cardId = response.jsonPath().get("id");
         Assert.assertEquals(response.getStatusCode(), 200);
     }

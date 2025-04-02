@@ -23,9 +23,8 @@ public class BoardApiTest extends BaseTest {
     private String memberId;
     private String boardStarsEnPoint = "/boardStars";
 
-
     @Test(priority = 1, description = "Create Board Validation", groups = "Created_Board_and_List")
-    @Story("Verify created board")
+    @Story("Bord")
     @Description("Get list of user")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() {
@@ -38,17 +37,17 @@ public class BoardApiTest extends BaseTest {
     }
 
     @Test(priority = 111, dependsOnMethods = "testCreateBoard")
-    @Story("Verify delete board")
+    @Story("Bord")
     @Description("Delete board")
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteBoard() {
-        Response response = boardSteps.deleteBoard(boardId);
+        Response response = boardSteps.deleteABoardFromService(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
     @Test(priority = 2, dependsOnMethods = "testCreateBoard")
-    @Story("Verify get board")
+    @Story("Bord")
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)
     public void testGetBoard() {
@@ -60,7 +59,7 @@ public class BoardApiTest extends BaseTest {
     }
 
     @Test(priority = 6, dependsOnMethods = "testCreateBoard")
-    @Story("Verify update board")
+    @Story("Bord")
     @Description("Update board")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateBoard() {
@@ -72,7 +71,7 @@ public class BoardApiTest extends BaseTest {
     }
 
     @Test(priority = 4, dependsOnMethods = "testCreateBoard")
-    @Story("Verify created a lable on a board")
+    @Story("Bord")
     @Description("Create a Label on a Board")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateLabelOnBoard() {
@@ -87,7 +86,7 @@ public class BoardApiTest extends BaseTest {
     }
 
     @Test(priority = 5, dependsOnMethods = "testCreateLabelOnBoard")
-    @Story("Verify get labels on a board")
+    @Story("Bord")
     @Description("Get Labels on a Board")
     @Severity(SeverityLevel.NORMAL)
     public void testGetLabelsOnBoard() {
@@ -97,7 +96,7 @@ public class BoardApiTest extends BaseTest {
     }
 
     @Test(priority = 3, dependsOnMethods = "testCreateBoard", groups = "Created_Board_and_List")
-    @Story("Verify List on a Board")
+    @Story("Bord")
     @Description("Create a List on a Board")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateListOnBoard() {
@@ -250,19 +249,6 @@ public class BoardApiTest extends BaseTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
-
-//                       Нужно знать ID существующего пользователя
-//    @Test(priority = 6, dependsOnMethods = "testCreateBoard", groups = "Created_Board_and_List")
-//    @Story("Bord")
-//    @Description("Add member from board")
-//    @Severity(SeverityLevel.NORMAL)
-//    public void testAddMemberToABoard() {
-//        Response response = boardSteps.addMemberToBoard(boardId, "342627567", "normal");
-//        System.out.println(response.asPrettyString());
-//        memberId = response.jsonPath().getString("id");
-//
-//        Assert.assertEquals(response.getStatusCode(), 200);
-//    }
 
     @Test(priority = 7, groups = "Created_Board_and_List")
     @Story("Bord")

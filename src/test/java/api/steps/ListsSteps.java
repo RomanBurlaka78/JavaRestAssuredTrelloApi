@@ -12,11 +12,8 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class ListsSteps {
+public class ListsSteps extends BaseService{
 
-    private final Specification specification = new Specification();
-    private RequestSpecification requestSpecification;
-    private final ApiClient apiClient = ApiClient.getInstance();
     private final String archiveEndPoint = "/archiveAllCards";
     private final String moveAllCardsEndPoint = "/moveAllCards";
     private final String archiveAListEndPoint = "/closed";
@@ -27,38 +24,13 @@ public class ListsSteps {
     private final String actionsEndPoint = "/actions";
     private final String boardEndPoint = "/board";
 
-    {
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
-    }
-
-    public String createABord(String boardName){
-
-        requestSpecification.queryParam("name", boardName);
-
-        Response response = apiClient.post(PathParameters.BOARD_BASE_PATH, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
-        return response.jsonPath().getString("id");
-    }
-
-    public String getTheFirstListsId(String boardId){
-        Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
-        List arrayList = resp.jsonPath().getList("id");
-        requestSpecification = given(specification.installRequest());
-        return (String) arrayList.get(0);
-    }
-
-    public void deleteBoard(String boardId) {
-        apiClient.delete(PathParameters.BOARD_BASE_PATH + boardId, requestSpecification);
-
-    }
-
     @Step("Create a new List: name = {name}")
     public Response createList(String nameOfTheList, String boardId) {
         requestSpecification.queryParam("name", nameOfTheList);
         requestSpecification.queryParam("idBoard", boardId);
 
         Response response = apiClient.post(PathParameters.LISTS_BASE_PATH, requestSpecification );
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
@@ -67,14 +39,16 @@ public class ListsSteps {
 
         requestSpecification.queryParam("name", newNameForTheList);
         Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + listId, requestSpecification );
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
     @Step("Get the list with id = {listId}")
     public Response getAList(String listId) {
 
-        return apiClient.get(PathParameters.LISTS_BASE_PATH + listId, requestSpecification);
+        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + listId, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Create a card for list with id = {listId}")
@@ -83,12 +57,15 @@ public class ListsSteps {
         requestSpecification.queryParam("name", "nameForCard");
 
         apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
     }
+
     @Step("Archive all existed cards on a list with id = {listId}")
     public Response archiveAllCardOnTheList(String listId) {
 
-        return apiClient.post(PathParameters.LISTS_BASE_PATH + listId + archiveEndPoint, requestSpecification);
+        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH + listId + archiveEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Move all cards from the list with id = {newCreatedListId} to the list with id = {IdOfTheListThatTheCardsShouldBeMovedTo}")
@@ -97,7 +74,7 @@ public class ListsSteps {
         requestSpecification.queryParam("idList",IdOfTheListThatTheCardsShouldBeMovedTo);
 
         Response response = apiClient.post(PathParameters.LISTS_BASE_PATH + newCreatedListId + moveAllCardsEndPoint, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
@@ -106,7 +83,7 @@ public class ListsSteps {
         requestSpecification.queryParam("value", "true");
 
         Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheListToArchive + archiveAListEndPoint, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
@@ -115,14 +92,16 @@ public class ListsSteps {
         requestSpecification.queryParam("value", "false");
 
         Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheListToUnArchive + archiveAListEndPoint, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
     @Step("Get a cards from a list with id {idOfTheList}")
     public Response getCardsOnAList(String idOfTheList) {
 
-        return apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + cardsEndPoint, requestSpecification);
+        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + cardsEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Move list from one board to another board with id {idOfABoardToMoveListTo}")
@@ -130,7 +109,7 @@ public class ListsSteps {
         requestSpecification.queryParam("value", idOfABoardToMoveListTo);
 
         Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheList + idBoardEndPoint, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
@@ -139,18 +118,22 @@ public class ListsSteps {
         requestSpecification.queryParam("value", valueForSubscribedField);
 
         Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfAList + subscribedFieldEndPoint, requestSpecification);
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
     @Step("Get the actions of a list")
     public Response getActionsofAList(String idOfTheList) {
 
-        return apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + actionsEndPoint, requestSpecification);
+        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + actionsEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Get the boar id the list is on")
     public Response getABoardAListIsOn(String idOfTheList) {
-        return apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + boardEndPoint, requestSpecification);
+        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + boardEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 }

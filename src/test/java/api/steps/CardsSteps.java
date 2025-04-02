@@ -13,46 +13,14 @@ import java.util.List;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 
-public class CardsSteps {
-
-    private final ApiClient apiClient = ApiClient.getInstance();
-    private final Specification specification = new Specification();
-    private RequestSpecification requestSpecification;
-    private String temporaryBoardId;
-    private String tepmoraryListId;
-
-    {
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
-    }
-
-    public void createABord(String boardName){
-
-        requestSpecification.queryParam("name", boardName);
-
-        Response response = apiClient.post(PathParameters.BOARD_BASE_PATH, requestSpecification);
-        temporaryBoardId =  response.jsonPath().getString("id");
-        requestSpecification = RestAssured.given().spec(specification.installRequest());
-
-
-        Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + temporaryBoardId+ "/lists", requestSpecification);
-        List arrayList = resp.jsonPath().getList("id");
-        tepmoraryListId = (String) arrayList.get(0);
-        requestSpecification = given(specification.installRequest());
-
-    }
-
-    public void deleteBoard() {
-        apiClient.delete(PathParameters.BOARD_BASE_PATH + temporaryBoardId, requestSpecification);
-
-    }
+public class CardsSteps extends BaseService{
 
     @Step("Create a new Card: id list = {idList}")
-    public Response createCard() {
-
-        requestSpecification.queryParam("idList", tepmoraryListId);
+    public Response createCard(String listId) {
+        requestSpecification.queryParam("idList", listId);
         Response response = apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
 
-        requestSpecification = given(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
@@ -60,6 +28,7 @@ public class CardsSteps {
     public Response getCard(String cardId) {
 
         Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
+        initRequestSpecification();
         return response;
     }
 
@@ -68,14 +37,14 @@ public class CardsSteps {
 
         requestSpecification.queryParam("name", newCardName);
         Response response = apiClient.put(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
-        requestSpecification = given(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 
     @Step("Delete a card: id card = {cardID}")
     public Response deleteCard(String cardID) {
         Response response = apiClient.delete(PathParameters.CARDS_BASE_PATH + cardID, requestSpecification);
-        requestSpecification = given(specification.installRequest());
+        initRequestSpecification();
         return response;
     }
 }
