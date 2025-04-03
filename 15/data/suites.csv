@@ -1,8 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"Get board","333","testGetBoard","Surefire suite","Fri Mar 07 21:49:09 GMT 2025","passed","Fri Mar 07 21:49:10 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testGetBoard"
-"Create a Label on a Board","312","testCreateLabelOnBoard","Surefire suite","Fri Mar 07 21:49:10 GMT 2025","passed","Fri Mar 07 21:49:10 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testCreateLabelOnBoard"
-"Update board","323","testUpdateBoard","Surefire suite","Fri Mar 07 21:49:11 GMT 2025","passed","Fri Mar 07 21:49:11 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testUpdateBoard"
-"Get list of user","2940","Create Board Validation","Surefire suite","Fri Mar 07 21:49:06 GMT 2025","passed","Fri Mar 07 21:49:09 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testCreateBoard"
-"Get Labels on a Board","212","testGetLabelsOnBoard","Surefire suite","Fri Mar 07 21:49:10 GMT 2025","passed","Fri Mar 07 21:49:11 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testGetLabelsOnBoard"
-"Delete board","1342","testDeleteBoard","Surefire suite","Fri Mar 07 21:49:11 GMT 2025","passed","Fri Mar 07 21:49:12 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testDeleteBoard"
-"Create a List on a Board","337","testCreateListOnBoard","Surefire suite","Fri Mar 07 21:49:10 GMT 2025","passed","Fri Mar 07 21:49:10 GMT 2025","api.tests.api.BoardApiTest","Surefire test","api.tests.api.BoardApiTest","testCreateListOnBoard"
