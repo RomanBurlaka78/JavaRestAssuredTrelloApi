@@ -174,4 +174,31 @@ public class BoardSteps extends BaseService{
         return response;
 
     }
+
+    @Step("Get boardStars on a Board: id board = {boardId}")
+    public Response getBoardStarsOnBoard(String boardId) {
+        return apiClient.get(basePath + boardId + "/boardStars");
+    }
+
+    @Step("Get memberships on a Board: id board = {boardId}")
+    public Response getMembershipsOnBoard(String boardId) {
+        return apiClient.get(basePath + boardId + "/memberships");
+    }
+
+    @Step("Add member to Board: boardId = {boardId}, email = {email}, memberType = {memberType}")
+    public Response addMemberToBoard(String boardId, String email, String memberType) {
+        String requestBody = String.format("""
+                {
+                "email": "%s", 
+                "type": "%s"
+                }
+                """, email, memberType);
+        return apiClient.put(basePath + boardId + "/members", requestBody);
+    }
+
+    @Step("Remove member from Board: boardId = {boardId}, memberId = {memberId}")
+    public Response removeMemberFromBoard(String boardId, String memberId) {
+        return ApiClient.getInstance().delete(basePath + boardId + "/members/" + memberId);
+
+    }
 }
