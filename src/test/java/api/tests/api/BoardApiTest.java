@@ -1,7 +1,7 @@
 package api.tests.api;
 
 import api.base.BaseTest;
-import api.base.TestData;
+import api.base.PathParameters;
 import api.steps.BoardSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
