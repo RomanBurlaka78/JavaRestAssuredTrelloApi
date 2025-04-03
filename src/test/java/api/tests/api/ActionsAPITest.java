@@ -4,9 +4,11 @@ import api.steps.ActionsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +26,8 @@ public class ActionsAPITest {
     private String actiontId;
     private String cardId;
     private String actiondIdAfterCreatingACard;
+    private final String[] anActionFields = {"/id", "/idMemberCreator", "/data", "/type",
+                                            "/date", "/limits", "/display", "/memberCreator"};
 
     @BeforeClass
     public void setUp(){
@@ -32,10 +36,10 @@ public class ActionsAPITest {
         actiontId = actionsSteps.getIdOfTheFirestActionOnABoard(boardId);
     }
 
-//    @AfterClass
-//    public void tearDown(){
-//        actionsSteps.deleteBoard(boardId);
-//    }
+    @AfterClass
+    public void tearDown(){
+        actionsSteps.deleteBoard(boardId);
+    }
 
     @Test(priority = 0)
     @Story("Actions")
@@ -49,7 +53,7 @@ public class ActionsAPITest {
 
     @Test(priority = 1)
     @Story("Actions")
-    @Description("Update a comment of the action of ")
+    @Description("Update a comment of the action")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateACommentOfTheAction(){
         String commentForAnAction = "Some comment, that was send from JavaRestAssured project";
@@ -63,9 +67,38 @@ public class ActionsAPITest {
         actiondIdAfterCreatingACard = actionsSteps.addNewComentToACard(cardId, commentForAnAction, commentsEnpoint).jsonPath().getString("id");
 
         Response response = actionsSteps.updateACommentOfTheAction(actiondIdAfterCreatingACard, updatedCommentForAnAction);
+        //Для ассерта надо достать обновлённый комент респонса и сверить с updatedCommentForAnAction
     }
 
     @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get a field 'date' of an action")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetASpecificFieldOnAnAction(){
+
+        LocalDate currentDateTime = LocalDate.now();
+        Response response = actionsSteps.getASpecificFieldOnAnAction(actiondIdAfterCreatingACard, anActionFields[4]);
+
+        String recivedDateOfAnAction = response.jsonPath().getString("_value").substring(0,10);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(recivedDateOfAnAction, currentDateTime.toString());
+    }
+
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get the board which refers to an action")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheBoardForAnAction(){
+
+        Response response = actionsSteps.getTheBoardForAnAction(actiondIdAfterCreatingACard);
+        String boardNameRecivedFromApiCall = response.jsonPath().getString("name");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(boardNameRecivedFromApiCall, bordName);
+    }
+
+    @Test(priority = 3)
     @Story("Actions")
     @Description("Delete an action via id, and make sure it is deleted by trying to get the same action back")
     @Severity(SeverityLevel.NORMAL)

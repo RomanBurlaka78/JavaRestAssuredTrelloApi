@@ -26,7 +26,7 @@ public abstract class BaseService {
 
         requestSpecification.queryParam("name", boardName);
 
-        Response response = apiClient.post(PathParameters.BOARD_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(PathParameters.BOARDS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response.jsonPath().getString("id");
     }
@@ -34,13 +34,13 @@ public abstract class BaseService {
     @Step("Delete a board with id = {boardId}")
     public void deleteBoard(String boardId) {
 
-        apiClient.delete(PathParameters.BOARD_BASE_PATH + boardId, requestSpecification);
+        apiClient.delete(PathParameters.BOARDS_BASE_PATH + boardId, requestSpecification);
     }
 
     @Step("Get id of the first list on a board")
     public String getIdOfTheFirstListOnABoard(String boardId){
 
-        Response resp = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
+        Response resp = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
         initRequestSpecification();
         return (String) arrayList.get(0);
@@ -48,7 +48,7 @@ public abstract class BaseService {
 
     @Step("Get id of the first action on a board with id = {boardId}")
     public String getIdOfTheFirestActionOnABoard(String boardId) {
-        Response response = apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
 
         List list = response.jsonPath().getList("id");
         return list.get(0).toString();

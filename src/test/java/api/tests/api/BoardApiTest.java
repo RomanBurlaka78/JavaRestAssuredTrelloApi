@@ -29,7 +29,6 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() {
         Response response = boardSteps.createBoard(bordName);
-        System.out.println(response.asPrettyString());
         boardId =  response.jsonPath().getString("id");
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());

@@ -2,7 +2,7 @@ package api.base;
 
 public class PathParameters {
 
-    public final static String BOARD_BASE_PATH = "boards/";
+    public final static String BOARDS_BASE_PATH = "boards/";
     public final static String CARDS_BASE_PATH = "/cards/";
     public final static String ACTIONS_BASE_PATH = "/actions/";
     public final static String CUSTOM_FIELDS_BASE_PATH = "/customFields";
