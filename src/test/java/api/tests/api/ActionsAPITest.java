@@ -36,10 +36,10 @@ public class ActionsAPITest {
         actiontId = actionsSteps.getIdOfTheFirestActionOnABoard(boardId);
     }
 
-    @AfterClass
-    public void tearDown(){
-        actionsSteps.deleteBoard(boardId);
-    }
+//    @AfterClass
+//    public void tearDown(){
+//        actionsSteps.deleteBoard(boardId);
+//    }
 
     @Test(priority = 0)
     @Story("Actions")
@@ -87,7 +87,7 @@ public class ActionsAPITest {
 
     @Test(priority = 2)
     @Story("Actions")
-    @Description("Get the board which refers to an action")
+    @Description("Get the board to which an action refers to")
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheBoardForAnAction(){
 
@@ -96,6 +96,19 @@ public class ActionsAPITest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(boardNameRecivedFromApiCall, bordName);
+    }
+
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get the card the action belong to")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheCardForAnAction(){
+
+        Response response = actionsSteps.getTheCardForAnAction(actiondIdAfterCreatingACard);
+        String cardIdRecivedFromApiCall = response.jsonPath().getString("id");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(cardIdRecivedFromApiCall, cardId);
     }
 
     @Test(priority = 3)
