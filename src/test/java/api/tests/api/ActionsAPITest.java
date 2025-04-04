@@ -4,6 +4,7 @@ import api.steps.ActionsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -25,22 +26,26 @@ public class ActionsAPITest {
     private String actiontId;
     private String cardId;
     private String actionIdAfterCreatingACard;
+    private String idMemberCreator;
+
     private final String anActionFieldDateResource = "/date";
     private final String anActionBoardResource ="/board";
     private final String anActionCardResource ="/card";
     private final String anActionListResource ="/list";
+    private final String anActionMemberCreatorResource ="/memberCreator";
 
     @BeforeClass
     public void setUp(){
         boardId = actionsSteps.createABord(bordName);
         toDoListId = actionsSteps.getIdOfTheFirstListOnABoard(boardId);
         actiontId = actionsSteps.getIdOfTheFirestActionOnABoard(boardId);
+        idMemberCreator = actionsSteps.getAnAction(actiontId).jsonPath().getString("idMemberCreator");
     }
 
-//    @AfterClass
-//    public void tearDown(){
-//        actionsSteps.deleteBoard(boardId);
-//    }
+    @AfterClass
+    public void tearDown(){
+        actionsSteps.deleteBoard(boardId);
+    }
 
     @Test(priority = 0)
     @Story("Actions")
@@ -48,6 +53,7 @@ public class ActionsAPITest {
     @Severity(SeverityLevel.NORMAL)
     public void getAnAction(){
         Response response = actionsSteps.getAnAction(actiontId);
+        System.out.println(response.jsonPath().getString("idMemberCreator"));
         System.out.println(response.asPrettyString());
         Assert.assertEquals(response.jsonPath().getString("id"), actiontId);
     }
@@ -123,6 +129,19 @@ public class ActionsAPITest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(listIdRecivedFromApiCall, toDoListId);
+    }
+
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get the member creator the action belong to")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheMemberCreatorOfAnAction(){
+
+        Response response = actionsSteps.getTheResourceOfAnAction(actiontId, anActionMemberCreatorResource);
+        String memberCreatorIdRecivedFromApiCall = response.jsonPath().getString("id");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(memberCreatorIdRecivedFromApiCall, idMemberCreator);
     }
 
     @Test(priority = 3)
