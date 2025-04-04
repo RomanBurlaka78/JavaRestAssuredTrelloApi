@@ -4,7 +4,6 @@ import api.steps.ActionsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -25,9 +24,11 @@ public class ActionsAPITest {
     private String toDoListId;
     private String actiontId;
     private String cardId;
-    private String actiondIdAfterCreatingACard;
-    private final String[] anActionFields = {"/id", "/idMemberCreator", "/data", "/type",
-                                            "/date", "/limits", "/display", "/memberCreator"};
+    private String actionIdAfterCreatingACard;
+    private final String anActionFieldDateResource = "/date";
+    private final String anActionBoardResource ="/board";
+    private final String anActionCardResource ="/card";
+    private final String anActionListResource ="/list";
 
     @BeforeClass
     public void setUp(){
@@ -64,9 +65,9 @@ public class ActionsAPITest {
 
         cardId = actionsSteps.createACard(queryParametersForRequestSpec).jsonPath().getString("id");
 
-        actiondIdAfterCreatingACard = actionsSteps.addNewComentToACard(cardId, commentForAnAction, commentsEnpoint).jsonPath().getString("id");
+        actionIdAfterCreatingACard = actionsSteps.addNewComentToACard(cardId, commentForAnAction, commentsEnpoint).jsonPath().getString("id");
 
-        Response response = actionsSteps.updateACommentOfTheAction(actiondIdAfterCreatingACard, updatedCommentForAnAction);
+        Response response = actionsSteps.updateACommentOfTheAction(actionIdAfterCreatingACard, updatedCommentForAnAction);
         //Для ассерта надо достать обновлённый комент респонса и сверить с updatedCommentForAnAction
     }
 
@@ -77,7 +78,7 @@ public class ActionsAPITest {
     public void testGetASpecificFieldOnAnAction(){
 
         LocalDate currentDateTime = LocalDate.now();
-        Response response = actionsSteps.getASpecificFieldOnAnAction(actiondIdAfterCreatingACard, anActionFields[4]);
+        Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, anActionFieldDateResource);
 
         String recivedDateOfAnAction = response.jsonPath().getString("_value").substring(0,10);
 
@@ -91,7 +92,7 @@ public class ActionsAPITest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheBoardForAnAction(){
 
-        Response response = actionsSteps.getTheBoardForAnAction(actiondIdAfterCreatingACard);
+        Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, anActionBoardResource);
         String boardNameRecivedFromApiCall = response.jsonPath().getString("name");
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -104,11 +105,24 @@ public class ActionsAPITest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheCardForAnAction(){
 
-        Response response = actionsSteps.getTheCardForAnAction(actiondIdAfterCreatingACard);
+        Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, anActionCardResource);
         String cardIdRecivedFromApiCall = response.jsonPath().getString("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(cardIdRecivedFromApiCall, cardId);
+    }
+
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get the list the action belong to")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheListForAnAction(){
+
+        Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, anActionListResource);
+        String listIdRecivedFromApiCall = response.jsonPath().getString("id");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(listIdRecivedFromApiCall, toDoListId);
     }
 
     @Test(priority = 3)
@@ -117,10 +131,10 @@ public class ActionsAPITest {
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteAnAction(){
         String responseMessageForDeletedAction = "The requested resource was not found.";
-        Response response = actionsSteps.deleteAnAction(actiondIdAfterCreatingACard);
+        Response response = actionsSteps.deleteAnAction(actionIdAfterCreatingACard);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(actionsSteps.getAnAction(actiondIdAfterCreatingACard).asPrettyString(), responseMessageForDeletedAction);
+        Assert.assertEquals(actionsSteps.getAnAction(actionIdAfterCreatingACard).asPrettyString(), responseMessageForDeletedAction);
 
     }
 }
