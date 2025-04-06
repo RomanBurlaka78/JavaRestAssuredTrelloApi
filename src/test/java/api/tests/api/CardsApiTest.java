@@ -1,67 +1,81 @@
 package api.tests.api;
 
 import api.base.BaseTest;
-import api.base.BaseUiTest;
-import api.base.TestData;
-import api.controllers.CardsSteps;
-import api.controllers.ui.UiCardSteps;
+import api.steps.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Epic("API Tests")
 @Feature("Cards Validation")
 @Owner("Group JavaForwardToOffer")
 public class CardsApiTest extends BaseTest {
 
-    CardsSteps cardsSteps = new CardsSteps();
-    UiCardSteps uiCardSteps = new UiCardSteps();
+    private CardsSteps cardsSteps = new CardsSteps();
+    private String cardId;
+    private String bordName = "Board for cards";
+    private String boardId;
+    private String listId;
 
-    @Test(priority = 51, dependsOnGroups = "Created_Board_and_List")
+
+
+    @BeforeClass
+    public void setUp(){
+        boardId = cardsSteps.createABord(bordName);
+        listId = cardsSteps.getIdOfTheFirstListOnABoard(boardId);
+    }
+
+    @AfterClass
+    public void tearDown(){
+        cardsSteps.deleteBoard(boardId);
+    }
+
+    @Test(priority = 0)
     @Story("Verify cards")
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewCard() {
-        Response response = cardsSteps.createCard(TestData.idList);
-        TestData.cardId = response.path("id");
+        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList",listId);
 
+        Response response = cardsSteps.createACard(queryParametersForRequestSpec);
+        cardId = response.jsonPath().get("id");
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 52, dependsOnMethods = "testCreateNewCard")
+    @Test(priority = 1)
     @Story("Verify cards")
     @Description("Get a card")
     @Severity(SeverityLevel.NORMAL)
     public void testGetCard() {
-        Response response = cardsSteps.getCard(TestData.cardId);
+        Response response = cardsSteps.getCard(cardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-
-
     }
 
-    @Test(priority = 53, dependsOnMethods = "testCreateNewCard")
+    @Test(priority = 1)
     @Story("Verify cards")
     @Description("Update a card")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateCard() {
-        String nameCard = "NewCardName";
-        Response response = cardsSteps.updateCard(TestData.cardId, nameCard);
+        String newCardName = "NewCardName";
+        Response response = cardsSteps.updateCard(cardId, newCardName);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.path("name"), nameCard);
+        Assert.assertEquals(response.path("name"), newCardName);
     }
 
-
-    @Test(priority = 54, dependsOnMethods = "testCreateNewCard")
+    @Test(priority = 6)
     @Story("Verify cards")
     @Description("Delete a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testDeleteCard() {
-        Response response = cardsSteps.deleteCard(TestData.cardId);
+        Response response = cardsSteps.deleteCard(cardId);
 
-        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(),200);
     }
 }

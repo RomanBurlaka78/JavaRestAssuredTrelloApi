@@ -1,38 +1,41 @@
 package api.controllers;
 
-import api.base.TestData;
+import api.base.PathParameters;
 import api.utils.ApiClient;
+import api.utils.Specification;
 import io.qameta.allure.Step;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
-public class CardsSteps {
+import java.util.List;
 
-    private ApiClient apiClient = ApiClient.getInstance();
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 
-    @Step("Create a new Card: id list = {idList}")
-    public Response createCard(String idList) {
-
-        return apiClient.post("cards/?idList=" + idList, "");
-    }
+public class CardsSteps extends BaseService{
 
     @Step("Get a card: id card = {cardId}")
     public Response getCard(String cardId) {
 
-        return apiClient.get("cards/" + cardId);
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Update a card: id card = {cardID}, name = {name}")
-    public Response updateCard(String cardID, String name) {
+    public Response updateCard(String cardId, String newCardName) {
 
-        String body = String.format("""
-                {"name" : "%s"}
-                """, name);
-
-        return apiClient.put("cards/" + TestData.cardId, body);
+        requestSpecification.queryParam("name", newCardName);
+        Response response = apiClient.put(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Delete a card: id card = {cardID}")
     public Response deleteCard(String cardID) {
-        return apiClient.delete("cards/" + TestData.cardId);
+        Response response = apiClient.delete(PathParameters.CARDS_BASE_PATH + cardID, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 }
