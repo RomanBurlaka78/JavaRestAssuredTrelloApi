@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static api.base.TestData.*;
 
-@Epic("API Tests")
+@Epic("UI Tests")
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
 public class BoardsUiTest extends BaseUiTest {
@@ -22,8 +22,8 @@ public class BoardsUiTest extends BaseUiTest {
 
 
     @Test(priority = 112, description = "Create Board Validation", groups = "Created_Board_and_List")
-    @Story("Verify created board")
-    @Description("Get list of user")
+    @Story("Board")
+    @Description("Create Board")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() throws IOException {
         Response response = boardSteps.createBoard(bordName);
@@ -32,8 +32,18 @@ public class BoardsUiTest extends BaseUiTest {
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
         Assert.assertEquals(response.getStatusCode(), 200);
         uiBoardSteps.verifyLoginInUI();
-
     }
 
+
+    @Test(priority = 113, dependsOnMethods = "testCreateBoard")
+    @Story("Bord")
+    @Description("Delete board")
+    @Severity(SeverityLevel.NORMAL)
+    public void testDeleteBoard() {
+        Response response = boardSteps.deleteABoardFromService(boardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        uiBoardSteps.closeBrowserAndDriver();
+    }
 
 }
