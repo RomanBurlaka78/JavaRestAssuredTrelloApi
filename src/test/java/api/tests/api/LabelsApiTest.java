@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.steps.LabelsSteps;
+import api.controllers.LabelsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;

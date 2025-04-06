@@ -1,10 +1,10 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
-public class ActionsSteps extends BaseService{
+public class ActionsSteps extends BaseService {
 
     private String textEndPoint ="/text";
 

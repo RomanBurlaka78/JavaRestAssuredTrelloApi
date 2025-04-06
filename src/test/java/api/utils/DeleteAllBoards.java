@@ -1,15 +1,15 @@
 package api.utils;
 
 import api.base.PathParameters;
-import api.steps.BaseService;
+import api.controllers.BaseService;
 import io.restassured.response.Response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//this class deletes all the board on a workspace.
+///this class deletes all the board on a workspace.
 // If you commented out deleteBoard() method in any of the steps for debug purpose, and found a lot of boards created
-// than you don`t need delete all the boards manually, just run main() method.
+// than you don`t need delete all the boards manually, just run main() method.///
 public class DeleteAllBoards extends BaseService {
 
     public List getAllTheBoardsId(List list){
