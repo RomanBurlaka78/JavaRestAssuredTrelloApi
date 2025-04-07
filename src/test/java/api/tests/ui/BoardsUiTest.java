@@ -21,7 +21,7 @@ public class BoardsUiTest extends BaseUiTest {
     private UiBoardSteps uiBoardSteps = new UiBoardSteps();
 
 
-    @Test(priority = 112, description = "Create Board Validation", groups = "Created_Board_and_List")
+    @Test(priority = 112)
     @Story("Board")
     @Description("Create Board")
     @Severity(SeverityLevel.CRITICAL)
@@ -35,7 +35,7 @@ public class BoardsUiTest extends BaseUiTest {
     }
 
 
-    @Test(priority = 300, dependsOnMethods = "testCreateBoard")
+    @Test(priority = 300)
     @Story("Bord")
     @Description("Delete board")
     @Severity(SeverityLevel.CRITICAL)
@@ -46,8 +46,8 @@ public class BoardsUiTest extends BaseUiTest {
         uiBoardSteps.closeBrowserAndDriver();
     }
 
-    @Test(priority = 113, dependsOnMethods = "testCreateBoard")
-    @Story("Verify get board")
+    @Test(priority = 113)
+    @Story("Board")
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)
     public void testGetBoard() {
