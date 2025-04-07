@@ -36,7 +36,7 @@ public class LabelsSteps {
         requestSpecification.queryParam("color", color);
         requestSpecification.queryParam("idBoard", boardId);
 
-        Response response = apiClient.post(PathParameters.LABLES_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(PathParameters.LABELS_BASE_PATH, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
 
         return response;
@@ -44,7 +44,7 @@ public class LabelsSteps {
 
     @Step("Get a Label: id label = {labelId}")
     public Response getLabel(String labelId) {
-        return apiClient.get(PathParameters.LABLES_BASE_PATH + "/" + labelId, requestSpecification);
+        return apiClient.get(PathParameters.LABELS_BASE_PATH + "/" + labelId, requestSpecification);
     }
 
     @Step("Update Label: label id = {labelId}, new name = {newName}, new color = {newColor}")
@@ -52,7 +52,7 @@ public class LabelsSteps {
         requestSpecification.queryParam("name", newName);
         requestSpecification.queryParam("color", newColor);
 
-        Response response = apiClient.put(PathParameters.LABLES_BASE_PATH + "/" + labelId, requestSpecification);
+        Response response = apiClient.put(PathParameters.LABELS_BASE_PATH + "/" + labelId, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
 
         return response;
@@ -62,7 +62,7 @@ public class LabelsSteps {
     public Response updateFieldLabel(String labelId, String field, String value) {
         requestSpecification.queryParam("value", value);
 
-        Response response = apiClient.put(PathParameters.LABLES_BASE_PATH + "/" + labelId + "/" + field, requestSpecification);
+        Response response = apiClient.put(PathParameters.LABELS_BASE_PATH + "/" + labelId + "/" + field, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
 
         return response;
@@ -71,6 +71,6 @@ public class LabelsSteps {
     @Step("Delete Label: label id = {labelId}")
     public Response deleteLabel(String labelId) {
 
-        return apiClient.delete(PathParameters.LABLES_BASE_PATH + "/" + labelId, requestSpecification);
+        return apiClient.delete(PathParameters.LABELS_BASE_PATH + "/" + labelId, requestSpecification);
     }
 }

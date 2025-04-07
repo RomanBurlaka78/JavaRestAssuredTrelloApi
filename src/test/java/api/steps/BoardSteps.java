@@ -53,14 +53,14 @@ public class BoardSteps {
     public Response createLabelOnBoard(String boardId, String nameOfLabel, String color) {
         requestSpecification.queryParam("name", nameOfLabel);
         requestSpecification.queryParam("color", color);
-        Response respone = apiClient.post(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LABLES_BASE_PATH, requestSpecification);
+        Response respone = apiClient.post(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LABELS_BASE_PATH, requestSpecification);
         requestSpecification = RestAssured.given().spec(specification.installRequest());
         return respone;
     }
 
     @Step("Get Labels on a Board: id board = {boardId}")
     public Response getLabelOnBoard(String boardId) {
-        return apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LABLES_BASE_PATH, requestSpecification);
+        return apiClient.get(PathParameters.BOARD_BASE_PATH + boardId + PathParameters.LABELS_BASE_PATH, requestSpecification);
     }
 
     @Step("Create a List on a Board: id board = {boardId}, list name = {nameForList}")

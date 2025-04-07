@@ -9,6 +9,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import java.util.List;
+import java.util.Objects;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
@@ -78,4 +79,24 @@ public class CardsSteps {
         requestSpecification = given(specification.installRequest());
         return response;
     }
+
+    @Step("Get custom fields on card: {cardId}, field = {field}")
+    public Response getFieldCard(String cardId) {
+       Objects.requireNonNull(cardId, "ID карточки не может быть null");
+        return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.CUSTOM_FIELDS_BASE_PATH, requestSpecification);
+    }
+
+    @Step("Get actions on card: {cardId}, actions = {actions}")
+    public Response getActionsCard(String cardId, String actions) {
+        return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
+    }
+
+    @Step("Get actions on card: {cardId}, attachments = {attachments}")
+    public Response getAttachmentsCard(String cardId) {
+            return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
+    }
+
 }
+
+
+
