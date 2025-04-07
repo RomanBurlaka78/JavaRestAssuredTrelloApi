@@ -45,14 +45,14 @@ public class BoardSteps extends BaseService{
     public Response createLabelOnBoard(String boardId, String nameOfLabel, String color) {
         requestSpecification.queryParam("name", nameOfLabel);
         requestSpecification.queryParam("color", color);
-        Response respone = apiClient.post(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.LABLES_BASE_PATH, requestSpecification);
+        Response respone = apiClient.post(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.LABELS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return respone;
     }
 
     @Step("Get Labels on a Board: id board = {boardId}")
     public Response getLabelOnBoard(String boardId) {
-        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.LABLES_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.LABELS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }

@@ -1,13 +1,17 @@
 package api.tests.api;
 
 import api.base.BaseTest;
-import api.controllers.CardsSteps;
+import api.base.PathParameters;
+import api.steps.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import java.util.List;
 import java.util.Map;
 
 @Epic("API Tests")
@@ -77,5 +81,43 @@ public class CardsApiTest extends BaseTest {
         Response response = cardsSteps.deleteCard(cardId);
 
         Assert.assertEquals(response.getStatusCode(),200);
+    }
+
+    @Test(priority = 3)
+    @Story("Verify field on a cards")
+    @Description("Get a field on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetFieldCard() {
+        Response response = cardsSteps.getFieldCard(cardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+
+    }
+
+    @Test(priority = 5)
+    @Story("Verify actions on a cards")
+    @Description("Get a actions on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetActionsCard() {
+        Response response = cardsSteps.getActionsCard(cardId, PathParameters.ACTIONS_BASE_PATH);
+        List arrayList = response.jsonPath().getList("id");
+
+        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(arrayList.size(), 0);
+    }
+
+    @Test(priority = 5)
+    @Story("Verify attachments on a cards")
+    @Description("Get a attachments on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetAttachmentsCard() {
+        Response response = cardsSteps.getAttachmentsCard(cardId);
+        List<Map<String, Object>> attachments = response.jsonPath().getList("");
+        if (!attachments.isEmpty()) {
+            String firstAttachmentId = (String) attachments.get(0).get("id");
+        }
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+
     }
 }
