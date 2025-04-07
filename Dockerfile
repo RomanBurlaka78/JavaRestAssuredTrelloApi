@@ -8,4 +8,4 @@ COPY . .
 
 
 # Выполняем тесты
-CMD ["mvn", "test", "-Denv=prod"]
+CMD ["mvn", "test"]
