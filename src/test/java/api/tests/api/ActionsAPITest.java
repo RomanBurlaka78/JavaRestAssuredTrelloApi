@@ -27,12 +27,14 @@ public class ActionsAPITest {
     private String cardId;
     private String actionIdAfterCreatingACard;
     private String idMemberCreator;
+    private String idOrganizationThatBelongToAnAction;
 
     private final String anActionFieldDateResource = "/date";
     private final String anActionBoardResource ="/board";
     private final String anActionCardResource ="/card";
     private final String anActionListResource ="/list";
     private final String anActionMemberCreatorResource ="/memberCreator";
+    private final String anActionOrganizationResource ="/organization";
 
     @BeforeClass
     public void setUp(){
@@ -40,6 +42,7 @@ public class ActionsAPITest {
         toDoListId = actionsSteps.getIdOfTheFirstListOnABoard(boardId);
         actiontId = actionsSteps.getIdOfTheFirestActionOnABoard(boardId);
         idMemberCreator = actionsSteps.getAnAction(actiontId).jsonPath().getString("idMemberCreator");
+        idOrganizationThatBelongToAnAction = actionsSteps.getAnAction(actiontId).jsonPath().getString("data.organization.id");
     }
 
     @AfterClass
@@ -142,6 +145,19 @@ public class ActionsAPITest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(memberCreatorIdRecivedFromApiCall, idMemberCreator);
+    }
+
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get the organization that belong to action ")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheOrganizationOfAnAction(){
+
+        Response response = actionsSteps.getTheResourceOfAnAction(actiontId,anActionOrganizationResource );
+
+        String idOfOrganizationRecivedFromApiCall = response.jsonPath().getString("id");
+
+        Assert.assertEquals(idOfOrganizationRecivedFromApiCall, idOrganizationThatBelongToAnAction);
     }
 
     @Test(priority = 3)
