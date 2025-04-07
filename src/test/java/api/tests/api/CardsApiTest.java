@@ -2,7 +2,7 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
-import api.steps.CardsSteps;
+import api.controllers.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
