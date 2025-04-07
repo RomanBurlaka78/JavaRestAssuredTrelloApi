@@ -35,15 +35,29 @@ public class BoardsUiTest extends BaseUiTest {
     }
 
 
-    @Test(priority = 113, dependsOnMethods = "testCreateBoard")
+    @Test(priority = 300, dependsOnMethods = "testCreateBoard")
     @Story("Bord")
     @Description("Delete board")
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     public void testDeleteBoard() {
         Response response = boardSteps.deleteABoardFromService(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         uiBoardSteps.closeBrowserAndDriver();
+    }
+
+    @Test(priority = 113, dependsOnMethods = "testCreateBoard")
+    @Story("Verify get board")
+    @Description("Get board")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetBoard() {
+        Response response = boardSteps.getBoard(TestData.boardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.body().jsonPath().get("id").toString(), TestData.boardId);
+        Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Api Board");
+
+        uiBoardSteps.getBoardNameUI();
     }
 
 }
