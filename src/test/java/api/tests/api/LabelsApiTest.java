@@ -21,7 +21,7 @@ public class LabelsApiTest {
 
     @BeforeClass
     public void setUp(){
-        boardId = labelsSteps.createBoard(boardName);
+        boardId = labelsSteps.createABord(boardName);
     }
 
     @AfterClass

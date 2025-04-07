@@ -14,9 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <allure.version>2.25.0</allure.version>
         <aspectj.version>1.9.20.1</aspectj.version>
-
-
         <webdrivermanager.version>5.5.3</webdrivermanager.version>
+        <suite>testng</suite>
     </properties>
 
     <dependencies>
@@ -57,7 +56,6 @@
             <artifactId>json</artifactId>
             <version>20231013</version>
         </dependency>
-
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
@@ -81,13 +79,11 @@
             <version>2.25.0</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj.version}</version>
         </dependency>
-
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -109,6 +105,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/${suite}.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>

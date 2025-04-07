@@ -8,6 +8,9 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import java.util.List;
 import java.util.Map;
 
@@ -18,17 +21,21 @@ public class CardsApiTest extends BaseTest {
 
     private CardsSteps cardsSteps = new CardsSteps();
     private String cardId;
-    private String listId;
     private String bordName = "Board for cards";
+    private String boardId;
+    private String listId;
+
+
 
     @BeforeClass
     public void setUp(){
-        cardsSteps.createABord(bordName);
+        boardId = cardsSteps.createABord(bordName);
+        listId = cardsSteps.getIdOfTheFirstListOnABoard(boardId);
     }
 
     @AfterClass
     public void tearDown(){
-        cardsSteps.deleteBoard();
+        cardsSteps.deleteBoard(boardId);
     }
 
     @Test(priority = 0)
@@ -36,7 +43,10 @@ public class CardsApiTest extends BaseTest {
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewCard() {
-        Response response = cardsSteps.createCard();
+        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList",listId);
+
+        Response response = cardsSteps.createACard(queryParametersForRequestSpec);
         cardId = response.jsonPath().get("id");
         Assert.assertEquals(response.getStatusCode(), 200);
     }

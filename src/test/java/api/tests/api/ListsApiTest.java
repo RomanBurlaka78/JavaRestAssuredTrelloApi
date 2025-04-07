@@ -8,24 +8,26 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Epic("API Tests")
 @Feature("Lists Validation")
 @Owner("Group JavaForwardToOffer")
 public class ListsApiTest {
 
-    private ListsSteps listsSteps = new ListsSteps();
+    private final ListsSteps listsSteps = new ListsSteps();
     private String bordName = "Board for lists";
     private String boardId;
     private String toDoListId;
     private String newCreatedListId;
-    private String newNameForTheList = "List with Updated name";
+    private final String newNameForTheList = "List with Updated name";
 
     @BeforeClass
     public void setUp(){
         boardId = listsSteps.createABord(bordName);
-        toDoListId = listsSteps.getTheFirstListsId(boardId);
+        toDoListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
     }
 
     @AfterClass
@@ -41,7 +43,7 @@ public class ListsApiTest {
 
         String nameOfTheList = "List from API";
         Response response = listsSteps.createList(nameOfTheList, boardId);
-        newCreatedListId = listsSteps.getTheFirstListsId(boardId);
+        newCreatedListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.path("name"), nameOfTheList);
@@ -77,7 +79,11 @@ public class ListsApiTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testArchiveAllCardsOnTheList() {
 
-        listsSteps.createACard(toDoListId);
+        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList", toDoListId);
+        queryParametersForRequestSpec.put("name", "nameForCard");
+
+        listsSteps.createACard(queryParametersForRequestSpec);
 
         Response response = listsSteps.archiveAllCardOnTheList(toDoListId);
 
@@ -90,14 +96,16 @@ public class ListsApiTest {
     @Description("Move all cards from one list to another")
     @Severity(SeverityLevel.CRITICAL)
     public void testMoveAllCardsFromOneListToAnother() {
+        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList", newCreatedListId);
+        queryParametersForRequestSpec.put("name", "nameForCard");
 
-        listsSteps.createACard(newCreatedListId);
-        listsSteps.createACard(newCreatedListId);
+        listsSteps.createACard(queryParametersForRequestSpec);
+        listsSteps.createACard(queryParametersForRequestSpec);
 
         Response response = listsSteps.moveAllCardsFromOneListToAnother(newCreatedListId, boardId, toDoListId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        //можно добавить ассерт из теста "Get Cards in a List"
     }
 
     @Test(priority = 3)
