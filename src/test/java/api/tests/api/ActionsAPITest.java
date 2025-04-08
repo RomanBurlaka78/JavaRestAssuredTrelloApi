@@ -160,6 +160,19 @@ public class ActionsAPITest {
         Assert.assertEquals(idOfOrganizationRecivedFromApiCall, idOrganizationThatBelongToAnAction);
     }
 
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get the organization that belong to action ")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetActions_Reactions(){
+
+        Response response = actionsSteps.getTheResourceOfAnAction(actiontId,anActionReactionsResource );
+
+        System.out.println(response.body().toString());
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.body().asString(), "[]");
+    }
+
     @Test(priority = 3)
     @Story("Actions")
     @Description("Delete an action via id, and make sure it is deleted by trying to get the same action back")
