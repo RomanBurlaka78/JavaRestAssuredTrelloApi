@@ -35,6 +35,8 @@ public class ActionsAPITest {
     private final String anActionListResource ="/list";
     private final String anActionMemberCreatorResource ="/memberCreator";
     private final String anActionOrganizationResource ="/organization";
+    private final String anActionReactionsResource ="/reactions";
+
 
     @BeforeClass
     public void setUp(){
@@ -158,6 +160,19 @@ public class ActionsAPITest {
         String idOfOrganizationRecivedFromApiCall = response.jsonPath().getString("id");
 
         Assert.assertEquals(idOfOrganizationRecivedFromApiCall, idOrganizationThatBelongToAnAction);
+    }
+
+    @Test(priority = 2)
+    @Story("Actions")
+    @Description("Get the organization that belong to action ")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetActions_Reactions(){
+
+        Response response = actionsSteps.getTheResourceOfAnAction(actiontId,anActionReactionsResource );
+
+        System.out.println(response.body().toString());
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.body().asString(), "[]");
     }
 
     @Test(priority = 3)
