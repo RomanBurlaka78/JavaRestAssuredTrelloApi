@@ -38,4 +38,10 @@ public class ActionsSteps extends BaseService{
     }
 
 
+    public Response createReactionForSpecificAction(String actiontId, String reactionsEndPoint) {
+        requestSpecification.queryParams("shortName", "grinning");
+        Response response = apiClient.post(PathParameters.ACTIONS_BASE_PATH + actiontId + reactionsEndPoint, requestSpecification );
+        initRequestSpecification();
+        return response;
+    }
 }

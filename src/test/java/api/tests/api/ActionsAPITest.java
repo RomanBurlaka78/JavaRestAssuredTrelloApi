@@ -164,7 +164,7 @@ public class ActionsAPITest {
 
     @Test(priority = 2)
     @Story("Actions")
-    @Description("Get the organization that belong to action ")
+    @Description("Get the reactions related to the specific action ")
     @Severity(SeverityLevel.NORMAL)
     public void testGetActions_Reactions(){
 
@@ -176,6 +176,19 @@ public class ActionsAPITest {
     }
 
     @Test(priority = 3)
+    @Story("Actions")
+    @Description("Create reaction for specific action ")
+    @Severity(SeverityLevel.NORMAL)
+    public void testCreateReactionForAction(){
+
+        String expectedEmojiName = "GRINNING FACE";
+        Response response = actionsSteps.createReactionForSpecificAction(actionIdAfterCreatingACard, anActionReactionsResource);
+        String actualEmojiName = response.jsonPath().getString("emoji.name");
+
+        Assert.assertEquals(actualEmojiName, expectedEmojiName);
+    }
+
+    @Test(priority = 4)
     @Story("Actions")
     @Description("Delete an action via id, and make sure it is deleted by trying to get the same action back")
     @Severity(SeverityLevel.NORMAL)

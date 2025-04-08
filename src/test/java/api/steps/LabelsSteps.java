@@ -16,14 +16,14 @@ public class LabelsSteps extends BaseService{
         requestSpecification.queryParam("color", color);
         requestSpecification.queryParam("idBoard", boardId);
 
-        Response response = apiClient.post(PathParameters.LABLES_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(PathParameters.LABELS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }
 
     @Step("Get a Label: id label = {labelId}")
     public Response getLabel(String labelId) {
-        Response response = apiClient.get(PathParameters.LABLES_BASE_PATH + "/" + labelId, requestSpecification);
+        Response response = apiClient.get(PathParameters.LABELS_BASE_PATH + "/" + labelId, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -33,7 +33,7 @@ public class LabelsSteps extends BaseService{
         requestSpecification.queryParam("name", newName);
         requestSpecification.queryParam("color", newColor);
 
-        Response response = apiClient.put(PathParameters.LABLES_BASE_PATH + "/" + labelId, requestSpecification);
+        Response response = apiClient.put(PathParameters.LABELS_BASE_PATH + "/" + labelId, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -42,7 +42,7 @@ public class LabelsSteps extends BaseService{
     public Response updateFieldLabel(String labelId, String field, String value) {
         requestSpecification.queryParam("value", value);
 
-        Response response = apiClient.put(PathParameters.LABLES_BASE_PATH + "/" + labelId + "/" + field, requestSpecification);
+        Response response = apiClient.put(PathParameters.LABELS_BASE_PATH + "/" + labelId + "/" + field, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -50,7 +50,7 @@ public class LabelsSteps extends BaseService{
     @Step("Delete Label: label id = {labelId}")
     public Response deleteLabel(String labelId) {
 
-        Response response = apiClient.delete(PathParameters.LABLES_BASE_PATH + "/" + labelId, requestSpecification);
+        Response response = apiClient.delete(PathParameters.LABELS_BASE_PATH + "/" + labelId, requestSpecification);
         initRequestSpecification();
         return response;
     }
