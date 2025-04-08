@@ -35,6 +35,8 @@ public class ActionsAPITest {
     private final String anActionListResource ="/list";
     private final String anActionMemberCreatorResource ="/memberCreator";
     private final String anActionOrganizationResource ="/organization";
+    private final String anActionReactionsResource ="/reactions";
+
 
     @BeforeClass
     public void setUp(){
