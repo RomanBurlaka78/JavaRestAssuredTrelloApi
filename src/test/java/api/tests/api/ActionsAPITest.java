@@ -182,7 +182,7 @@ public class ActionsAPITest {
     public void testCreateReactionForAction(){
 
         String expectedEmojiName = "GRINNING FACE";
-        Response response = actionsSteps.createReactionForSpecificAction(actionIdAfterCreatingACard, anActionReactionsResource);
+        Response response = actionsSteps.createReactionForAction(actionIdAfterCreatingACard, anActionReactionsResource);
         String actualEmojiName = response.jsonPath().getString("emoji.name");
 
         Assert.assertEquals(actualEmojiName, expectedEmojiName);
