@@ -4,6 +4,7 @@ import api.base.BaseUiTest;
 import api.controllers.BoardSteps;
 import api.controllers.ui.UiBoardSteps;
 import io.qameta.allure.*;
+import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,6 +16,7 @@ import static api.base.TestData.*;
 @Epic("UI Tests")
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
+@Tag("api")
 public class BoardsUiTest extends BaseUiTest {
 
     private BoardSteps boardSteps = new BoardSteps();
@@ -25,6 +27,7 @@ public class BoardsUiTest extends BaseUiTest {
     @Story("Board")
     @Description("Create Board")
     @Severity(SeverityLevel.CRITICAL)
+    @Tag("api")
     public void testCreateBoard() throws IOException {
         Response response = boardSteps.createBoard(bordName);
         boardId = response.path("id").toString();

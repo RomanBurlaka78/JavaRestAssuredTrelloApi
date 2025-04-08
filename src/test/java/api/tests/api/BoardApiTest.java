@@ -4,6 +4,7 @@ import api.base.BaseTest;
 import api.base.PathParameters;
 import api.controllers.BoardSteps;
 import io.qameta.allure.*;
+import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.Assert;
@@ -14,6 +15,7 @@ import java.util.*;
 @Epic("API Tests")
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
+@Tag("api")
 public class BoardApiTest extends BaseTest {
 
     private BoardSteps boardSteps = new BoardSteps();
