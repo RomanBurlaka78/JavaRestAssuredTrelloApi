@@ -24,11 +24,6 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
 
-      - name: Set up Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-
       - name: Create config.properties
         run: |
           echo "key=${{ secrets.key }}" > src/test/resources/config.properties
@@ -36,11 +31,13 @@ jobs:
           echo "login=${{ secrets.login }}" >> src/test/resources/config.properties
           echo "password=${{ secrets.password }}" >> src/test/resources/config.properties
 
-      - name: Build with Docker Compose
-        run: docker-compose build
+      - name: Copy config.properties to target (simulate volume)
+        run: |
+          mkdir -p target/allure-results
+          cp src/test/resources/config.properties target/allure-results/
 
-      - name: Start Docker Compose services
-        run: docker-compose up
+      - name: Run Maven tests
+        run: mvn test
 
       - name: Attach screenshots
         if: failure()
@@ -77,7 +74,3 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
-
-      - name: Stop Docker Compose services
-        if: always()
-        run: docker-compose down
