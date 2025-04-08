@@ -39,37 +39,29 @@ jobs:
       - name: Build with Docker Compose
         run: docker-compose build
 
-      - name: Start Docker Compose services in background
+      - name: Start Docker Compose services (API)
         run: docker-compose up -d
 
-      - name: Wait for Selenium to be ready
+
+      - name: Start Selenium container
         run: |
+          docker run -d -p 4444:4444 --name selenium-chrome --shm-size="2g" selenium/standalone-chrome:latest
           echo "Waiting for Selenium to start..."
           for i in {1..10}; do
             if curl -sSL "http://localhost:4444/wd/hub/status" 2>&1 | grep -q '"ready": true'; then
               echo "Selenium is ready!"
-              exit 0
+              break
             fi
             echo "Waiting for Selenium... Attempt $i"
             sleep 5
           done
-          echo "Selenium failed to start within the allotted time"
-          exit 1
 
-      - name: Maven test
-        run: mvn test
+      - name: Run UI tests
+        run: mvn test -Dgroups="ui"
         env:
           CHROME_OPTIONS: --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
-          CI_RUN: true
           SELENIUM_HUB_URL: http://localhost:4444/wd/hub
-
-      - name: Chrome test
-        if: always()
-        run: mvn test
-        env:
-          CHROME_OPTIONS: --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
           CI_RUN: true
-          SELENIUM_HUB_URL: http://localhost:4444/wd/hub
 
       - name: Attach screenshots
         if: failure()
@@ -107,6 +99,9 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
-      - name: Stop Docker Compose services
+      - name: Stop containers
         if: always()
-        run: docker-compose down
+        run: |
+          docker-compose down
+          docker stop selenium-chrome || true
+          docker rm selenium-chrome || true
