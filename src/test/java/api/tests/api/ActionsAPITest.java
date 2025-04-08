@@ -3,6 +3,7 @@ package api.tests.api;
 import api.steps.ActionsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -36,7 +37,6 @@ public class ActionsAPITest {
     private final String listEnPoint ="/list";
     private final String memberCreatorEndPoint ="/memberCreator";
     private final String organizationEndPoint ="/organization";
-    private final String reactionsEndPoint ="/reactions/";
 
 
     @BeforeClass
@@ -169,7 +169,7 @@ public class ActionsAPITest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetActions_Reactions(){
 
-        Response response = actionsSteps.getTheResourceOfAnAction(actiontId, reactionsEndPoint);
+        Response response = actionsSteps.getActions_Reactions(actiontId);
 
         System.out.println(response.body().toString());
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -183,7 +183,7 @@ public class ActionsAPITest {
     public void testCreateReactionForAction(){
 
         String expectedEmojiName = "GRINNING FACE";
-        Response response = actionsSteps.createReactionForAction(actionIdAfterCreatingACard, reactionsEndPoint);
+        Response response = actionsSteps.createReactionForAction(actionIdAfterCreatingACard);
         String actualEmojiName = response.jsonPath().getString("emoji.name");
         idOfReaction = response.jsonPath().getString("id");
 
@@ -196,13 +196,25 @@ public class ActionsAPITest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetActionsReaction(){
 
-        Response response = actionsSteps.getActionsReaction(actionIdAfterCreatingACard, reactionsEndPoint, idOfReaction);
+        Response response = actionsSteps.getActionsReaction(actionIdAfterCreatingACard, idOfReaction);
         String idOfReactionReceivedBack = response.jsonPath().getString("id");
 
         Assert.assertEquals(idOfReactionReceivedBack, idOfReaction);
     }
 
     @Test(priority = 5)
+    @Story("Actions")
+    @Description("Delete specific reaction of specific action")
+    @Severity(SeverityLevel.NORMAL)
+    public void testDeleteActionsReaction(){
+
+        JSONObject jsonObject = new JSONObject();
+
+        Response response = actionsSteps.deleteActionsReaction(actionIdAfterCreatingACard, idOfReaction);
+        Assert.assertEquals(response.body().asString(), jsonObject.toString());
+    }
+
+    @Test(priority = 6)
     @Story("Actions")
     @Description("Delete an action via id, and make sure it is deleted by trying to get the same action back")
     @Severity(SeverityLevel.NORMAL)

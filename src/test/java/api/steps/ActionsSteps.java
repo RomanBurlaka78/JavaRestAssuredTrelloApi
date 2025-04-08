@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 public class ActionsSteps extends BaseService{
 
     private String textEndPoint ="/text";
+    private final String reactionsEndPoint ="/reactions/";
 
     @Step("Get an action with id = {actiontId} from a board")
     public Response getAnAction(String actiontId) {
@@ -30,24 +31,40 @@ public class ActionsSteps extends BaseService{
         return response;
     }
 
-    @Step("Get the resource {resourceEndPoint}, the action with id {actionId}, belong to")
+    @Step("Get the resource {resourceEndPoint}, from action with id {actionId}")
     public Response getTheResourceOfAnAction(String idOfAnAction, String resourceEndPoint) {
         Response response = apiClient.get(PathParameters.ACTIONS_BASE_PATH + idOfAnAction + resourceEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
 
+    @Step("Get all existed reactions for action with id - {actionId}")
+    public Response getActions_Reactions(String actionId){
+        Response response = apiClient.get(PathParameters.ACTIONS_BASE_PATH + actionId + reactionsEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 
-    public Response createReactionForAction(String actiontId, String reactionsEndPoint) {
+    @Step("Create reaction for action with id - {actiontId}")
+    public Response createReactionForAction(String actiontId) {
         requestSpecification.queryParams("shortName", "grinning");
         Response response = apiClient.post(PathParameters.ACTIONS_BASE_PATH + actiontId + reactionsEndPoint, requestSpecification );
         initRequestSpecification();
         return response;
     }
 
-    public Response getActionsReaction(String actionIdAfterCreatingACard, String reactionsEnPoint, String idOfReaction) {
+    @Step("Get reaction with id {idOfReaction}, from action with id - {actionIdAfterCreatingACard}")
+    public Response getActionsReaction(String actionIdAfterCreatingACard, String idOfReaction) {
         Response response = apiClient.get(PathParameters.ACTIONS_BASE_PATH + actionIdAfterCreatingACard +
-                                            reactionsEnPoint + idOfReaction, requestSpecification);
+                reactionsEndPoint + idOfReaction, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Delete reaction with id - {idOfReaction}, from action with id - {actionIdAfterCreatingACard}")
+    public Response deleteActionsReaction(String actionIdAfterCreatingACard, String idOfReaction) {
+        Response response = apiClient.delete(PathParameters.ACTIONS_BASE_PATH + actionIdAfterCreatingACard +
+                reactionsEndPoint + idOfReaction, requestSpecification);
         initRequestSpecification();
         return response;
     }
