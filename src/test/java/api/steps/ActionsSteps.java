@@ -44,4 +44,11 @@ public class ActionsSteps extends BaseService{
         initRequestSpecification();
         return response;
     }
+
+    public Response getActionsReaction(String actionIdAfterCreatingACard, String reactionsEnPoint, String idOfReaction) {
+        Response response = apiClient.get(PathParameters.ACTIONS_BASE_PATH + actionIdAfterCreatingACard +
+                                            reactionsEnPoint + idOfReaction, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 }
