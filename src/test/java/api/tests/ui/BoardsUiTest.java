@@ -16,7 +16,7 @@ import static api.base.TestData.*;
 @Epic("UI Tests")
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
-@Tag("api")
+@Tag("ui")
 public class BoardsUiTest extends BaseUiTest {
 
     private BoardSteps boardSteps = new BoardSteps();
@@ -27,8 +27,7 @@ public class BoardsUiTest extends BaseUiTest {
     @Story("Board")
     @Description("Create Board")
     @Severity(SeverityLevel.CRITICAL)
-    @Tag("api")
-    public void testCreateBoard() throws IOException {
+    public void testCreateUiBoard() throws IOException {
         Response response = boardSteps.createBoard(bordName);
         boardId = response.path("id").toString();
 
@@ -42,7 +41,7 @@ public class BoardsUiTest extends BaseUiTest {
     @Story("Bord")
     @Description("Delete board")
     @Severity(SeverityLevel.CRITICAL)
-    public void testDeleteBoard() {
+    public void testDeleteUiBoard() {
         Response response = boardSteps.deleteABoardFromService(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -53,7 +52,7 @@ public class BoardsUiTest extends BaseUiTest {
     @Story("Board")
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetBoard() {
+    public void testGetUiBoard() {
         Response response = boardSteps.getBoard(TestData.boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
