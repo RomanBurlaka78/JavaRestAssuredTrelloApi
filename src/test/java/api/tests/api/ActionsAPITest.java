@@ -171,7 +171,6 @@ public class ActionsAPITest {
 
         Response response = actionsSteps.getActions_Reactions(actiontId);
 
-        System.out.println(response.body().toString());
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), "[]");
     }
