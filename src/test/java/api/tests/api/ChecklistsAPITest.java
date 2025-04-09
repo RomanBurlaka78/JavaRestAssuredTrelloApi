@@ -65,4 +65,20 @@ public class ChecklistsAPITest {
         Assert.assertEquals(actualIdOfChecklistReceived, checklistId);
     }
 
+    @Test(priority = 2)
+    @Story("Checklists")
+    @Description("Update a name of a checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testUpdateAChecklist(){
+
+        String nameOfAFieldToBeUpdated = "name";
+        String valueForAFieldToBeUpdated = "New name for checklist";
+
+        Response response = checklistsSteps.updateAFieldOfCheckList(checklistId, nameOfAFieldToBeUpdated, valueForAFieldToBeUpdated);
+
+        String actualNameOfChecklistReceived = response.jsonPath().getString("name");
+
+        Assert.assertEquals(actualNameOfChecklistReceived, valueForAFieldToBeUpdated);
+    }
+
 }

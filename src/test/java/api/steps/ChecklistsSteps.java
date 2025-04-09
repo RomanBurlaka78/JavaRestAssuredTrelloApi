@@ -19,4 +19,11 @@ public class ChecklistsSteps extends BaseService{
         initRequestSpecification();
         return response;
     }
+
+    public Response updateAFieldOfCheckList(String checklistId, String nameOfAField, String newValueOfAField) {
+        requestSpecification.queryParam(nameOfAField, newValueOfAField);
+        Response response = apiClient.put(PathParameters.CHECKLISTS_BASE_PATH + checklistId, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 }
