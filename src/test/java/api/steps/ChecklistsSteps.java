@@ -6,7 +6,9 @@ import io.restassured.response.Response;
 
 public class ChecklistsSteps extends BaseService{
 
-    private String boardEndPoint = "/board";
+    private final String boardEndPoint = "/board";
+    private final String cardsEndPoint = "/cards";
+    private final String checkItemsEndPoint = "/checkItems";
 
     @Step("Create a checklist on a card with id - {'idCard'}, with a name - {'nameOfAChecklistBeingCreated'}")
     public Response createAChecklist(String idCard, String nameOfAChecklistBeingCreated) {
@@ -42,6 +44,21 @@ public class ChecklistsSteps extends BaseService{
     @Step("Get the board the checklist with id - {'checklistId'} is on")
     public Response getTheBoardTheChecklistIsOn(String checklistId) {
         Response response = apiClient.get(PathParameters.CHECKLISTS_BASE_PATH + checklistId + boardEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get the card the checklist with id - {'checklistId'}, is on.")
+    public Response getTheCardAChecklistIsOn(String checklistId) {
+        Response response = apiClient.get(PathParameters.CHECKLISTS_BASE_PATH + checklistId + cardsEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Create checkItem with the name - {'nameOfNewCheckItem'}, on a checklist with id - {'checklistId'}")
+    public Response createCheckitemOnChecklist(String checklistId, String nameOfNewCheckItem) {
+        requestSpecification.queryParam("name", nameOfNewCheckItem);
+        Response response = apiClient.post(PathParameters.CHECKLISTS_BASE_PATH + checklistId + checkItemsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }

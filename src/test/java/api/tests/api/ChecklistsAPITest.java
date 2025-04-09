@@ -99,7 +99,7 @@ public class ChecklistsAPITest {
 
     @Test(priority = 3)
     @Story("Checklists")
-    @Description("Get a 'pos' field on a checklist")
+    @Description("Get a board checklist is on")
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheBoardTheChecklistIsOn(){
 
@@ -107,6 +107,32 @@ public class ChecklistsAPITest {
         String actualIdOfABoardReceived = response.jsonPath().getString("id");
 
         Assert.assertEquals(actualIdOfABoardReceived, boardId);
+    }
+
+    @Test(priority = 3)
+    @Story("Checklists")
+    @Description("Get the card checklist is on")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheCardAChecklistIsOn(){
+
+        Response response = checklistsSteps.getTheCardAChecklistIsOn(checklistId);
+        String actualIdOfACardReceived = response.jsonPath().getString("id");
+        actualIdOfACardReceived = actualIdOfACardReceived.substring(1,actualIdOfACardReceived.length()-1);  //have to remove square brackets
+
+        Assert.assertEquals(actualIdOfACardReceived, cardId);
+    }
+
+    @Test(priority = 4)
+    @Story("Checklists")
+    @Description("Create new checkItem on a checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testCreateCheckitemOnChecklist(){
+        String nameForNewCheckItem = "Mark";
+
+        Response response = checklistsSteps.createCheckitemOnChecklist(checklistId, nameForNewCheckItem);
+        String actualNameOfNewCheckItem = response.jsonPath().getString("name");
+
+        Assert.assertEquals(actualNameOfNewCheckItem, nameForNewCheckItem);
     }
 
 }
