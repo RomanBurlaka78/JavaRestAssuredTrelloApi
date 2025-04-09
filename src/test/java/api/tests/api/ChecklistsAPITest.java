@@ -61,7 +61,7 @@ public class ChecklistsAPITest {
 
         Response response = checklistsSteps.getCheckList(checklistId);
         String actualIdOfChecklistReceived = response.jsonPath().getString("id");
-        System.out.println(response.asPrettyString());
+
         Assert.assertEquals(actualIdOfChecklistReceived, checklistId);
     }
 
@@ -79,6 +79,22 @@ public class ChecklistsAPITest {
         String actualNameOfChecklistReceived = response.jsonPath().getString("name");
 
         Assert.assertEquals(actualNameOfChecklistReceived, valueForAFieldToBeUpdated);
+    }
+
+    @Test(priority = 3)
+    @Story("Checklists")
+    @Description("Get a 'pos' field on a checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetFieldOnAChecklist(){
+
+        String expectedPosOfAChecklist = "16384";
+        String fieldToGetBackFromTheChecklist = "/pos";
+
+        Response response = checklistsSteps.getFieldOnAChecklist(checklistId, fieldToGetBackFromTheChecklist);
+        String actualPosOfAChecklistReceivedBack = response.jsonPath().getString("_value");
+
+        Assert.assertEquals(actualPosOfAChecklistReceivedBack, expectedPosOfAChecklist);
+
     }
 
 }
