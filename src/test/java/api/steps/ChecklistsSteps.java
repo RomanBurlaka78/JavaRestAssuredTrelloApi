@@ -62,4 +62,11 @@ public class ChecklistsSteps extends BaseService{
         initRequestSpecification();
         return response;
     }
+
+    @Step("Get all checkItems that are currently available on a checklist")
+    public Response getCheckitemsOnAChecklist(String checklistId) {
+        Response response = apiClient.get(PathParameters.CHECKLISTS_BASE_PATH + checklistId + checkItemsEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 }

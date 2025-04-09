@@ -6,6 +6,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -120,6 +121,20 @@ public class ChecklistsAPITest {
         actualIdOfACardReceived = actualIdOfACardReceived.substring(1,actualIdOfACardReceived.length()-1);  //have to remove square brackets
 
         Assert.assertEquals(actualIdOfACardReceived, cardId);
+    }
+
+    @Test(priority = 3)
+    @Story("Checklists")
+    @Description("Get all checkItems presented on a checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetCheckitemsOnAChecklist(){
+
+        String emptyString = "[]";
+
+        Response response = checklistsSteps.getCheckitemsOnAChecklist(checklistId);
+        String adtualCheckItemsOnAChecklist = response.body().asString();
+
+        Assert.assertEquals(adtualCheckItemsOnAChecklist, emptyString);
     }
 
     @Test(priority = 4)
