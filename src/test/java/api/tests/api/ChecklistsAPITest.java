@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -21,6 +22,7 @@ public class ChecklistsAPITest {
     private final String nameOfAChecklistCreated = "First Checklist";
     private String boardId;
     private String cardId;
+    private String checklistId;
 
     @BeforeClass
     public void setUp(){
@@ -41,12 +43,26 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Create a checklist on a card")
     @Severity(SeverityLevel.NORMAL)
-    public void CreateAChecklist(){
+    public void testCreateAChecklist(){
 
-        String actualNameofChecklistReceived =
-                checklistsSteps.createAChecklist(cardId, nameOfAChecklistCreated).jsonPath().getString("name");
+        Response response = checklistsSteps.createAChecklist(cardId, nameOfAChecklistCreated);
 
-        Assert.assertEquals(actualNameofChecklistReceived, nameOfAChecklistCreated);
+        String actualNameOfChecklistReceived = response.jsonPath().getString("name");
+        checklistId = response.jsonPath().getString("id");
+
+        Assert.assertEquals(actualNameOfChecklistReceived, nameOfAChecklistCreated);
+    }
+
+    @Test(priority = 1)
+    @Story("Checklists")
+    @Description("Get a checklist on a card")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetAChecklist(){
+
+        Response response = checklistsSteps.getCheckList(checklistId);
+        String actualIdOfChecklistReceived = response.jsonPath().getString("id");
+        System.out.println(response.asPrettyString());
+        Assert.assertEquals(actualIdOfChecklistReceived, checklistId);
     }
 
 }
