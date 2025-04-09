@@ -97,4 +97,16 @@ public class ChecklistsAPITest {
 
     }
 
+    @Test(priority = 3)
+    @Story("Checklists")
+    @Description("Get a 'pos' field on a checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetTheBoardTheChecklistIsOn(){
+
+        Response response = checklistsSteps.getTheBoardTheChecklistIsOn(checklistId);
+        String actualIdOfABoardReceived = response.jsonPath().getString("id");
+
+        Assert.assertEquals(actualIdOfABoardReceived, boardId);
+    }
+
 }
