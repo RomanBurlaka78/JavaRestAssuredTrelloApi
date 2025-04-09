@@ -48,7 +48,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 2, dependsOnMethods = "testCreateBoard")
+    @Test(priority = 2, dependsOnMethods = "testCreateBoard", groups = "api")
     @Story("Bord")
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)
