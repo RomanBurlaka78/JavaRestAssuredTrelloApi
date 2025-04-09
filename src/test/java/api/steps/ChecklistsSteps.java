@@ -13,4 +13,10 @@ public class ChecklistsSteps extends BaseService{
         initRequestSpecification();
         return response;
     }
+
+    public Response getCheckList(String checklistId) {
+        Response response = apiClient.get(PathParameters.CHECKLISTS_BASE_PATH + checklistId, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 }
