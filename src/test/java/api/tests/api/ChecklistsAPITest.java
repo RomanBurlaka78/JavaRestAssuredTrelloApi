@@ -24,6 +24,7 @@ public class ChecklistsAPITest {
     private String boardId;
     private String cardId;
     private String checklistId;
+    private String checkItemId;
 
     @BeforeClass
     public void setUp(){
@@ -146,8 +147,49 @@ public class ChecklistsAPITest {
 
         Response response = checklistsSteps.createCheckitemOnChecklist(checklistId, nameForNewCheckItem);
         String actualNameOfNewCheckItem = response.jsonPath().getString("name");
+        checkItemId = response.jsonPath().getString("id");
 
         Assert.assertEquals(actualNameOfNewCheckItem, nameForNewCheckItem);
+    }
+
+    @Test(priority = 5)
+    @Story("Checklists")
+    @Description("Get specific checkItem on a checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetACheckitemOnAChecklist(){
+
+        Response response = checklistsSteps.getACheckitemOnAChecklist(checklistId, checkItemId);
+        String actualCheckItemIdReceived = response.jsonPath().getString("id");
+
+        Assert.assertEquals(actualCheckItemIdReceived, checkItemId);
+    }
+
+    @Test(priority = 6)
+    @Story("Checklists")
+    @Description("Delete specific checkItem from checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testDeleteCheckitemFromChecklist(){
+
+        String expectedStringResult = "[:]";
+
+        Response response = checklistsSteps.deleteCheckitemFromChecklist(checklistId, checkItemId);
+        String emptyBody = response.jsonPath().getString("limits");
+
+        Assert.assertEquals(emptyBody, expectedStringResult);
+    }
+
+    @Test(priority = 7)
+    @Story("Checklists")
+    @Description("Delete specific checkItem from checklist")
+    @Severity(SeverityLevel.NORMAL)
+    public void testDeleteAChecklist(){
+
+        String expectedStringResult = "[:]";
+
+        Response response = checklistsSteps.deleteAChecklist(checklistId);
+        String emptyBody = response.jsonPath().getString("limits");
+
+        Assert.assertEquals(emptyBody, expectedStringResult);
     }
 
 }
