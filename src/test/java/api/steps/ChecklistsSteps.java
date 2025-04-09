@@ -6,6 +6,8 @@ import io.restassured.response.Response;
 
 public class ChecklistsSteps extends BaseService{
 
+    private String boardEndPoint = "/board";
+
     @Step("Create a checklist on a card with id - {'idCard'}, with a name - {'nameOfAChecklistBeingCreated'}")
     public Response createAChecklist(String idCard, String nameOfAChecklistBeingCreated) {
         requestSpecification.queryParam("idCard", idCard);
@@ -33,6 +35,13 @@ public class ChecklistsSteps extends BaseService{
     @Step("Get a field - {'fieldToGetBackFromTheChecklist'}, from a checklist with id - {checklistId}")
     public Response getFieldOnAChecklist(String checklistId, String fieldToGetBackFromTheChecklist) {
         Response response = apiClient.get(PathParameters.CHECKLISTS_BASE_PATH + checklistId + fieldToGetBackFromTheChecklist, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get the board the checklist with id - {'checklistId'} is on")
+    public Response getTheBoardTheChecklistIsOn(String checklistId) {
+        Response response = apiClient.get(PathParameters.CHECKLISTS_BASE_PATH + checklistId + boardEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
