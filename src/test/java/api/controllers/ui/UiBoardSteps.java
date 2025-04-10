@@ -21,15 +21,11 @@ public class UiBoardSteps extends BaseUiTest {
         login();
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-//        WebElement board = getDriver().findElement(By.xpath("//div[@data-testid='TeamTabSection']//parent::ul/li[3]/a"));
-//        WebElement board = getDriver().findElement
-//                (By.xpath("//span[contains(text(), 'TrelloApiForward')]"));
-//        board.click();
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//        WebElement boardApi = getDriver().findElement(By.xpath("//div[@title='Api Board']/div"));
+        WebElement boardApi = getDriver().findElement(By.xpath("//div[@title='Api Board']/div"));
 
 
-        Assert.assertEquals(getDriver().getCurrentUrl(), "https://trello.com/u/romanbv/boards");
+        Assert.assertEquals(boardApi.getText(), "Api Board");
     }
 
     @Step("Close browser Trello UI and delete driver")

@@ -30,7 +30,7 @@ public abstract class BaseUiTest {
         if (driver == null) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments(
-                    "--headless",
+//                    "--headless",
                     "--disable-gpu",
                     "--window-size=1920,1080",
                     "--no-sandbox",
