@@ -50,7 +50,7 @@ public class BoardsUiTest extends BaseUiTest {
         uiBoardSteps.closeBrowserAndDriver();
     }
 
-    @Ignore
+
     @Test(priority = 113, groups = "ui")
     @Story("Board")
     @Description("Get board")

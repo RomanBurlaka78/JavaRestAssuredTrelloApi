@@ -4,23 +4,30 @@ import api.base.BaseUiTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UiBoardSteps extends BaseUiTest {
+
     @Step("Verify board exists in Trello UI")
     public void verifyLoginInUI() throws IOException {
         login();
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//        WebElement board = getDriver().findElement(By.xpath("//*[contains(text(),'Api Board')]"));
-        String title = getDriver().getTitle();
 
-//        Assert.assertTrue(board.isDisplayed(), "Created board is not displayed in UI");
-//        Assert.assertEquals(title, "Sh");
+        WebElement board = getDriver().findElement(By.xpath("//div[@data-testid='TeamTabSection']//parent::ul/li[3]/a"));
+        board.click();
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebElement boardApi = getDriver().findElement(By.xpath("//div[@title='Api Board']/div"));
+
+
+        Assert.assertEquals(boardApi.getText(), "Api Board");
     }
 
     @Step("Close browser Trello UI and delete driver")

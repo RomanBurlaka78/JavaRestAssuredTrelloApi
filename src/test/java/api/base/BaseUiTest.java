@@ -19,29 +19,13 @@ public abstract class BaseUiTest {
     private WebDriverWait wait2;
     private WebDriverWait wait5;
     private WebDriverWait wait10;
-    private static ChromeOptions chromeOptions;
+
 
     protected static WebDriver getDriver() {
         return driver;
     }
 
     protected static WebDriver createDriver() {
-
-//        WebDriverManager.chromedriver().setup();
-//        chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments(
-//                "--headless",
-//                "--disable-gpu",
-//                "--window-size=1920,1080",
-//                "--no-sandbox",
-//                "--disable-dev-shm-usage",
-//                "--remote-allow-origins=*",
-//                "--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID()
-//        );
-//        chromeOptions.getBrowserName();
-//        chromeOptions.addArguments("window-size= 1920, 1080");
-//        driver = new ChromeDriver(chromeOptions);
-//        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
 
         if (driver == null) {
             ChromeOptions options = new ChromeOptions();
