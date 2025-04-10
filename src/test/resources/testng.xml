@@ -9,6 +9,7 @@
             <class name="api.tests.api.LabelsApiTest"/>
             <class name="api.tests.api.ActionsAPITest"/>
             <class name="api.tests.api.ChecklistsAPITest"/>
+            <class name="api.tests.api.MembersAPITest"/>
         </classes>
     </test>
 </suite>
