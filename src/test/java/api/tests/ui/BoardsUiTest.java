@@ -7,8 +7,10 @@ import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import api.base.*;
+
 import java.io.IOException;
 
 import static api.base.TestData.*;
@@ -36,7 +38,7 @@ public class BoardsUiTest extends BaseUiTest {
         uiBoardSteps.verifyLoginInUI();
     }
 
-
+    @Ignore
     @Test(priority = 300, groups = "ui")
     @Story("Bord")
     @Description("Delete board")

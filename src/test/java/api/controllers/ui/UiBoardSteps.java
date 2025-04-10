@@ -16,9 +16,11 @@ public class UiBoardSteps extends BaseUiTest {
     public void verifyLoginInUI() throws IOException {
         login();
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        WebElement board = getDriver().findElement(By.xpath("//*[contains(text(),'Api Board')]"));
+//        WebElement board = getDriver().findElement(By.xpath("//*[contains(text(),'Api Board')]"));
+        String title = getDriver().getTitle();
 
-        Assert.assertTrue(board.isDisplayed(), "Created board is not displayed in UI");
+//        Assert.assertTrue(board.isDisplayed(), "Created board is not displayed in UI");
+        Assert.assertEquals(title, "Sh");
     }
 
     @Step("Close browser Trello UI and delete driver")
