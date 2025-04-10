@@ -51,7 +51,7 @@ jobs:
           sudo chmod -R 777 target
 
       - name: Run UI tests
-        run: mvn test -Dgroups="ui"
+        run: mvn test -Dgroups="ui" -DforkCount=1 -DreuseForks=false
 
 
       - name: Attach screenshots

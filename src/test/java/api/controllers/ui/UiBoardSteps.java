@@ -22,7 +22,7 @@ public class UiBoardSteps extends BaseUiTest {
     @Step("Close browser Trello UI and delete driver")
     public void closeBrowserAndDriver() {
         logOut();
-        closeDriver();
+
         Assert.assertEquals(getDriver(), null);
     }
 

@@ -7,10 +7,12 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.UUID;
 
 public abstract class BaseUiTest {
     private static WebDriver driver;
@@ -24,13 +26,39 @@ public abstract class BaseUiTest {
     }
 
     protected static WebDriver createDriver() {
-        WebDriverManager.chromedriver().setup();
-        chromeOptions = new ChromeOptions();
-        chromeOptions.getBrowserName();
-        chromeOptions.addArguments("window-size= 1920, 1080");
-        driver = new ChromeDriver(chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
 
+//        WebDriverManager.chromedriver().setup();
+//        chromeOptions = new ChromeOptions();
+//        chromeOptions.addArguments(
+//                "--headless",
+//                "--disable-gpu",
+//                "--window-size=1920,1080",
+//                "--no-sandbox",
+//                "--disable-dev-shm-usage",
+//                "--remote-allow-origins=*",
+//                "--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID()
+//        );
+//        chromeOptions.getBrowserName();
+//        chromeOptions.addArguments("window-size= 1920, 1080");
+//        driver = new ChromeDriver(chromeOptions);
+//        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+
+        if (driver == null) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments(
+                    "--headless",
+                    "--disable-gpu",
+                    "--window-size=1920,1080",
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--remote-allow-origins=*",
+                    "--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID()
+            );
+
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver(options);
+            driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        }
         return driver;
     }
 
@@ -116,8 +144,7 @@ public abstract class BaseUiTest {
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
-
+        closeDriver();
     }
-
 
 }
