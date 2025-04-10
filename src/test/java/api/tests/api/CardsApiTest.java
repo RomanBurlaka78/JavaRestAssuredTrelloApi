@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.List;
-import java.util.Map;
 
 @Epic("API Tests")
 @Feature("Cards Validation")
@@ -24,6 +23,7 @@ public class CardsApiTest extends BaseTest {
     private String bordName = "Board for cards";
     private String boardId;
     private String listId;
+    private String createdAttachmentId;
 
 
 
@@ -73,16 +73,6 @@ public class CardsApiTest extends BaseTest {
         Assert.assertEquals(response.path("name"), newCardName);
     }
 
-    @Test(priority = 6)
-    @Story("Verify cards")
-    @Description("Delete a card")
-    @Severity(SeverityLevel.CRITICAL)
-    public void testDeleteCard() {
-        Response response = cardsSteps.deleteCard(cardId);
-
-        Assert.assertEquals(response.getStatusCode(),200);
-    }
-
     @Test(priority = 3)
     @Story("Verify field on a cards")
     @Description("Get a field on a card")
@@ -118,6 +108,75 @@ public class CardsApiTest extends BaseTest {
         }
 
         Assert.assertEquals(response.getStatusCode(), 200);
+    }
 
+    @Test(priority = 6)
+    @Story("Verify attachments on a cards")
+    @Description("Create an attachment on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testCreateAttachmentOnCard() {
+        String nameOfCreatedAttachment = "ForCreateAttachmentOnCardTest.txt";
+
+        Response response = cardsSteps.createAttachmentOnCard(cardId, "src/test/resources/ForCreateAttachmentOnCardTest.txt");
+        createdAttachmentId = response.jsonPath().getString("id");
+        String nameOfAttachmentReceivedBack = response.jsonPath().getString("name");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(nameOfAttachmentReceivedBack, nameOfCreatedAttachment);
+    }
+
+    @Test(priority = 7)
+    @Story("Verify attachments on a cards")
+    @Description("Get an attachment on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetAnAttachmentOnACard() {
+
+        Response response = cardsSteps.getAnAttachmentOnACard(cardId, createdAttachmentId);
+        String attachmentIdReceivedBack = response.jsonPath().getString("id");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(attachmentIdReceivedBack, createdAttachmentId);
+    }
+
+    @Test(priority = 7)
+    @Story("Verify attachments on a cards")
+    @Description("Get all available checkItems on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetCheckItemsOnACard() {
+
+        String emptyString = "[]";
+
+        Response response = cardsSteps.getCheckItemsOnACard(cardId);
+
+        String actualCheckItemsOnACard = response.body().asString();
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(actualCheckItemsOnACard, emptyString);
+    }
+
+    @Test(priority = 7)
+    @Story("Verify attachments on a cards")
+    @Description("Get all available checkItems on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetChecklistsOnACard() {
+
+        String emptyString = "[]";
+
+        Response response = cardsSteps.getChecklistsOnACard(cardId);
+
+        String actualChecklistsOnACard = response.body().asString();
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(actualChecklistsOnACard, emptyString);
+    }
+
+    @Test(priority = 8)
+    @Story("Verify cards")
+    @Description("Delete a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testDeleteCard() {
+        Response response = cardsSteps.deleteCard(cardId);
+
+        Assert.assertEquals(response.getStatusCode(),200);
     }
 }
