@@ -25,7 +25,7 @@ public class UiBoardSteps extends BaseUiTest {
 //        WebElement boardApi = getDriver().findElement(By.xpath("//div[@title='Api Board']/div"));
 
 
-        Assert.assertTrue(getDriver().getCurrentUrl().isEmpty());
+        Assert.assertTrue(!getDriver().getCurrentUrl().isEmpty());
     }
 
     @Step("Close browser Trello UI and delete driver")
