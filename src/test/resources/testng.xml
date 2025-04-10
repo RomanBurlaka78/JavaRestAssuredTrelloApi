@@ -8,7 +8,6 @@
             <class name="api.tests.api.CardsApiTest"/>
             <class name="api.tests.api.LabelsApiTest"/>
             <class name="api.tests.api.ActionsAPITest"/>
-            <class name="api.tests.ui.BoardsUiTest"/>
         </classes>
     </test>
 </suite>

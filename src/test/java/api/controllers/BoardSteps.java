@@ -127,13 +127,6 @@ public class BoardSteps extends BaseService{
         return response;
     }
 
-    public Response getMembersOfABoard(String boardId, String membersEndPoint) {
-
-        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + membersEndPoint, requestSpecification);
-        initRequestSpecification();
-        return response;
-    }
-
     public Response putWithSpecification(String boardId, String membersEndPoint) {
         requestSpecification.param("email", "ironman-968-privet-test@ya.ru");
         Response response = apiClient.put(PathParameters.BOARDS_BASE_PATH + boardId + membersEndPoint, requestSpecification);

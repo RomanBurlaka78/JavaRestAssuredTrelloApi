@@ -77,4 +77,10 @@ public abstract class BaseService {
     }
 
 
+    public Response getTheMembersOfABoard(String boardId) {
+
+        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.MEMBERS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 }
