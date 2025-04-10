@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Delete board","6723","testDeleteUiBoard","All test","Thu Apr 10 20:38:15 GMT 2025","passed","Thu Apr 10 20:38:21 GMT 2025","api.tests.ui.BoardsUiTest","Test UI with xml","api.tests.ui.BoardsUiTest","testDeleteUiBoard"
+"Create Board","6628","testCreateUiBoard","All test","Thu Apr 10 20:38:07 GMT 2025","failed","Thu Apr 10 20:38:14 GMT 2025","api.tests.ui.BoardsUiTest","Test UI with xml","api.tests.ui.BoardsUiTest","testCreateUiBoard"
+"Get board","750","testGetUiBoard","All test","Thu Apr 10 20:38:14 GMT 2025","passed","Thu Apr 10 20:38:15 GMT 2025","api.tests.ui.BoardsUiTest","Test UI with xml","api.tests.ui.BoardsUiTest","testGetUiBoard"
