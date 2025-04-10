@@ -21,10 +21,6 @@ public class UiBoardSteps extends BaseUiTest {
         login();
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//        WebElement boardApi = getDriver().findElement(By.xpath("//div[@title='Api Board']/div"));
-
-
         Assert.assertTrue(!getDriver().getCurrentUrl().isEmpty());
     }
 

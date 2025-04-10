@@ -40,7 +40,7 @@ public class BoardsUiTest extends BaseUiTest {
 
 
     @Test(priority = 300, groups = "ui")
-    @Story("Bord")
+    @Story("Board")
     @Description("Delete board")
     @Severity(SeverityLevel.CRITICAL)
     public void testDeleteUiBoard() {
