@@ -1,25 +1,10 @@
 version: '3'
 
 services:
-  selenium:
-    image: selenium/standalone-chrome:latest
-    ports:
-      - "4444:4444"
-    shm_size: "2g"  # Важно для Chrome в Docker!
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-
   tests:
     build: .
     image: trello-api-tests
     container_name: test-container
-    depends_on:
-      selenium:
-        condition: service_healthy
     environment:
       key: $key
       token: $token
