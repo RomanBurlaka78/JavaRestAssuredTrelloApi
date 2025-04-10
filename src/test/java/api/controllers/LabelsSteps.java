@@ -1,4 +1,4 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
 import api.utils.ApiClient;
@@ -8,7 +8,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-public class LabelsSteps extends BaseService{
+public class LabelsSteps extends BaseService {
 
     @Step("Create a new Label: name = {name}, color = {color}, board id = {idBoard}")
     public Response createLabel(String labelName, String color, String boardId) {

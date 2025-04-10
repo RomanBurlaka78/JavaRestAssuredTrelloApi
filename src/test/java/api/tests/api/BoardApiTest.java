@@ -2,8 +2,9 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
-import api.steps.BoardSteps;
+import api.controllers.BoardSteps;
 import io.qameta.allure.*;
+import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.Assert;
@@ -14,6 +15,7 @@ import java.util.*;
 @Epic("API Tests")
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
+@Tag("api")
 public class BoardApiTest extends BaseTest {
 
     private BoardSteps boardSteps = new BoardSteps();
@@ -46,7 +48,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 2, dependsOnMethods = "testCreateBoard")
+    @Test(priority = 2, dependsOnMethods = "testCreateBoard", groups = "api")
     @Story("Bord")
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)

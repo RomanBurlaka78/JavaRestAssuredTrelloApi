@@ -1,4 +1,4 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
 import api.utils.ApiClient;
@@ -6,13 +6,14 @@ import api.utils.Specification;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import  api.controllers.BaseService;
 import io.restassured.specification.RequestSpecification;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class ListsSteps extends BaseService{
+public class ListsSteps extends BaseService {
 
     private final String archiveEndPoint = "/archiveAllCards";
     private final String moveAllCardsEndPoint = "/moveAllCards";

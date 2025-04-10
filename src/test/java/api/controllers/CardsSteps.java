@@ -1,4 +1,4 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
 import api.utils.ApiClient;

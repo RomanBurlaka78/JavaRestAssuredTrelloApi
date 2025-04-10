@@ -1,10 +1,11 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
+import api.controllers.BaseService;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
-public class ChecklistsSteps extends BaseService{
+public class ChecklistsSteps extends BaseService {
 
     private final String boardEndPoint = "/board";
     private final String cardsEndPoint = "/cards";

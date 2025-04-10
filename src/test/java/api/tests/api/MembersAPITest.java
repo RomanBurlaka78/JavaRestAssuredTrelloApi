@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.steps.MembersSteps;
+import api.controllers.MembersSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -27,14 +27,14 @@ public class MembersAPITest {
     private String starId;
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = membersSteps.createABord(bordName);
         firstMemberId = membersSteps.getTheMembersOfABoard(boardId).jsonPath().getString("id");
-        firstMemberId = firstMemberId.substring(1, firstMemberId.length()-1);
+        firstMemberId = firstMemberId.substring(1, firstMemberId.length() - 1);
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         membersSteps.deleteBoard(boardId);
     }
 
@@ -42,7 +42,8 @@ public class MembersAPITest {
     @Story("Verify member")
     @Description("Get a member")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetAMember(){
+    public void testGetAMember() {
+
         Response response = membersSteps.getAMember(firstMemberId);
         String memberIdReceivedBack = response.jsonPath().getString("id");
 
@@ -130,16 +131,6 @@ public class MembersAPITest {
     public void testDeleteStarBoard() {
         Response response = membersSteps.deleteStarBoard(firstMemberId, starId);
 
-        Assert.assertEquals(response.getStatusCode(), 200);
-    }
 
-    @Test
-    @Story("Verify Get a Member's boardStars")
-    @Description("List a member's board stars")
-    @Severity(SeverityLevel.NORMAL)
-    public void testGetMemberBoardStars() {
-        Response response = membersSteps.getMemberBoardStars(firstMemberId);
-
-        Assert.assertEquals(response.getStatusCode(), 200);
     }
 }

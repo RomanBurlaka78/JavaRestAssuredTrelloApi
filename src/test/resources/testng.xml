@@ -12,4 +12,9 @@
             <class name="api.tests.api.MembersAPITest"/>
         </classes>
     </test>
+    <test name="Test UI with xml">
+        <classes>
+            <class name="api.tests.ui.BoardsUiTest"></class>
+        </classes>
+    </test>
 </suite>

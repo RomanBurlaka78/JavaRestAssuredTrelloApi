@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.steps.ChecklistsSteps;
+import api.controllers.ChecklistsSteps;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
