@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.steps.MembersSteps;
+import api.controllers.MembersSteps;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
