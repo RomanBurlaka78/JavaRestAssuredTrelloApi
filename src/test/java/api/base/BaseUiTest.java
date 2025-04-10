@@ -7,6 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
@@ -115,6 +116,7 @@ public abstract class BaseUiTest {
         return message;
     }
 
+    @BeforeClass
     public void login() throws IOException {
         createDriver();
         getDriver().get("https://trello.com/login");
