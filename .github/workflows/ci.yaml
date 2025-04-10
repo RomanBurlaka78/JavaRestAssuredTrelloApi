@@ -31,6 +31,8 @@ jobs:
 
       - name: Create config.properties
         run: |
+          mkdir -p src/test/resources
+          mkdir -p target/test-classes  # ← Добавлено!
           echo "key=${{ secrets.key }}" > src/test/resources/config.properties
           echo "token=${{ secrets.token }}" >> src/test/resources/config.properties
           echo "login=${{ secrets.login }}" >> src/test/resources/config.properties
