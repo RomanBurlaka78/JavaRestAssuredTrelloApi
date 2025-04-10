@@ -211,8 +211,8 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheMembersOfABoard() {
 
-        Response response = boardSteps.getMembersOfABoard(boardId, PathParameters.MEMBERS_BASE_PATH);
-
+        Response response = boardSteps.getTheMembersOfABoard(boardId);
+        System.out.println(response.asPrettyString());
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -255,7 +255,7 @@ public class BoardApiTest extends BaseTest {
     @Description("Remove member from board")
     @Severity(SeverityLevel.NORMAL)
     public void testRemoveMemberFromBoard() {
-        Response membersResponse = boardSteps.getMembersOfABoard(boardId, "/members");
+        Response membersResponse = boardSteps.getTheMembersOfABoard(boardId);
         List<String> memberIds = membersResponse.jsonPath().getList("id"); // ИЛИ "members.id"
         System.out.println(memberIds.size());
         String memberIdToRemove = memberIds.get(0);
