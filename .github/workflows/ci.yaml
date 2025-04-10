@@ -42,13 +42,13 @@ jobs:
       - name: Start Docker Compose services (API)
         run: docker-compose up -d
 
+      - name: Verify containers are running
+        run: docker ps
+
 
       - name: Run UI tests
         run: mvn test -Dgroups="ui"
-        env:
-            CHROME_OPTIONS: --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
-            SELENIUM_HUB_URL: http://localhost:4444/wd/hub
-            CI_RUN: true
+
 
       - name: Attach screenshots
         if: failure()
@@ -90,5 +90,3 @@ jobs:
         if: always()
         run: |
           docker-compose down
-          docker stop selenium-chrome || true
-          docker rm selenium-chrome || true
