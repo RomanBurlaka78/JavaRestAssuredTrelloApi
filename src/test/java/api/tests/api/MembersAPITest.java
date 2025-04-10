@@ -27,14 +27,14 @@ public class MembersAPITest {
     private String starId;
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = membersSteps.createABord(bordName);
         firstMemberId = membersSteps.getTheMembersOfABoard(boardId).jsonPath().getString("id");
-        firstMemberId = firstMemberId.substring(1, firstMemberId.length()-1);
+        firstMemberId = firstMemberId.substring(1, firstMemberId.length() - 1);
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         membersSteps.deleteBoard(boardId);
     }
 
@@ -42,7 +42,7 @@ public class MembersAPITest {
     @Story("Verify member")
     @Description("Get a member")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetAMember(){
+    public void testGetAMember() {
 
         Response response = membersSteps.getAMember(firstMemberId);
         String memberIdReceivedBack = response.jsonPath().getString("id");
@@ -132,4 +132,5 @@ public class MembersAPITest {
         Response response = membersSteps.deleteStarBoard(firstMemberId, starId);
 
 
+    }
 }
