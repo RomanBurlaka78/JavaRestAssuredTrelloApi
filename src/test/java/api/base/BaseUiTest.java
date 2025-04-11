@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.UUID;
 
-public abstract class BaseUiTest {
+public abstract class BaseUiTest  {
     private static WebDriver driver;
     private WebDriverWait wait2;
     private WebDriverWait wait5;

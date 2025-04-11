@@ -83,4 +83,13 @@ public abstract class BaseService {
         initRequestSpecification();
         return response;
     }
+
+    @Step("Create a checklist on a card with id - {'idCard'}, with a name - {'nameOfAChecklistBeingCreated'}")
+    public Response createAChecklist(String idCard, String nameOfAChecklistBeingCreated) {
+        requestSpecification.queryParam("idCard", idCard);
+        requestSpecification.queryParam("name", nameOfAChecklistBeingCreated);
+        Response response = apiClient.post(PathParameters.CHECKLISTS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 }

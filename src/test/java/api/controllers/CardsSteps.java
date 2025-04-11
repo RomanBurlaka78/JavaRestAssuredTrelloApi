@@ -126,6 +126,7 @@ public class CardsSteps extends BaseService {
         return response;
     }
 
+
     @Step("Get list on card: {cardId}")
     public Response getListCard(String cardId) {
         Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + listsEndPoint, requestSpecification);
@@ -146,6 +147,7 @@ public class CardsSteps extends BaseService {
         initRequestSpecification();
         return response;
     }
+
 
 }
 
