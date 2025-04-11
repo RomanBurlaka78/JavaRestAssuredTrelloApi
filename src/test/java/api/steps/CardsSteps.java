@@ -43,18 +43,61 @@ public class CardsSteps extends BaseService{
     @Step("Get custom fields on card: {cardId}, field = {field}")
     public Response getFieldCard(String cardId) {
        Objects.requireNonNull(cardId, "ID карточки не может быть null");
-        return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.CUSTOM_FIELDS_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.CUSTOM_FIELDS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Get actions on card: {cardId}, actions = {actions}")
     public Response getActionsCard(String cardId, String actions) {
-        return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
-    @Step("Get actions on card: {cardId}, attachments = {attachments}")
+    @Step("Get Attachment on card: {cardId}, attachments = {attachments}")
     public Response getAttachmentsCard(String cardId) {
-            return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
+
+    @Step("Get Attachment on card: {cardId}, attachments = {attachments}, idAttachment = {idAttachment} ")
+    public Response getSpecificAttachmentsCard(String cardId, String field) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Delete a Attachment: id card = {cardID}")
+    public Response deleteAttachmentCard(String cardID, String attachmentId) {
+        Response response = apiClient.delete(PathParameters.CARDS_BASE_PATH + cardID + PathParameters.ATTACHMENTS_BASE_PATH + "/" + attachmentId, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+    @Step("Get custom fields on card: {cardId}, field = {field}")
+    public Response getBoardCard(String cardId) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get checkItems on card: {cardId}, field = {field}")
+    public Response getCheckItemsCard(String cardId) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + "/checkItemStates", requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get Checklists on card: {cardId}")
+    public Response getChecklistsCard(String cardId) {
+        requestSpecification.queryParam("checkItems", "all");
+        requestSpecification.queryParam("checkItem_fields", "id,name,state");
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + "/checklists", requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
 
 }
 
