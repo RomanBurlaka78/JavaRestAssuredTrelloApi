@@ -11,9 +11,12 @@ import java.util.Objects;
 
 public class CardsSteps extends BaseService {
 
-//    private final String attachmentsEndPoint = "/attachments/";
-//    private final String checkItemsEndPoint = "/checkItemStates";
-//    private final String checklistsEndPoint = "/checklists";
+    private final String attachmentsEndPoint = "/attachments/";
+    private final String checkItemsEndPoint = "/checkItemStates";
+    private final String checklistsEndPoint = "/checklists";
+    private final String listsEndPoint = "/list";
+    private final String membersEndPoint = "/Members";
+    private final String stickersEndPoint = "/stickers";
 
     @Step("Get a card: id card = {cardId}")
     public Response getCard(String cardId) {
@@ -58,7 +61,7 @@ public class CardsSteps extends BaseService {
     @Step("Add attachment that is located - {'filePathOfAnAttachment'}, on a card with id - {'cardId'}")
     public Response createAttachmentOnCard(String cardId, String filePathOfAnAttachment) {
 
-
+        requestSpecification.multiPart(new File(filePathOfAnAttachment));
         requestSpecification.contentType("multipart/form-data");
 
         Response response = apiClient.post(CardsPath.CARDS_BASE_PATH + cardId + PathParameters.attachmentsEndPoint, requestSpecification);
