@@ -1,6 +1,7 @@
 package api.controllers;
 
 import api.base.PathParameters;
+import api.base.PathParameters.*;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
@@ -21,7 +22,7 @@ public class ListsSteps extends BaseService {
         requestSpecification.queryParam("name", nameOfTheList);
         requestSpecification.queryParam("idBoard", boardId);
 
-        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(ListsPath.LISTS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -30,7 +31,7 @@ public class ListsSteps extends BaseService {
     public Response updateANameForList(String listId, String newNameForTheList) {
 
         requestSpecification.queryParam("name", newNameForTheList);
-        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + listId, requestSpecification);
+        Response response = apiClient.put(ListsPath.LISTS_BASE_PATH + listId, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -38,7 +39,7 @@ public class ListsSteps extends BaseService {
     @Step("Get the list with id = {listId}")
     public Response getAList(String listId) {
 
-        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + listId, requestSpecification);
+        Response response = apiClient.get(ListsPath.LISTS_BASE_PATH + listId, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -46,7 +47,7 @@ public class ListsSteps extends BaseService {
     @Step("Archive all existed cards on a list with id = {listId}")
     public Response archiveAllCardOnTheList(String listId) {
 
-        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH + listId + archiveEndPoint, requestSpecification);
+        Response response = apiClient.post(ListsPath.LISTS_BASE_PATH + listId + archiveEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -56,7 +57,7 @@ public class ListsSteps extends BaseService {
         requestSpecification.queryParam("idBoard", boardId);
         requestSpecification.queryParam("idList", IdOfTheListThatTheCardsShouldBeMovedTo);
 
-        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH + newCreatedListId + moveAllCardsEndPoint, requestSpecification);
+        Response response = apiClient.post(ListsPath.LISTS_BASE_PATH + newCreatedListId + moveAllCardsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -65,7 +66,7 @@ public class ListsSteps extends BaseService {
     public Response archiveAList(String idOfTheListToArchive) {
         requestSpecification.queryParam("value", "true");
 
-        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheListToArchive + archiveAListEndPoint, requestSpecification);
+        Response response = apiClient.put(ListsPath.LISTS_BASE_PATH + idOfTheListToArchive + archiveAListEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -74,7 +75,7 @@ public class ListsSteps extends BaseService {
     public Response unArchiveAList(String idOfTheListToUnArchive) {
         requestSpecification.queryParam("value", "false");
 
-        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheListToUnArchive + archiveAListEndPoint, requestSpecification);
+        Response response = apiClient.put(ListsPath.LISTS_BASE_PATH + idOfTheListToUnArchive + archiveAListEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -82,7 +83,7 @@ public class ListsSteps extends BaseService {
     @Step("Get a cards from a list with id {idOfTheList}")
     public Response getCardsOnAList(String idOfTheList) {
 
-        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + cardsEndPoint, requestSpecification);
+        Response response = apiClient.get(ListsPath.LISTS_BASE_PATH + idOfTheList + cardsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -91,7 +92,7 @@ public class ListsSteps extends BaseService {
     public Response moveListFromOneBoardToAnother(String idOfTheList, String idOfABoardToMoveListTo) {
         requestSpecification.queryParam("value", idOfABoardToMoveListTo);
 
-        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfTheList + idBoardEndPoint, requestSpecification);
+        Response response = apiClient.put(ListsPath.LISTS_BASE_PATH + idOfTheList + idBoardEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -100,7 +101,7 @@ public class ListsSteps extends BaseService {
     public Response updateSubscribedFieldOfAList(String idOfAList, boolean valueForSubscribedField) {
         requestSpecification.queryParam("value", valueForSubscribedField);
 
-        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + idOfAList + subscribedFieldEndPoint, requestSpecification);
+        Response response = apiClient.put(ListsPath.LISTS_BASE_PATH + idOfAList + subscribedFieldEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -108,14 +109,14 @@ public class ListsSteps extends BaseService {
     @Step("Get the actions of a list")
     public Response getActionsofAList(String idOfTheList) {
 
-        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + actionsEndPoint, requestSpecification);
+        Response response = apiClient.get(ListsPath.LISTS_BASE_PATH + idOfTheList + actionsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
 
     @Step("Get the boar id the list is on")
     public Response getABoardAListIsOn(String idOfTheList) {
-        Response response = apiClient.get(PathParameters.LISTS_BASE_PATH + idOfTheList + boardEndPoint, requestSpecification);
+        Response response = apiClient.get(ListsPath.LISTS_BASE_PATH + idOfTheList + boardEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }

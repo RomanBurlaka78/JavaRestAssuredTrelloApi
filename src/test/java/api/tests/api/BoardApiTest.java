@@ -2,6 +2,7 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
+import api.base.PathParameters.*;
 import static api.base.TestData.*;
 import api.controllers.BoardSteps;
 import io.qameta.allure.*;
@@ -127,7 +128,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetActionsFromABoard() {
 
-        Response response = getBoardSteps().getActions(boardId, PathParameters.ACTIONS_BASE_PATH);
+        Response response = getBoardSteps().getActions(boardId, PathParameters.ActionsPath.ACTIONS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(arrayList.size(), 3);
@@ -143,7 +144,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetChecklistsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getChecklists(boardId, PathParameters.CHECKLISTS_BASE_PATH);
+        Response response = getBoardSteps().getChecklists(boardId, CheckListsPath.CHECKLISTS_BASE_PATH);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -155,7 +156,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetCardsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getCards(boardId, PathParameters.CARDS_BASE_PATH);
+        Response response = getBoardSteps().getCards(boardId, CardsPath.CARDS_BASE_PATH);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -167,7 +168,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetFilteredCardsOnABoard() {
 
         String expectedResult = "[]";
-        Response response =getBoardSteps().getFilteredCards(boardId, PathParameters.CARDS_BASE_PATH, "all");
+        Response response =getBoardSteps().getFilteredCards(boardId, CardsPath.CARDS_BASE_PATH, "all");
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -190,7 +191,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetListsOfABoard() {
 
-        Response response = getBoardSteps().getListsOfABoard(boardId, PathParameters.LISTS_BASE_PATH);
+        Response response = getBoardSteps().getListsOfABoard(boardId, ListsPath.LISTS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -204,7 +205,7 @@ public class BoardApiTest extends BaseTest {
 
         String expectedResult = "[]";
         String nameOfAFilter = "closed";
-        Response response = getBoardSteps().getSpecificListOfABoard(boardId, PathParameters.LISTS_BASE_PATH, nameOfAFilter);
+        Response response = getBoardSteps().getSpecificListOfABoard(boardId, ListsPath.LISTS_BASE_PATH, nameOfAFilter);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -228,7 +229,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testInviteMembertoBoardViaEmail() {
 
-        Response response = getBoardSteps().putWithSpecification(boardId, PathParameters.MEMBERS_BASE_PATH);
+        Response response = getBoardSteps().putWithSpecification(boardId, MembersPath.MEMBERS_BASE_PATH);
 
         List listOfMembers = response.jsonPath().getList("members.id");
         Assert.assertTrue(listOfMembers.size() == 2);
