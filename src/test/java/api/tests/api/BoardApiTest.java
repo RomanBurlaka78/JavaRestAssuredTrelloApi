@@ -2,18 +2,19 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
-import api.steps.BoardSteps;
+import api.controllers.BoardSteps;
 import io.qameta.allure.*;
+import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.List;
 
 @Epic("API Tests")
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
+@Tag("api")
 public class BoardApiTest extends BaseTest {
 
     private BoardSteps boardSteps = new BoardSteps();
@@ -30,7 +31,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() {
         Response response = boardSteps.createBoard(bordName);
-        boardId =  response.jsonPath().getString("id");
+        boardId = response.jsonPath().getString("id");
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -46,7 +47,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 2, dependsOnMethods = "testCreateBoard")
+    @Test(priority = 2, dependsOnMethods = "testCreateBoard", groups = "api")
     @Story("Bord")
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)
@@ -107,12 +108,12 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 5,description = "get specified field from a board")
+    @Test(priority = 5, description = "get specified field from a board")
     @Story("Bord")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetAFieldOnABord() {
         String fieldName = "/name";
-        Response response = boardSteps.getAField( boardId, fieldName);
+        Response response = boardSteps.getAField(boardId, fieldName);
 
         Assert.assertEquals(response.jsonPath().getString("_value"), bordName);
 
@@ -123,7 +124,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetActionsFromABoard() {
 
-        Response response = boardSteps.getActions( boardId,  PathParameters.ACTIONS_BASE_PATH);
+        Response response = boardSteps.getActions(boardId, PathParameters.ACTIONS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(arrayList.size(), 3);
@@ -211,15 +212,15 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheMembersOfABoard() {
 
-        Response response = boardSteps.getMembersOfABoard(boardId, PathParameters.MEMBERS_BASE_PATH);
-
+        Response response = boardSteps.getTheMembersOfABoard(boardId);
+        System.out.println(response.asPrettyString());
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(arrayList.size(), 1);
     }
 
-    @Test(priority = 5,description = "Invite Member to Board via email")
+    @Test(priority = 5, description = "Invite Member to Board via email")
     @Story("Bord")
     @Severity(SeverityLevel.NORMAL)
     public void testInviteMembertoBoardViaEmail() {
@@ -227,7 +228,7 @@ public class BoardApiTest extends BaseTest {
         Response response = boardSteps.putWithSpecification(boardId, PathParameters.MEMBERS_BASE_PATH);
 
         List listOfMembers = response.jsonPath().getList("members.id");
-        Assert.assertTrue(listOfMembers.size()==2);
+        Assert.assertTrue(listOfMembers.size() == 2);
     }
 
     @Test(priority = 6)
@@ -255,7 +256,7 @@ public class BoardApiTest extends BaseTest {
     @Description("Remove member from board")
     @Severity(SeverityLevel.NORMAL)
     public void testRemoveMemberFromBoard() {
-        Response membersResponse = boardSteps.getMembersOfABoard(boardId, "/members");
+        Response membersResponse = boardSteps.getTheMembersOfABoard(boardId);
         List<String> memberIds = membersResponse.jsonPath().getList("id"); // ИЛИ "members.id"
         System.out.println(memberIds.size());
         String memberIdToRemove = memberIds.get(0);

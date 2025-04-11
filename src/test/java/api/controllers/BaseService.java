@@ -1,4 +1,4 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
 import api.utils.ApiClient;
@@ -22,7 +22,7 @@ public abstract class BaseService {
     }
 
     @Step("Create a board with a name {'boardName'}")
-    public String createABord(String boardName){
+    public String createABord(String boardName) {
 
         requestSpecification.queryParam("name", boardName);
 
@@ -38,7 +38,7 @@ public abstract class BaseService {
     }
 
     @Step("Get id of the first list on a board")
-    public String getIdOfTheFirstListOnABoard(String boardId){
+    public String getIdOfTheFirstListOnABoard(String boardId) {
 
         Response resp = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
@@ -54,7 +54,7 @@ public abstract class BaseService {
         return list.get(0).toString();
     }
 
-    protected void initRequestSpecification(){
+    protected void initRequestSpecification() {
         requestSpecification = RestAssured.given().spec(specification.installRequest());
 
     }
@@ -77,4 +77,10 @@ public abstract class BaseService {
     }
 
 
+    public Response getTheMembersOfABoard(String boardId) {
+
+        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + PathParameters.MEMBERS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 }

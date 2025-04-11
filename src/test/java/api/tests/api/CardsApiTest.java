@@ -2,12 +2,16 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
-import api.steps.CardsSteps;
+import api.controllers.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.*;
 
 import java.util.Map;
@@ -22,7 +26,7 @@ public class CardsApiTest extends BaseTest {
     private String bordName = "Board for cards";
     private String boardId;
     private String listId;
-    private String attachmentId;
+
 
 
     @BeforeClass
@@ -78,7 +82,7 @@ public class CardsApiTest extends BaseTest {
     public void testDeleteCard() {
         Response response = cardsSteps.deleteCard(cardId);
 
-        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(),200);
     }
 
     @Test(priority = 3)
@@ -110,7 +114,7 @@ public class CardsApiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testGetAttachmentsCard() {
         Response response = cardsSteps.getAttachmentsCard(cardId);
-        List<Map<String, Object>> attachments = response.jsonPath().getList("$");
+        List<Map<String, Object>> attachments = response.jsonPath().getList("");
         if (!attachments.isEmpty()) {
             String firstAttachmentId = (String) attachments.get(0).get("id");
 

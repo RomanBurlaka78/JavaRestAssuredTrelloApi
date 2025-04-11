@@ -10,12 +10,13 @@ public class BasePage {
     private WebDriverWait wait2;
     private WebDriverWait wait5;
     private WebDriverWait wait10;
-    private  final WebDriver driver;
+    private final WebDriver driver;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
+
     public WebDriver getDriver() {
         return driver;
     }

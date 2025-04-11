@@ -1,11 +1,11 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
 import api.utils.ApiClient;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
-public class BoardSteps extends BaseService{
+public class BoardSteps extends BaseService {
 
     @Step("Create board with name: {nameOfTheBoard}")
     public Response createBoard(String nameOfTheBoard) {
@@ -68,7 +68,7 @@ public class BoardSteps extends BaseService{
     @Step("getting a field - {field}, from a bord which id is - {boardId}")
     public Response getAField(String boardId, String fieldName) {
 
-        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH +boardId + fieldName, requestSpecification);
+        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + fieldName, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -123,13 +123,6 @@ public class BoardSteps extends BaseService{
     public Response getSpecificListOfABoard(String boardId, String listsEndPoint, String filter) {
 
         Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + listsEndPoint + filter, requestSpecification);
-        initRequestSpecification();
-        return response;
-    }
-
-    public Response getMembersOfABoard(String boardId, String membersEndPoint) {
-
-        Response response = apiClient.get(PathParameters.BOARDS_BASE_PATH + boardId + membersEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
