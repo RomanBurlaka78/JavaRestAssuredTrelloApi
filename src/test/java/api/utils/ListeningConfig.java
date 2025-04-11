@@ -27,7 +27,4 @@ public class ListeningConfig implements ITestListener {
     public void onTestSkipped(ITestResult result) {
         LoggerUtil.warn("Test skipped: " + result.getName());
     }
-
-
-
 }

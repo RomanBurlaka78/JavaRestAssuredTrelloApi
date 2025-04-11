@@ -1,22 +1,13 @@
-package api.steps;
+package api.controllers;
 
 import api.base.PathParameters;
-import api.utils.ApiClient;
-import api.utils.Specification;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.apache.http.Header;
 
 import java.io.File;
-import java.util.List;
 import java.util.Objects;
 
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
-
-public class CardsSteps extends BaseService{
+public class CardsSteps extends BaseService {
 
     private final String attachmentsEndPoint = "/attachments/";
     private final String checkItemsEndPoint = "/checkItemStates";
@@ -48,7 +39,7 @@ public class CardsSteps extends BaseService{
 
     @Step("Get custom fields on card: {cardId}, field = {field}")
     public Response getFieldCard(String cardId) {
-       Objects.requireNonNull(cardId, "ID карточки не может быть null");
+        Objects.requireNonNull(cardId, "ID карточки не может быть null");
         return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.CUSTOM_FIELDS_BASE_PATH, requestSpecification);
     }
 
@@ -59,7 +50,7 @@ public class CardsSteps extends BaseService{
 
     @Step("Get actions on card: {cardId}, attachments = {attachments}")
     public Response getAttachmentsCard(String cardId) {
-            return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
+        return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
     }
 
     @Step("Add attachment that is located - {'filePathOfAnAttachment'}, on a card with id - {'cardId'}")
@@ -89,7 +80,7 @@ public class CardsSteps extends BaseService{
 
     @Step("Get checklists on a card with id - {'cardId'}")
     public Response getChecklistsOnACard(String cardId) {
-        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + checklistsEndPoint, requestSpecification );
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + checklistsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }

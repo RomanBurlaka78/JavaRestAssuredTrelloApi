@@ -2,16 +2,15 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
-import api.steps.CardsSteps;
+import api.controllers.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.HashMap;
-import java.util.Map;
-
 import java.util.List;
+import java.util.Map;
 
 @Epic("API Tests")
 @Feature("Cards Validation")
@@ -25,26 +24,24 @@ public class CardsApiTest extends BaseTest {
     private String listId;
     private String createdAttachmentId;
 
-
-
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = cardsSteps.createABord(bordName);
         listId = cardsSteps.getIdOfTheFirstListOnABoard(boardId);
     }
 
-//    @AfterClass
-//    public void tearDown(){
-//        cardsSteps.deleteBoard(boardId);
-//    }
+    @AfterClass
+    public void tearDown() {
+        cardsSteps.deleteBoard(boardId);
+    }
 
     @Test(priority = 0)
     @Story("Verify cards")
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewCard() {
-        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
-        queryParametersForRequestSpec.put("idList",listId);
+        Map<String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList", listId);
 
         Response response = cardsSteps.createACard(queryParametersForRequestSpec);
         cardId = response.jsonPath().get("id");
@@ -92,7 +89,7 @@ public class CardsApiTest extends BaseTest {
         Response response = cardsSteps.getActionsCard(cardId, PathParameters.ACTIONS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
-        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(arrayList.size(), 0);
     }
 
@@ -182,17 +179,18 @@ public class CardsApiTest extends BaseTest {
         String checklistNameReceivedBack = response.jsonPath().getString("name");
 
         Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(checklistNameReceivedBack, nameForCheckListCreated);
 
     }
 
-//    @Test(priority = 9)
-//    @Story("Verify cards")
-//    @Description("Delete a card")
-//    @Severity(SeverityLevel.CRITICAL)
-//    public void testDeleteCard() {
-//        Response response = cardsSteps.deleteCard(cardId);
-//
-//        Assert.assertEquals(response.getStatusCode(),200);
-//    }
+        @Test(priority = 9)
+    @Story("Verify cards")
+    @Description("Delete a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testDeleteCard() {
+        Response response = cardsSteps.deleteCard(cardId);
+
+        Assert.assertEquals(response.getStatusCode(),200);
+    }
 }

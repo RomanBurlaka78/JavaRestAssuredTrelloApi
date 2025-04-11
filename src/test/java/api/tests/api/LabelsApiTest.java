@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.steps.LabelsSteps;
+import api.controllers.LabelsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -20,12 +20,12 @@ public class LabelsApiTest {
     private String labelId;
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = labelsSteps.createABord(boardName);
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         labelsSteps.deleteBoard(boardId);
     }
 
@@ -52,7 +52,7 @@ public class LabelsApiTest {
     public void testGetLabel() {
         Response response = labelsSteps.getLabel(labelId);
 
-        Assert.assertEquals(response.getStatusCode(),200);
+        Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString("id"), labelId);
     }
 
@@ -63,7 +63,7 @@ public class LabelsApiTest {
     public void testUpdateLabel() {
         String newName = "New Label from API";
         String newColor = "blue";
-        Response response = labelsSteps.updateLabel(labelId, newName,newColor);
+        Response response = labelsSteps.updateLabel(labelId, newName, newColor);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString("name"), newName);
@@ -94,9 +94,9 @@ public class LabelsApiTest {
 
     @DataProvider()
     public Object[][] createUpdateFieldLabel() {
-        return new Object[][] {
-                { "color", "green" },
-                { "name", "Name field Label from API"},
+        return new Object[][]{
+                {"color", "green"},
+                {"name", "Name field Label from API"},
         };
     }
 }

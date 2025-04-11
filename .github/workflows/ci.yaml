@@ -33,12 +33,26 @@ jobs:
         run: |
           echo "key=${{ secrets.key }}" > src/test/resources/config.properties
           echo "token=${{ secrets.token }}" >> src/test/resources/config.properties
+          echo "login=${{ secrets.login }}" >> src/test/resources/config.properties
+          echo "password=${{ secrets.password }}" >> src/test/resources/config.properties
 
       - name: Build with Docker Compose
         run: docker-compose build
 
-      - name: Start Docker Compose services
-        run: docker-compose up
+      - name: Start Docker Compose services (API)
+        run: docker-compose up -d
+
+      - name: Verify containers are running
+        run: docker ps
+
+      - name: Prepare directories
+        run: |
+          mkdir -p target/allure-results
+          sudo chmod -R 777 target
+
+      - name: Run UI tests
+        run: mvn test -Dgroups="ui" -DforkCount=1 -DreuseForks=false
+
 
       - name: Attach screenshots
         if: failure()
@@ -76,6 +90,7 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
-      - name: Stop Docker Compose services
+      - name: Stop containers
         if: always()
-        run: docker-compose down
+        run: |
+          docker-compose down

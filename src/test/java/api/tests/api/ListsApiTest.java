@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.steps.ListsSteps;
+import api.controllers.ListsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -25,13 +25,13 @@ public class ListsApiTest {
     private final String newNameForTheList = "List with Updated name";
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = listsSteps.createABord(bordName);
         toDoListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         listsSteps.deleteBoard(boardId);
     }
 
@@ -79,7 +79,7 @@ public class ListsApiTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testArchiveAllCardsOnTheList() {
 
-        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        Map<String, String> queryParametersForRequestSpec = new HashMap<>();
         queryParametersForRequestSpec.put("idList", toDoListId);
         queryParametersForRequestSpec.put("name", "nameForCard");
 
@@ -96,7 +96,7 @@ public class ListsApiTest {
     @Description("Move all cards from one list to another")
     @Severity(SeverityLevel.CRITICAL)
     public void testMoveAllCardsFromOneListToAnother() {
-        Map <String, String> queryParametersForRequestSpec = new HashMap<>();
+        Map<String, String> queryParametersForRequestSpec = new HashMap<>();
         queryParametersForRequestSpec.put("idList", newCreatedListId);
         queryParametersForRequestSpec.put("name", "nameForCard");
 
@@ -140,7 +140,7 @@ public class ListsApiTest {
         System.out.println(response.asPrettyString());
         List arrayList = response.jsonPath().getList("id");
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(arrayList.size(),2);
+        Assert.assertEquals(arrayList.size(), 2);
     }
 
     @Test(priority = 5)

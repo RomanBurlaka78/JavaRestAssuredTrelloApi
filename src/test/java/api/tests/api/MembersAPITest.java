@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.steps.MembersSteps;
+import api.controllers.MembersSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -27,14 +27,14 @@ public class MembersAPITest {
     private String starId;
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = membersSteps.createABord(bordName);
         firstMemberId = membersSteps.getTheMembersOfABoard(boardId).jsonPath().getString("id");
-        firstMemberId = firstMemberId.substring(1, firstMemberId.length()-1);
+        firstMemberId = firstMemberId.substring(1, firstMemberId.length() - 1);
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         membersSteps.deleteBoard(boardId);
     }
 
@@ -42,7 +42,8 @@ public class MembersAPITest {
     @Story("Verify member")
     @Description("Get a member")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetAMember(){
+    public void testGetAMember() {
+
         Response response = membersSteps.getAMember(firstMemberId);
         String memberIdReceivedBack = response.jsonPath().getString("id");
 
@@ -139,6 +140,36 @@ public class MembersAPITest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetMemberBoardStars() {
         Response response = membersSteps.getMemberBoardStars(firstMemberId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test
+    @Story("Verify Get Boards that Member belongs to")
+    @Description("Lists the boards that the user is a member of")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetBoardsMemberBelongs() {
+        Response response = membersSteps.getBoardsMemberBelongs(firstMemberId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test
+    @Story("Verify Get Boards the Member has been invited to")
+    @Description("Get the boards the member has been invited to")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetBoardsMemberInvited() {
+        Response response = membersSteps.getBoardsMemberInvited(firstMemberId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test
+    @Story("Verify Get Cards the Member is on")
+    @Description("Gets the cards a member is on")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetCardsMember() {
+        Response response = membersSteps.getCardsMember(firstMemberId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }

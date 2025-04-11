@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All test" parallel="tests" thread-count="6">
-    <test name="Tests with xml">
+    <test name="Tests API with xml">
         <classes>
             <class name="api.tests.api.BoardApiTest"/>
             <class name="api.tests.api.ListsApiTest"/>
@@ -10,6 +10,11 @@
             <class name="api.tests.api.ActionsAPITest"/>
             <class name="api.tests.api.ChecklistsAPITest"/>
             <class name="api.tests.api.MembersAPITest"/>
+        </classes>
+    </test>
+    <test name="Test UI with xml">
+        <classes>
+            <class name="api.tests.ui.BoardsUiTest"/>
         </classes>
     </test>
 </suite>
