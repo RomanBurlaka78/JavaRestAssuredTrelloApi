@@ -33,10 +33,10 @@ public class CardsApiTest extends BaseTest {
         listId = cardsSteps.getIdOfTheFirstListOnABoard(boardId);
     }
 
-    @AfterClass
-    public void tearDown(){
-        cardsSteps.deleteBoard(boardId);
-    }
+//    @AfterClass
+//    public void tearDown(){
+//        cardsSteps.deleteBoard(boardId);
+//    }
 
     @Test(priority = 0)
     @Story("Verify cards")
@@ -171,12 +171,28 @@ public class CardsApiTest extends BaseTest {
     }
 
     @Test(priority = 8)
-    @Story("Verify cards")
-    @Description("Delete a card")
+    @Story("Verify attachments on a cards")
+    @Description("Get all available checkItems on a card")
     @Severity(SeverityLevel.CRITICAL)
-    public void testDeleteCard() {
-        Response response = cardsSteps.deleteCard(cardId);
+    public void testCreateChecklistOnACard() {
 
-        Assert.assertEquals(response.getStatusCode(),200);
+        String nameForCheckListCreated = "CardsAPITest";
+
+        Response response = cardsSteps.createAChecklist(cardId, nameForCheckListCreated);
+        String checklistNameReceivedBack = response.jsonPath().getString("name");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(checklistNameReceivedBack, nameForCheckListCreated);
+
     }
+
+//    @Test(priority = 9)
+//    @Story("Verify cards")
+//    @Description("Delete a card")
+//    @Severity(SeverityLevel.CRITICAL)
+//    public void testDeleteCard() {
+//        Response response = cardsSteps.deleteCard(cardId);
+//
+//        Assert.assertEquals(response.getStatusCode(),200);
+//    }
 }

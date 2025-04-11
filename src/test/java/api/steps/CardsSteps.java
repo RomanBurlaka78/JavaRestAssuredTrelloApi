@@ -93,6 +93,14 @@ public class CardsSteps extends BaseService{
         initRequestSpecification();
         return response;
     }
+
+//    @Step("Create checklist on a card with id - {'cardId'}")
+//    public Response createChecklistOnACard(String cardId) {
+//
+//        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH + cardId + checklistsEndPoint, requestSpecification);
+//        initRequestSpecification();
+//        return response;
+//    }
 }
 
 

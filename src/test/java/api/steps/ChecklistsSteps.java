@@ -10,15 +10,6 @@ public class ChecklistsSteps extends BaseService{
     private final String cardsEndPoint = "/cards";
     private final String checkItemsEndPoint = "/checkItems/";
 
-    @Step("Create a checklist on a card with id - {'idCard'}, with a name - {'nameOfAChecklistBeingCreated'}")
-    public Response createAChecklist(String idCard, String nameOfAChecklistBeingCreated) {
-        requestSpecification.queryParam("idCard", idCard);
-        requestSpecification.queryParam("name", nameOfAChecklistBeingCreated);
-        Response response = apiClient.post(PathParameters.CHECKLISTS_BASE_PATH, requestSpecification);
-        initRequestSpecification();
-        return response;
-    }
-
     @Step("Get all fields of a checklist with id - {'checklistId'}")
     public Response getCheckList(String checklistId) {
         Response response = apiClient.get(PathParameters.CHECKLISTS_BASE_PATH + checklistId, requestSpecification);
