@@ -1,7 +1,6 @@
 package api.tests.ui;
 
 import api.base.BaseUiTest;
-import api.base.TestData;
 import api.controllers.BoardSteps;
 import api.controllers.ui.UiBoardSteps;
 import io.qameta.allure.*;
@@ -12,8 +11,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static api.base.TestData.boardId;
-import static api.base.TestData.bordName;
+import static api.base.TestData.*;
 
 @Epic("UI Tests")
 @Feature("Board Validation")
@@ -24,13 +22,12 @@ public class BoardsUiTest extends BaseUiTest {
     private BoardSteps boardSteps = new BoardSteps();
     private UiBoardSteps uiBoardSteps = new UiBoardSteps();
 
-
     @Test(priority = 112, groups = "ui")
     @Story("Board")
     @Description("Create Board")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateUiBoard() throws IOException {
-        Response response = boardSteps.createBoard(bordName);
+        Response response = boardSteps.createBoard(BOARD_NAME);
         boardId = response.path("id").toString();
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
@@ -56,10 +53,10 @@ public class BoardsUiTest extends BaseUiTest {
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)
     public void testGetUiBoard() {
-        Response response = boardSteps.getBoard(TestData.boardId);
+        Response response = boardSteps.getBoard(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.body().jsonPath().get("id").toString(), TestData.boardId);
+        Assert.assertEquals(response.body().jsonPath().get("id").toString(), boardId);
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Api Board");
 
         uiBoardSteps.getBoardNameUI();
