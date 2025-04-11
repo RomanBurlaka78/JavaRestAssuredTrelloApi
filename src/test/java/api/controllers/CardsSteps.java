@@ -71,15 +71,52 @@ public class CardsSteps extends BaseService {
         return response;
     }
 
-    @Step("Get checkItems on a card with id - {'cardId'}")
-    public Response getCheckItemsOnACard(String cardId) {
+//    @Step("Get checkItems on a card with id - {'cardId'}")
+//    public Response getCheckItemsOnACard(String cardId) {
+//        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + checkItemsEndPoint, requestSpecification);
+//        initRequestSpecification();
+//        return response;
+//    }
+//
+//    @Step("Get checklists on a card with id - {'cardId'}")
+//    public Response getChecklistsOnACard(String cardId) {
+//        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + checklistsEndPoint, requestSpecification);
+//        initRequestSpecification();
+//        return response;
+//    }
+
+
+    @Step("Get Attachment on card: {cardId}, attachments = {attachments}, idAttachment = {idAttachment} ")
+    public Response getSpecificAttachmentsCard(String cardId, String field) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Delete a Attachment: id card = {cardID}")
+    public Response deleteAttachmentCard(String cardID, String attachmentId) {
+        Response response = apiClient.delete(PathParameters.CARDS_BASE_PATH + cardID + PathParameters.ATTACHMENTS_BASE_PATH + "/" + attachmentId, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+    @Step("Get custom fields on card: {cardId}, field = {field}")
+    public Response getBoardCard(String cardId) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get checkItems on card: {cardId}, field = {field}")
+    public Response getCheckItemsCard(String cardId) {
         Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + checkItemsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }
 
-    @Step("Get checklists on a card with id - {'cardId'}")
-    public Response getChecklistsOnACard(String cardId) {
+    @Step("Get Checklists on card: {cardId}")
+    public Response getChecklistsCard(String cardId) {
+        requestSpecification.queryParam("checkItems", "all");
+        requestSpecification.queryParam("checkItem_fields", "id,name,state");
         Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + checklistsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
