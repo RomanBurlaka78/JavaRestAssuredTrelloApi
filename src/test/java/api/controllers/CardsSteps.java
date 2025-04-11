@@ -12,6 +12,10 @@ public class CardsSteps extends BaseService {
     private final String attachmentsEndPoint = "/attachments/";
     private final String checkItemsEndPoint = "/checkItemStates";
     private final String checklistsEndPoint = "/checklists";
+    private final String listsEndPoint = "/list";
+    private final String membersEndPoint = "/Members";
+    private final String stickersEndPoint = "/stickers";
+
 
     @Step("Get a card: id card = {cardId}")
     public Response getCard(String cardId) {
@@ -121,6 +125,29 @@ public class CardsSteps extends BaseService {
         initRequestSpecification();
         return response;
     }
+
+
+    @Step("Get list on card: {cardId}")
+    public Response getListCard(String cardId) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + listsEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get list on card: {cardId}")
+    public Response getMembersCard(String cardId) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + membersEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get list on card: {cardId}")
+    public Response getStickersCard(String cardId) {
+        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + stickersEndPoint, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
 
 }
 
