@@ -43,16 +43,30 @@ jobs:
         run: docker-compose up -d
 
       - name: Verify containers are running
-        run: docker ps
-
-      - name: Prepare directories
         run: |
-          mkdir -p target/allure-results
-          sudo chmod -R 777 target
+          sleep 10  # Даем время контейнерам запуститься
+          docker-compose ps
+          docker ps -a
+
+      - name: Prepare test environment
+        run: |
+            mkdir -p target/allure-results
+            mkdir -p screenshots
+            sudo chmod -R 777 target
+            sudo chmod -R 777 screenshots
 
       - name: Run UI tests
-        run: mvn test -Dgroups="ui" -DforkCount=1 -DreuseForks=false
+        run: |
+            mvn test -Dgroups="ui" -DforkCount=1 -DreuseForks=false
+            # Дополнительная проверка результатов тестов
+            test -f target/surefire-reports/TEST-*.xml || echo "No test results found"
 
+      - name: Verify test results
+        run: |
+            ls -la target/allure-results
+            ls -la target/surefire-reports
+            [ -n "$(ls -A target/allure-results)" ] || { echo "Allure results directory is empty"; exit 1; }
+          
 
       - name: Attach screenshots
         if: failure()
