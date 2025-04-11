@@ -6,7 +6,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -27,17 +26,19 @@ public class ChecklistsAPITest {
     private String checkItemId;
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = checklistsSteps.createABord(bordName);
         toDoListId = checklistsSteps.getIdOfTheFirstListOnABoard(boardId);
         cardId = checklistsSteps.
-                createACard(new HashMap<>()
-                {{put("idList",toDoListId);put("name", "card");}})
+                createACard(new HashMap<>() {{
+                    put("idList", toDoListId);
+                    put("name", "card");
+                }})
                 .jsonPath().getString("id");
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         checklistsSteps.deleteBoard(boardId);
     }
 
@@ -45,7 +46,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Create a checklist on a card")
     @Severity(SeverityLevel.NORMAL)
-    public void testCreateAChecklist(){
+    public void testCreateAChecklist() {
 
         Response response = checklistsSteps.createAChecklist(cardId, nameOfAChecklistCreated);
 
@@ -59,7 +60,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Get a checklist on a card")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetAChecklist(){
+    public void testGetAChecklist() {
 
         Response response = checklistsSteps.getCheckList(checklistId);
         String actualIdOfChecklistReceived = response.jsonPath().getString("id");
@@ -71,7 +72,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Update a name of a checklist")
     @Severity(SeverityLevel.NORMAL)
-    public void testUpdateAChecklist(){
+    public void testUpdateAChecklist() {
 
         String nameOfAFieldToBeUpdated = "name";
         String valueForAFieldToBeUpdated = "New name for checklist";
@@ -87,7 +88,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Get a 'pos' field on a checklist")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetFieldOnAChecklist(){
+    public void testGetFieldOnAChecklist() {
 
         String expectedPosOfAChecklist = "16384";
         String fieldToGetBackFromTheChecklist = "/pos";
@@ -103,7 +104,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Get a board checklist is on")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetTheBoardTheChecklistIsOn(){
+    public void testGetTheBoardTheChecklistIsOn() {
 
         Response response = checklistsSteps.getTheBoardTheChecklistIsOn(checklistId);
         String actualIdOfABoardReceived = response.jsonPath().getString("id");
@@ -115,11 +116,11 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Get the card checklist is on")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetTheCardAChecklistIsOn(){
+    public void testGetTheCardAChecklistIsOn() {
 
         Response response = checklistsSteps.getTheCardAChecklistIsOn(checklistId);
         String actualIdOfACardReceived = response.jsonPath().getString("id");
-        actualIdOfACardReceived = actualIdOfACardReceived.substring(1,actualIdOfACardReceived.length()-1);  //have to remove square brackets
+        actualIdOfACardReceived = actualIdOfACardReceived.substring(1, actualIdOfACardReceived.length() - 1);  //have to remove square brackets
 
         Assert.assertEquals(actualIdOfACardReceived, cardId);
     }
@@ -128,7 +129,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Get all checkItems presented on a checklist")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetCheckitemsOnAChecklist(){
+    public void testGetCheckitemsOnAChecklist() {
 
         String emptyString = "[]";
 
@@ -142,7 +143,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Create new checkItem on a checklist")
     @Severity(SeverityLevel.NORMAL)
-    public void testCreateCheckitemOnChecklist(){
+    public void testCreateCheckitemOnChecklist() {
         String nameForNewCheckItem = "Mark";
 
         Response response = checklistsSteps.createCheckitemOnChecklist(checklistId, nameForNewCheckItem);
@@ -156,7 +157,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Get specific checkItem on a checklist")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetACheckitemOnAChecklist(){
+    public void testGetACheckitemOnAChecklist() {
 
         Response response = checklistsSteps.getACheckitemOnAChecklist(checklistId, checkItemId);
         String actualCheckItemIdReceived = response.jsonPath().getString("id");
@@ -168,7 +169,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Delete specific checkItem from checklist")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeleteCheckitemFromChecklist(){
+    public void testDeleteCheckitemFromChecklist() {
 
         String expectedStringResult = "[:]";
 
@@ -182,7 +183,7 @@ public class ChecklistsAPITest {
     @Story("Checklists")
     @Description("Delete specific checkItem from checklist")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeleteAChecklist(){
+    public void testDeleteAChecklist() {
 
         String expectedStringResult = "[:]";
 

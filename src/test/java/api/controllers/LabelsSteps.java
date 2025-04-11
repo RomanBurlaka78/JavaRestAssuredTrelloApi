@@ -1,12 +1,8 @@
 package api.controllers;
 
 import api.base.PathParameters;
-import api.utils.ApiClient;
-import api.utils.Specification;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 public class LabelsSteps extends BaseService {
 

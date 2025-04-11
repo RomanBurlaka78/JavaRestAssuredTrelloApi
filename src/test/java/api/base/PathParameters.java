@@ -11,5 +11,4 @@ final public class PathParameters {
     public final static String CHECKLISTS_BASE_PATH = "/checklists/";
     public final static String LABELS_BASE_PATH = "/labels";
     public final static String ATTACHMENTS_BASE_PATH = "/attachments";
-
 }

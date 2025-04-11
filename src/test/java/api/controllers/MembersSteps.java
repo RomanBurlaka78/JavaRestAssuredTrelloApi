@@ -3,7 +3,6 @@ package api.controllers;
 import api.base.PathParameters;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.testng.annotations.AfterMethod;
 
 public class MembersSteps extends BaseService {
 
@@ -77,6 +76,27 @@ public class MembersSteps extends BaseService {
     @Step("List a member's board stars: memberId = {memberId}")
     public Response getMemberBoardStars(String memberId) {
         Response response = apiClient.get(PathParameters.MEMBERS_BASE_PATH + memberId + "/boardStars", requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Lists the boards that the user is a member of:  memberId = {memberId}")
+    public Response getBoardsMemberBelongs(String memberId) {
+        Response response = apiClient.get(PathParameters.MEMBERS_BASE_PATH + memberId + "/boards", requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Get the boards the member has been invited to:  memberId = {memberId}")
+    public Response getBoardsMemberInvited(String memberId) {
+        Response response = apiClient.get(PathParameters.MEMBERS_BASE_PATH + memberId + "/boardsInvited", requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
+
+    @Step("Gets the cards a member is on:  memberId = {memberId}")
+    public Response getCardsMember(String memberId) {
+        Response response = apiClient.get(PathParameters.MEMBERS_BASE_PATH + memberId + "/cards", requestSpecification);
         initRequestSpecification();
         return response;
     }

@@ -9,7 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,15 +32,15 @@ public class ActionsAPITest {
     private String idOfReaction;
 
     private final String dateEndPoint = "/date";
-    private final String boardEndPoint ="/board";
-    private final String cardEndPoint ="/card";
-    private final String listEnPoint ="/list";
-    private final String memberCreatorEndPoint ="/memberCreator";
-    private final String organizationEndPoint ="/organization";
+    private final String boardEndPoint = "/board";
+    private final String cardEndPoint = "/card";
+    private final String listEnPoint = "/list";
+    private final String memberCreatorEndPoint = "/memberCreator";
+    private final String organizationEndPoint = "/organization";
 
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         boardId = actionsSteps.createABord(bordName);
         toDoListId = actionsSteps.getIdOfTheFirstListOnABoard(boardId);
         actiontId = actionsSteps.getIdOfTheFirestActionOnABoard(boardId);
@@ -49,7 +49,7 @@ public class ActionsAPITest {
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         actionsSteps.deleteBoard(boardId);
     }
 
@@ -57,7 +57,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get the action from a board")
     @Severity(SeverityLevel.NORMAL)
-    public void getAnAction(){
+    public void getAnAction() {
         Response response = actionsSteps.getAnAction(actiontId);
         System.out.println(response.jsonPath().getString("idMemberCreator"));
         System.out.println(response.asPrettyString());
@@ -68,12 +68,12 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Update a comment of the action")
     @Severity(SeverityLevel.NORMAL)
-    public void testUpdateACommentOfTheAction(){
+    public void testUpdateACommentOfTheAction() {
         String commentForAnAction = "Some comment, that was send from JavaRestAssured project";
         String updatedCommentForAnAction = "Comment has been successfully updated";
         Map<String, String> queryParametersForRequestSpec = new HashMap<>();
-        queryParametersForRequestSpec.put("idList",toDoListId);
-        queryParametersForRequestSpec.put("name","card for actions");
+        queryParametersForRequestSpec.put("idList", toDoListId);
+        queryParametersForRequestSpec.put("name", "card for actions");
 
         cardId = actionsSteps.createACard(queryParametersForRequestSpec).jsonPath().getString("id");
 
@@ -87,12 +87,12 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get a field 'date' of an action")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetASpecificFieldOnAnAction(){
+    public void testGetASpecificFieldOnAnAction() {
 
         LocalDate currentDateTime = LocalDate.now();
         Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, dateEndPoint);
 
-        String recivedDateOfAnAction = response.jsonPath().getString("_value").substring(0,10);
+        String recivedDateOfAnAction = response.jsonPath().getString("_value").substring(0, 10);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(recivedDateOfAnAction, currentDateTime.toString());
@@ -102,7 +102,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get the board to which an action refers to")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetTheBoardForAnAction(){
+    public void testGetTheBoardForAnAction() {
 
         Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, boardEndPoint);
         String boardNameRecivedFromApiCall = response.jsonPath().getString("name");
@@ -115,7 +115,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get the card the action belong to")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetTheCardForAnAction(){
+    public void testGetTheCardForAnAction() {
 
         Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, cardEndPoint);
         String cardIdRecivedFromApiCall = response.jsonPath().getString("id");
@@ -128,7 +128,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get the list the action belong to")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetTheListForAnAction(){
+    public void testGetTheListForAnAction() {
 
         Response response = actionsSteps.getTheResourceOfAnAction(actionIdAfterCreatingACard, listEnPoint);
         String listIdRecivedFromApiCall = response.jsonPath().getString("id");
@@ -141,7 +141,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get the member creator the action belong to")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetTheMemberCreatorOfAnAction(){
+    public void testGetTheMemberCreatorOfAnAction() {
 
         Response response = actionsSteps.getTheResourceOfAnAction(actiontId, memberCreatorEndPoint);
         String memberCreatorIdRecivedFromApiCall = response.jsonPath().getString("id");
@@ -154,7 +154,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get the organization that belong to action ")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetTheOrganizationOfAnAction(){
+    public void testGetTheOrganizationOfAnAction() {
 
         Response response = actionsSteps.getTheResourceOfAnAction(actiontId, organizationEndPoint);
 
@@ -167,7 +167,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get the reactions related to the specific action ")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetActions_Reactions(){
+    public void testGetActions_Reactions() {
 
         Response response = actionsSteps.getActions_Reactions(actiontId);
 
@@ -179,7 +179,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Create reaction for specific action ")
     @Severity(SeverityLevel.NORMAL)
-    public void testCreateReactionForAction(){
+    public void testCreateReactionForAction() {
 
         String expectedEmojiName = "GRINNING FACE";
         Response response = actionsSteps.createReactionForAction(actionIdAfterCreatingACard);
@@ -193,7 +193,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Get reaction of specific action")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetActionsReaction(){
+    public void testGetActionsReaction() {
 
         Response response = actionsSteps.getActionsReaction(actionIdAfterCreatingACard, idOfReaction);
         String idOfReactionReceivedBack = response.jsonPath().getString("id");
@@ -205,7 +205,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Delete specific reaction of specific action")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeleteActionsReaction(){
+    public void testDeleteActionsReaction() {
 
         JSONObject jsonObject = new JSONObject();
 
@@ -217,7 +217,7 @@ public class ActionsAPITest {
     @Story("Actions")
     @Description("Delete an action via id, and make sure it is deleted by trying to get the same action back")
     @Severity(SeverityLevel.NORMAL)
-    public void testDeleteAnAction(){
+    public void testDeleteAnAction() {
         String responseMessageForDeletedAction = "The requested resource was not found.";
         Response response = actionsSteps.deleteAnAction(actionIdAfterCreatingACard);
 

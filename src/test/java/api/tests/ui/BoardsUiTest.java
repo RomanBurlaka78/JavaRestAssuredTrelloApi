@@ -1,19 +1,19 @@
 package api.tests.ui;
 
 import api.base.BaseUiTest;
+import api.base.TestData;
 import api.controllers.BoardSteps;
 import api.controllers.ui.UiBoardSteps;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
-import api.base.*;
 
 import java.io.IOException;
 
-import static api.base.TestData.*;
+import static api.base.TestData.boardId;
+import static api.base.TestData.bordName;
 
 @Epic("UI Tests")
 @Feature("Board Validation")

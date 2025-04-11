@@ -1,12 +1,9 @@
 package api.utils;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import static io.restassured.RestAssured.given;
 
 public class ApiClient {
 

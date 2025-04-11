@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
-import java.io.IOException;
 import java.time.Duration;
 
 public class UiCardSteps extends BaseUiTest {

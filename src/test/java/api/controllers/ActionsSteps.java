@@ -6,8 +6,8 @@ import io.restassured.response.Response;
 
 public class ActionsSteps extends BaseService {
 
-    private String textEndPoint ="/text";
-    private final String reactionsEndPoint ="/reactions/";
+    private String textEndPoint = "/text";
+    private final String reactionsEndPoint = "/reactions/";
 
     @Step("Get an action with id = {actiontId} from a board")
     public Response getAnAction(String actiontId) {
@@ -39,7 +39,7 @@ public class ActionsSteps extends BaseService {
     }
 
     @Step("Get all existed reactions for action with id - {actionId}")
-    public Response getActions_Reactions(String actionId){
+    public Response getActions_Reactions(String actionId) {
         Response response = apiClient.get(PathParameters.ACTIONS_BASE_PATH + actionId + reactionsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
@@ -48,7 +48,7 @@ public class ActionsSteps extends BaseService {
     @Step("Create reaction for action with id - {actiontId}")
     public Response createReactionForAction(String actiontId) {
         requestSpecification.queryParams("shortName", "grinning");
-        Response response = apiClient.post(PathParameters.ACTIONS_BASE_PATH + actiontId + reactionsEndPoint, requestSpecification );
+        Response response = apiClient.post(PathParameters.ACTIONS_BASE_PATH + actiontId + reactionsEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
     }

@@ -1,7 +1,6 @@
 package api.controllers;
 
 import api.base.PathParameters;
-import api.controllers.BaseService;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 

@@ -1,4 +1,5 @@
 package api.base;
+
 public class TestData {
     public static String bordName = "Api Board";
     public static String boardId;

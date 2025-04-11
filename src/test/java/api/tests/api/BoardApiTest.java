@@ -6,11 +6,10 @@ import api.controllers.BoardSteps;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.List;
 
 @Epic("API Tests")
 @Feature("Board Validation")
@@ -32,7 +31,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() {
         Response response = boardSteps.createBoard(bordName);
-        boardId =  response.jsonPath().getString("id");
+        boardId = response.jsonPath().getString("id");
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -109,12 +108,12 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 5,description = "get specified field from a board")
+    @Test(priority = 5, description = "get specified field from a board")
     @Story("Bord")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetAFieldOnABord() {
         String fieldName = "/name";
-        Response response = boardSteps.getAField( boardId, fieldName);
+        Response response = boardSteps.getAField(boardId, fieldName);
 
         Assert.assertEquals(response.jsonPath().getString("_value"), bordName);
 
@@ -125,7 +124,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetActionsFromABoard() {
 
-        Response response = boardSteps.getActions( boardId,  PathParameters.ACTIONS_BASE_PATH);
+        Response response = boardSteps.getActions(boardId, PathParameters.ACTIONS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(arrayList.size(), 3);
@@ -221,7 +220,7 @@ public class BoardApiTest extends BaseTest {
         Assert.assertEquals(arrayList.size(), 1);
     }
 
-    @Test(priority = 5,description = "Invite Member to Board via email")
+    @Test(priority = 5, description = "Invite Member to Board via email")
     @Story("Bord")
     @Severity(SeverityLevel.NORMAL)
     public void testInviteMembertoBoardViaEmail() {
@@ -229,7 +228,7 @@ public class BoardApiTest extends BaseTest {
         Response response = boardSteps.putWithSpecification(boardId, PathParameters.MEMBERS_BASE_PATH);
 
         List listOfMembers = response.jsonPath().getList("members.id");
-        Assert.assertTrue(listOfMembers.size()==2);
+        Assert.assertTrue(listOfMembers.size() == 2);
     }
 
     @Test(priority = 6)

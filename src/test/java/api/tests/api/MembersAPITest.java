@@ -131,6 +131,46 @@ public class MembersAPITest {
     public void testDeleteStarBoard() {
         Response response = membersSteps.deleteStarBoard(firstMemberId, starId);
 
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
 
+    @Test
+    @Story("Verify Get a Member's boardStars")
+    @Description("List a member's board stars")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetMemberBoardStars() {
+        Response response = membersSteps.getMemberBoardStars(firstMemberId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test
+    @Story("Verify Get Boards that Member belongs to")
+    @Description("Lists the boards that the user is a member of")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetBoardsMemberBelongs() {
+        Response response = membersSteps.getBoardsMemberBelongs(firstMemberId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test
+    @Story("Verify Get Boards the Member has been invited to")
+    @Description("Get the boards the member has been invited to")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetBoardsMemberInvited() {
+        Response response = membersSteps.getBoardsMemberInvited(firstMemberId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test
+    @Story("Verify Get Cards the Member is on")
+    @Description("Gets the cards a member is on")
+    @Severity(SeverityLevel.NORMAL)
+    public void testGetCardsMember() {
+        Response response = membersSteps.getCardsMember(firstMemberId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
     }
 }

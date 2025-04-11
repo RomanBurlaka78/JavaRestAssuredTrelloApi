@@ -1,17 +1,8 @@
 package api.controllers;
 
 import api.base.PathParameters;
-import api.utils.ApiClient;
-import api.utils.Specification;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import  api.controllers.BaseService;
-import io.restassured.specification.RequestSpecification;
-
-import java.util.List;
-
-import static io.restassured.RestAssured.given;
 
 public class ListsSteps extends BaseService {
 
@@ -30,7 +21,7 @@ public class ListsSteps extends BaseService {
         requestSpecification.queryParam("name", nameOfTheList);
         requestSpecification.queryParam("idBoard", boardId);
 
-        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH, requestSpecification );
+        Response response = apiClient.post(PathParameters.LISTS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -39,7 +30,7 @@ public class ListsSteps extends BaseService {
     public Response updateANameForList(String listId, String newNameForTheList) {
 
         requestSpecification.queryParam("name", newNameForTheList);
-        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + listId, requestSpecification );
+        Response response = apiClient.put(PathParameters.LISTS_BASE_PATH + listId, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -63,7 +54,7 @@ public class ListsSteps extends BaseService {
     @Step("Move all cards from the list with id = {newCreatedListId} to the list with id = {IdOfTheListThatTheCardsShouldBeMovedTo}")
     public Response moveAllCardsFromOneListToAnother(String newCreatedListId, String boardId, String IdOfTheListThatTheCardsShouldBeMovedTo) {
         requestSpecification.queryParam("idBoard", boardId);
-        requestSpecification.queryParam("idList",IdOfTheListThatTheCardsShouldBeMovedTo);
+        requestSpecification.queryParam("idList", IdOfTheListThatTheCardsShouldBeMovedTo);
 
         Response response = apiClient.post(PathParameters.LISTS_BASE_PATH + newCreatedListId + moveAllCardsEndPoint, requestSpecification);
         initRequestSpecification();
