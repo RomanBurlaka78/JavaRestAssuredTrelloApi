@@ -1,6 +1,0 @@
-"BROKEN","EPIC","FAILED","FEATURE","PASSED","SKIPPED","STORY","UNKNOWN"
-"1","UI Tests","1","Board Validation","0","0","Board","0"
-"0","API Tests","0","Cards Validation","0","1","Verify cards","0"
-"0","API Tests","0","Labels Validation","0","1","Verify created label","0"
-"0","API Tests","0","Lists Validation","0","1","lists","0"
-"0","UI Tests","1","Board Validation","0","0","Bord","0"

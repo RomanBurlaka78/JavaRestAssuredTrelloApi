@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"Get board","212","testGetUiBoard","All test","Thu Apr 10 11:13:00 GMT 2025","failed","Thu Apr 10 11:13:00 GMT 2025","api.tests.ui.BoardsUiTest","Test UI with xml","api.tests.ui.BoardsUiTest","testGetUiBoard"
-"Create a new Card","0","testCreateNewCard","All test","Thu Apr 10 11:13:00 GMT 2025","skipped","Thu Apr 10 11:13:00 GMT 2025","api.tests.api.CardsApiTest","Tests  API with xml","api.tests.api.CardsApiTest","testCreateNewCard"
-"Create Board","3867","testCreateUiBoard","All test","Thu Apr 10 11:12:56 GMT 2025","broken","Thu Apr 10 11:12:59 GMT 2025","api.tests.ui.BoardsUiTest","Test UI with xml","api.tests.ui.BoardsUiTest","testCreateUiBoard"
-"Create a new Label on a Board","1","testCreateLabel","All test","Thu Apr 10 11:13:01 GMT 2025","skipped","Thu Apr 10 11:13:01 GMT 2025","api.tests.api.LabelsApiTest","Tests  API with xml","api.tests.api.LabelsApiTest","testCreateLabel"
-"Create a new List on a Board","1","testCreateNewList","All test","Thu Apr 10 11:12:59 GMT 2025","skipped","Thu Apr 10 11:12:59 GMT 2025","api.tests.api.ListsApiTest","Tests  API with xml","api.tests.api.ListsApiTest","testCreateNewList"
-"Delete board","135","testDeleteUiBoard","All test","Thu Apr 10 11:13:00 GMT 2025","failed","Thu Apr 10 11:13:00 GMT 2025","api.tests.ui.BoardsUiTest","Test UI with xml","api.tests.ui.BoardsUiTest","testDeleteUiBoard"
