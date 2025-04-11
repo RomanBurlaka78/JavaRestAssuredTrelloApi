@@ -185,6 +185,22 @@ public class CardsApiTest extends BaseTest {
     }
 
     @Test(priority = 3)
+    @Story("Cards")
+    @Description("Get all available checkItems on a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testCreateChecklistOnACard() {
+
+        String nameForCheckListCreated = "CardsAPITest";
+
+        Response response = cardsSteps.createAChecklist(cardId, nameForCheckListCreated);
+        String checklistNameReceivedBack = response.jsonPath().getString("name");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(checklistNameReceivedBack, nameForCheckListCreated);
+
+    }
+
+    @Test(priority = 3)
     @Story("Verify Checklists on a card")
     @Description("Get the Checklists on a Card")
     @Severity(SeverityLevel.CRITICAL)
