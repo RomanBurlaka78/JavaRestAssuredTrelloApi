@@ -123,7 +123,7 @@ public class CardsApiTest extends BaseTest {
     }
 
     @Test(priority = 7)
-    @Story("Verify attachments on a cards")
+    @Story("Cards")
     @Description("Get an attachment on a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetAnAttachmentOnACard() {
@@ -136,7 +136,7 @@ public class CardsApiTest extends BaseTest {
     }
 
     @Test(priority = 7)
-    @Story("Verify attachments on a cards")
+    @Story("Cards")
     @Description("Get all available checkItems on a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetCheckItemsOnACard() {
@@ -152,7 +152,7 @@ public class CardsApiTest extends BaseTest {
     }
 
     @Test(priority = 7)
-    @Story("Verify attachments on a cards")
+    @Story("Cards")
     @Description("Get all available checkItems on a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetChecklistsOnACard() {
@@ -168,7 +168,7 @@ public class CardsApiTest extends BaseTest {
     }
 
     @Test(priority = 8)
-    @Story("Verify attachments on a cards")
+    @Story("Cards")
     @Description("Get all available checkItems on a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateChecklistOnACard() {
@@ -179,13 +179,12 @@ public class CardsApiTest extends BaseTest {
         String checklistNameReceivedBack = response.jsonPath().getString("name");
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(checklistNameReceivedBack, nameForCheckListCreated);
 
     }
 
-        @Test(priority = 9)
-    @Story("Verify cards")
+    @Test(priority = 9)
+    @Story("Cards")
     @Description("Delete a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testDeleteCard() {
