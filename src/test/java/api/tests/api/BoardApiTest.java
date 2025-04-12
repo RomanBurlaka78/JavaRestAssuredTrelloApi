@@ -2,7 +2,9 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
+
 import static api.base.TestData.*;
+
 import api.controllers.BoardSteps;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -11,8 +13,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
-
-
+/**
+ * This is a example of  class comment
+ *
+ */
 
 @Epic("API Tests")
 @Feature("Board Validation")
@@ -20,20 +24,21 @@ import java.util.List;
 @Tag("api")
 public class BoardApiTest extends BaseTest {
 
-
-
     private String boardId;
     private String labelId;
     private String listId;
     private String memberId;
     private String boardStarsEnPoint = "/boardStars";
 
-    @Test(priority = 1, description = "Create Board Validation", groups = "Created_Board_and_List")
+    @Test(priority = 1, groups = "Created_Board_and_List")
     @Story("Bord")
     @Description("Get list of user")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateBoard() {
-        Response response = getBoardSteps().createBoard(BOARD_NAME);
+        /**
+         * This is example of  test public method comment
+         */
+        Response response = getBoardSteps().createBoard(BoardTestData.BOARD_NAME);
         boardId = response.jsonPath().getString("id");
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
@@ -59,7 +64,7 @@ public class BoardApiTest extends BaseTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().get("id").toString(), boardId);
-        Assert.assertEquals(response.body().jsonPath().get("name").toString(), BOARD_NAME);
+        Assert.assertEquals(response.body().jsonPath().get("name").toString(), BoardTestData.BOARD_NAME);
     }
 
     @Test(priority = 6, dependsOnMethods = "testCreateBoard")
@@ -118,7 +123,7 @@ public class BoardApiTest extends BaseTest {
         String fieldName = "/name";
         Response response = getBoardSteps().getAField(boardId, fieldName);
 
-        Assert.assertEquals(response.jsonPath().getString("_value"), BOARD_NAME);
+        Assert.assertEquals(response.jsonPath().getString("_value"), BoardTestData.BOARD_NAME);
 
     }
 
@@ -132,9 +137,12 @@ public class BoardApiTest extends BaseTest {
 
         Assert.assertEquals(arrayList.size(), 3);
 
-        //Любое действие произведённое на доске щитается actions и имеет свои cridentials, изначально
-        //количество actions=3, но если например добавить карточку то actions будет уже не 3. Actions - это любое
-        //действие на доске
+        /* TODO: (This is examle of block comments)
+         * Любое действие произведённое на доске считается actions и имеет свои credentials, изначально
+         * количество actions=3, но если например добавить карточку то actions будет уже не 3. Actions - это любое
+         * действие на доске
+         *
+         */
     }
 
     @Test(priority = 5, description = "get actions from a board")
@@ -167,7 +175,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetFilteredCardsOnABoard() {
 
         String expectedResult = "[]";
-        Response response =getBoardSteps().getFilteredCards(boardId, PathParameters.CARDS_BASE_PATH, "all");
+        Response response = getBoardSteps().getFilteredCards(boardId, PathParameters.CARDS_BASE_PATH, "all");
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);

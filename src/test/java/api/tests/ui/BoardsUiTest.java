@@ -27,7 +27,7 @@ public class BoardsUiTest extends BaseUiTest {
     @Description("Create Board")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateUiBoard() throws IOException {
-        Response response = boardSteps.createBoard(BOARD_NAME);
+        Response response = boardSteps.createBoard(BoardTestData.BOARD_NAME);
         boardId = response.path("id").toString();
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
