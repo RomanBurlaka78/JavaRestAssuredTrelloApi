@@ -1,6 +1,7 @@
 package api.utils;
 
 import api.base.PathParameters;
+import api.base.PathParameters.*;
 import api.controllers.BaseService;
 import io.restassured.response.Response;
 
@@ -13,8 +14,8 @@ import java.util.List;
 public class DeleteAllBoards extends BaseService {
 
     public List getAllTheBoardsId(List list) {
-        Response response = apiClient.get(PathParameters.MEMBERS_BASE_PATH + "me/" + PathParameters.BOARDS_BASE_PATH, requestSpecification);
-        list = apiClient.get(PathParameters.MEMBERS_BASE_PATH + "me/" + PathParameters.BOARDS_BASE_PATH, requestSpecification).jsonPath().getList("id");
+        Response response = apiClient.get(PathParameters.MEMBERS_BASE_PATH + "me/" + BoardPath.BOARDS_BASE_PATH, requestSpecification);
+        list = apiClient.get(PathParameters.MEMBERS_BASE_PATH + "me/" + BoardPath.BOARDS_BASE_PATH, requestSpecification).jsonPath().getList("id");
         return list;
     }
 
