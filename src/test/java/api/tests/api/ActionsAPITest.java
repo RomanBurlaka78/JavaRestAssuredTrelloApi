@@ -38,7 +38,7 @@ public class ActionsAPITest extends BaseTest {
     @Story("Actions")
     @Description("Get the action from a board")
     @Severity(SeverityLevel.NORMAL)
-    public void getAnAction() {
+    public void testGetAnAction() {
         Response response = getActionsSteps().getAnAction(ActionsTestData.actiontId);
 
         Assert.assertEquals(response.jsonPath().getString("id"), ActionsTestData.actiontId);
@@ -48,7 +48,7 @@ public class ActionsAPITest extends BaseTest {
     @Story("Actions")
     @Description("Update a comment of the action")
     @Severity(SeverityLevel.NORMAL)
-    public void testUpdateACommentOfTheAction() {
+    public void testUpdateAnAction() {
         String commentForAnAction = "Some comment, that was send from JavaRestAssured project";
         String updatedCommentForAnAction = "Comment has been successfully updated";
         Map<String, String> queryParametersForRequestSpec = new HashMap<>();
