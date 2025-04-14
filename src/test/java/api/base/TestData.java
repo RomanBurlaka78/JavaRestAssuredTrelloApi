@@ -1,10 +1,24 @@
 package api.base;
 
  final public class TestData {
+
     public final static class BoardTestData {
        public final static String BOARD_NAME = "Api Board";
     }
+
     public final static class ActionsTestData{
+
+       public final static  String BOARD_NAME = "Board for Actions";
+       public final static String COMMENTS_ENDPOINT = "comments";
+
+       public static String boardId;
+       public static String toDoListId;
+       public static String actiontId;
+       public static String cardId;
+       public static String actionIdAfterCreatingACard;
+       public static String idMemberCreator;
+       public static String idOrganizationThatBelongToAnAction;
+       public static String idOfReaction;
 
     }
     public final static class CardsTestData{
