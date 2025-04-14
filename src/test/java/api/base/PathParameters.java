@@ -7,7 +7,16 @@ final public class PathParameters {
 
     }
 
-    public  final static class ActionsPath {
+    public  final static class ActionsEndPoints {
+
+        public final static String DATE_ENDPOINT = "/date";
+        public final static String BOARD_ENDPOINT = "/board";
+        public final static String CARD_ENDPOINT = "/card";
+        public final static String LIST_ENDPOINT = "/list";
+        public final static String MEMBER_CREATOR_ENDPOINT = "/memberCreator";
+        public final static String ORGANIZATION_ENDPOINT = "/organization";
+
+
 
     }
 
