@@ -28,7 +28,7 @@ public class BoardsUiTest extends BaseUiTest {
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateUiBoard() throws IOException {
         Response response = boardSteps.createBoard(BoardTestData.BOARD_NAME);
-        boardId = response.path("id").toString();
+        BoardTestData.boardId = response.path("id").toString();
 
         Assert.assertTrue(!response.jsonPath().getString("id").isEmpty());
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -41,7 +41,7 @@ public class BoardsUiTest extends BaseUiTest {
     @Description("Delete board")
     @Severity(SeverityLevel.CRITICAL)
     public void testDeleteUiBoard() {
-        Response response = boardSteps.deleteABoardFromService(boardId);
+        Response response = boardSteps.deleteABoardFromService(BoardTestData.boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         uiBoardSteps.closeBrowserAndDriver();
@@ -53,10 +53,10 @@ public class BoardsUiTest extends BaseUiTest {
     @Description("Get board")
     @Severity(SeverityLevel.NORMAL)
     public void testGetUiBoard() {
-        Response response = boardSteps.getBoard(boardId);
+        Response response = boardSteps.getBoard(BoardTestData.boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.body().jsonPath().get("id").toString(), boardId);
+        Assert.assertEquals(response.body().jsonPath().get("id").toString(), BoardTestData.boardId);
         Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Api Board");
 
         uiBoardSteps.getBoardNameUI();
