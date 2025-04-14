@@ -1,7 +1,7 @@
 package api.tests.api;
 
 import api.base.BaseTest;
-import api.base.PathParameters;
+import api.base.PathParameters.*;
 import api.controllers.CardsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
@@ -101,7 +101,7 @@ public class CardsApiTest extends BaseTest {
     @Description("Get a actions on a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetActionsCard() {
-        Response response = cardsSteps.getActionsCard(cardId, PathParameters.ACTIONS_BASE_PATH);
+        Response response = cardsSteps.getActionsCard(cardId, ActionsEndPoints.ACTIONS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);

@@ -1,6 +1,7 @@
 package api.controllers;
 
 import api.base.PathParameters;
+import api.base.PathParameters.*;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
@@ -49,7 +50,7 @@ public class CardsSteps extends BaseService {
 
     @Step("Get actions on card: {cardId}, actions = {actions}")
     public Response getActionsCard(String cardId, String actions) {
-        return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
+        return apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + ActionsEndPoints.ACTIONS_BASE_PATH, requestSpecification);
     }
 
     @Step("Get actions on card: {cardId}, attachments = {attachments}")

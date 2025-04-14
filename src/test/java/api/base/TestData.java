@@ -9,7 +9,6 @@ package api.base;
     public final static class ActionsTestData{
 
        public final static  String BOARD_NAME = "Board for Actions";
-       public final static String COMMENTS_ENDPOINT = "comments";
 
        public static String boardId;
        public static String toDoListId;
