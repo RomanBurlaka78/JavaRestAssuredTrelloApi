@@ -49,7 +49,7 @@ public abstract class BaseService {
 
     @Step("Get id of the first action on a board with id = {boardId}")
     public String getIdOfTheFirestActionOnABoard(String boardId) {
-        Response response = apiClient.get(BoardPath.BOARDS_BASE_PATH + boardId + PathParameters.ACTIONS_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(BoardPath.BOARDS_BASE_PATH + boardId + ActionsEndPoints.ACTIONS_BASE_PATH, requestSpecification);
 
         List list = response.jsonPath().getList("id");
         return list.get(0).toString();
@@ -72,7 +72,7 @@ public abstract class BaseService {
     @Step("Add a comment {'commentForAnAction'} to a card with id ={cardId}")
     public Response addNewComentToACard(String cardId, String commentForAnAction, String commentsEnpoint) {
         requestSpecification.queryParams("text", commentForAnAction);
-        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH + cardId + PathParameters.ACTIONS_BASE_PATH + commentsEnpoint, requestSpecification);
+        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH + cardId + ActionsEndPoints.ACTIONS_BASE_PATH + commentsEnpoint, requestSpecification);
         initRequestSpecification();
         return response;
     }

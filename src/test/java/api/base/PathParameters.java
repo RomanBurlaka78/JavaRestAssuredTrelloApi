@@ -9,12 +9,21 @@ final public class PathParameters {
 
     public  final static class ActionsEndPoints {
 
+        public final static String ACTIONS_BASE_PATH = "/actions/";
+
+
         public final static String DATE_ENDPOINT = "/date";
         public final static String BOARD_ENDPOINT = "/board";
         public final static String CARD_ENDPOINT = "/card";
         public final static String LIST_ENDPOINT = "/list";
         public final static String MEMBER_CREATOR_ENDPOINT = "/memberCreator";
         public final static String ORGANIZATION_ENDPOINT = "/organization";
+        public final static String textEndPoint = "/text";
+        public final static String reactionsEndPoint = "/reactions/";
+        public final static String COMMENTS_ENDPOINT = "comments";
+
+
+
 
 
 
@@ -42,7 +51,6 @@ final public class PathParameters {
 
 
     public final static String CARDS_BASE_PATH = "/cards/";
-    public final static String ACTIONS_BASE_PATH = "/actions/";
     public final static String CUSTOM_FIELDS_BASE_PATH = "/customFields";
     public final static String LISTS_BASE_PATH = "/lists/";
     public final static String MEMBERS_BASE_PATH = "/members/";

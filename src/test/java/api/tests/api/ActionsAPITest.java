@@ -40,8 +40,7 @@ public class ActionsAPITest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void getAnAction() {
         Response response = getActionsSteps().getAnAction(ActionsTestData.actiontId);
-        System.out.println(response.jsonPath().getString("idMemberCreator"));
-        System.out.println(response.asPrettyString());
+
         Assert.assertEquals(response.jsonPath().getString("id"), ActionsTestData.actiontId);
     }
 
@@ -58,7 +57,7 @@ public class ActionsAPITest extends BaseTest {
 
         ActionsTestData.cardId = getActionsSteps().createACard(queryParametersForRequestSpec).jsonPath().getString("id");
 
-        ActionsTestData.actionIdAfterCreatingACard = getActionsSteps().addNewComentToACard(ActionsTestData.cardId, commentForAnAction, ActionsTestData.COMMENTS_ENDPOINT).jsonPath().getString("id");
+        ActionsTestData.actionIdAfterCreatingACard = getActionsSteps().addNewComentToACard(ActionsTestData.cardId, commentForAnAction, ActionsEndPoints.COMMENTS_ENDPOINT).jsonPath().getString("id");
 
         Response response = getActionsSteps().updateACommentOfTheAction(ActionsTestData.actionIdAfterCreatingACard, updatedCommentForAnAction);
         //Для ассерта надо достать обновлённый комент респонса и сверить с updatedCommentForAnAction

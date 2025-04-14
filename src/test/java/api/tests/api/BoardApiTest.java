@@ -2,6 +2,7 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
+import api.base.PathParameters.*;
 
 import static api.base.TestData.*;
 
@@ -132,7 +133,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetActionsFromABoard() {
 
-        Response response = getBoardSteps().getActions(boardId, PathParameters.ACTIONS_BASE_PATH);
+        Response response = getBoardSteps().getActions(boardId, ActionsEndPoints.ACTIONS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(arrayList.size(), 3);
