@@ -31,11 +31,16 @@ final public class TestData {
     public final static class CardsTestData {
 
         public final static String BOARD_NAME = BASE_BOARD_NAME + "Cards";
+        public static final String emptyString = "[]";
+        public static final String NAME_FOR_CHECKLIST_CREATED = "Checklist for CardsAPITest";
 
         public static String cardId;
         public static String boardId;
         public static String listId;
-        public static String attachmentId;
+        public static String createdAttachmentId;
+
+
+
     }
 
     public final static class CheckListsTestData {
