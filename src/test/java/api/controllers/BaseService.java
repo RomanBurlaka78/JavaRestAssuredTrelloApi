@@ -65,7 +65,7 @@ public abstract class BaseService {
     @Step("Create a card for list with id = {listId}")
     public Response createACard(Map queryParamMap) {
         requestSpecification.queryParams(queryParamMap);
-        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(CardsEndPoints.CARDS_BASE_PATH, requestSpecification);
 
         initRequestSpecification();
         return response;
@@ -74,7 +74,7 @@ public abstract class BaseService {
     @Step("Add a comment {'commentForAnAction'} to a card with id ={cardId}")
     public Response addNewComentToACard(String cardId, String commentForAnAction, String commentsEnpoint) {
         requestSpecification.queryParams("text", commentForAnAction);
-        Response response = apiClient.post(PathParameters.CARDS_BASE_PATH + cardId + ActionsEndPoints.ACTIONS_BASE_PATH + commentsEnpoint, requestSpecification);
+        Response response = apiClient.post(CardsEndPoints.CARDS_BASE_PATH + cardId + ActionsEndPoints.ACTIONS_BASE_PATH + commentsEnpoint, requestSpecification);
         initRequestSpecification();
         return response;
     }

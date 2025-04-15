@@ -7,12 +7,16 @@ import api.controllers.MembersSteps;
 import api.controllers.ui.UiBoardSteps;
 import api.utils.ListeningConfig;
 import org.testng.annotations.Listeners;
+import api.controllers.ActionsSteps;
+import api.controllers.CardsSteps;
 
 @Listeners(ListeningConfig.class)
 public class BaseTest {
 
     private BoardSteps boardSteps = new BoardSteps();
     private ActionsSteps actionsSteps = new ActionsSteps();
+    private CardsSteps cardsSteps = new CardsSteps();
+
     private UiBoardSteps uiBoardSteps = new UiBoardSteps();
     private final LabelsSteps labelsSteps = new LabelsSteps();
     private final MembersSteps membersSteps = new MembersSteps();
@@ -23,6 +27,10 @@ public class BaseTest {
 
     public ActionsSteps getActionsSteps() {
         return actionsSteps;
+    }
+
+    public CardsSteps getCardsSteps() {
+        return cardsSteps;
     }
 
     public UiBoardSteps getUiBoardSteps() {

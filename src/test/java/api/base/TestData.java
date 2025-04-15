@@ -12,6 +12,9 @@ final public class TestData {
        public static String boardId;
        public static String labelId;
        public static String listId;
+
+
+
     }
 
     public final static class ActionsTestData{
@@ -26,9 +29,21 @@ final public class TestData {
        public static String idMemberCreator;
        public static String idOrganizationThatBelongToAnAction;
        public static String idOfReaction;
+
     }
 
     public final static class CardsTestData{
+
+       public final static  String BOARD_NAME = BASE_BOARD_NAME + "Cards";
+
+       public static String cardId;
+       public static String boardId;
+       public static String listId;
+       public static String attachmentId;
+
+
+
+
 
     }
 

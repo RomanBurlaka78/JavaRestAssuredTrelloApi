@@ -1,0 +1,85 @@
+This document aims to provide a clear plan for the testing activities and final product.
+
+1) Application under test is Trello.com
+
+2) Области, подвергаемые тестированию:
+    UI
+    API
+
+3)The testing would be done with:
+    - e2e type testing for UI
+    - functional testing for API
+
+4) Global descriptions (Epics) features of application to be tested
+For end 2 end testing (UI), the epic is:
+For a registered user in the system, there are should be available opportunity to work and modify such
+activities as actions, boards, cards, checklists, customFields, emoji, lables, lists.
+
+For functional testing of API the test suit is:
+Api testing of major application functions such as: Actions, Boards, Cards, Checklists, CustomFields, Emoji,
+Lables, Lists.
+
+5) Тестовая документация будет иметь 2-e параллельные иерархии составления тест кейсов, для каждой области
+тестируемого приложения
+    5.1 Для UI Behavior-based hierarchy: epic - feature - user story - test case
+    5.2 для API Suite-based hierarchy: parent_test_suite - test suite - test case
+
+5) Work to be done besides testing activities:
+    -Generating report with Allure report framework
+    -Creating docker image that would consist of all necessary tools and scripts to reproduce testing
+
+
+6) Инструменты и паттерны
+    6.1 Для e2e (UI) testing
+        -Java (17)
+        -TestNg
+        -Selenium
+        -Allure
+        -POM
+        -log4j2
+        -GitHub
+
+
+    6.2 для API
+        -Java (17)
+        -TestNG
+        -Rest Assured
+        -Allure
+        -Service Object Model
+        -log4j2
+        -jackson-databind - for serialization / de serialization
+        -jackson-annotations - for additional assertions
+        -GitHub
+
+7) Критерии завершонности:
+    - After work is done, project should represent automated, scalable testing framework.
+    - All mentioned features in пункт 5 are fully tested with generated report.
+    - Docker image is created and available on DockerHub
+    - The source code is available on GitHub repository
+
+All the information above are subject to discuss and might be changed at any time.
+
+Предложения и вопросы:
+а) Будем ли делать CI
+б) Можно выполнить validation testing. Тестировать некие валидные значения для форм применяя
+    parameterized testing.
+в) Кросс браузерное тестирование?
+г) Паралельное тестирование.
+д) Cucumber for API
+
+********************************************************************************************************
+Так как АPI поделено на Features (Bord, Actions...), а они имеют строго дефиринцированые HTTP запросы
+я больше склоняюсь к тому чтобы протестировать сначала все (или сколько заплонирую) эти самые запросы
+по отдельности используя Suite-based hierarchy. Где фичя/функция = 1 класс, а HTTP запросы этой фичи =
+тесты в этом классе.
+В документации здесь я бы использовал parent_test_suite - test suite - test case
+В процессе написания тестов выяснилось, что такой вид тестирования существует - Component testing
+
+а потом использовать Behavior-based hierarchy и тестировать пользовательские сценарии с использованием
+User story.
+
+Также возможно использовать некий симбиоз между POM и SOM (Service object model). В POM у нас пэйджи
+имели методы, которые мы могли использовать в тестах как reusable function, чтобы не повторятся.
+А, что если все HTTP запросы зделать методами. Тогда при тестировании можно использовать эти методы
+как самостоятельные тесты, так и комбинировать несколько таких методов в одном тесте, в случае с
+пользовательским сценарием.

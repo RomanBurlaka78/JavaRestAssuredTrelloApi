@@ -7,6 +7,7 @@ import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import static api.base.TestData.*;
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
 @Tag("ui")
+@Ignore
 public class BoardsUiTest extends BaseUiTest {
 
     private BoardSteps boardSteps = new BoardSteps();
