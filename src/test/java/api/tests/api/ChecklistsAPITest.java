@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.controllers.ChecklistsSteps;
+import api.base.BaseTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -10,26 +10,17 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import java.util.HashMap;
 
-public class ChecklistsAPITest {
+import static api.base.TestData.CheckListsTestData.*;
 
-    private final ChecklistsSteps checklistsSteps = new ChecklistsSteps();
-
-    private String toDoListId;
-    private final String bordName = "Board for Checklists";
-    private final String nameOfAChecklistCreated = "First Checklist";
-    private String boardId;
-    private String cardId;
-    private String checklistId;
-    private String checkItemId;
+public class ChecklistsAPITest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        boardId = checklistsSteps.createABord(bordName);
-        toDoListId = checklistsSteps.getIdOfTheFirstListOnABoard(boardId);
-        cardId = checklistsSteps.
+        boardId = getChecklistsSteps().createABord(bordName);
+        toDoListId = getChecklistsSteps().getIdOfTheFirstListOnABoard(boardId);
+        cardId = getChecklistsSteps().
                 createACard(new HashMap<>() {{
                     put("idList", toDoListId);
                     put("name", "card");
@@ -39,7 +30,7 @@ public class ChecklistsAPITest {
 
     @AfterClass
     public void tearDown() {
-        checklistsSteps.deleteBoard(boardId);
+        getChecklistsSteps().deleteBoard(boardId);
     }
 
     @Test(priority = 0)
@@ -47,8 +38,7 @@ public class ChecklistsAPITest {
     @Description("Create a checklist on a card")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateAChecklist() {
-
-        Response response = checklistsSteps.createAChecklist(cardId, nameOfAChecklistCreated);
+        Response response = getChecklistsSteps().createAChecklist(cardId, nameOfAChecklistCreated);
 
         String actualNameOfChecklistReceived = response.jsonPath().getString("name");
         checklistId = response.jsonPath().getString("id");
@@ -61,8 +51,7 @@ public class ChecklistsAPITest {
     @Description("Get a checklist on a card")
     @Severity(SeverityLevel.NORMAL)
     public void testGetAChecklist() {
-
-        Response response = checklistsSteps.getCheckList(checklistId);
+        Response response = getChecklistsSteps().getCheckList(checklistId);
         String actualIdOfChecklistReceived = response.jsonPath().getString("id");
 
         Assert.assertEquals(actualIdOfChecklistReceived, checklistId);
@@ -73,11 +62,7 @@ public class ChecklistsAPITest {
     @Description("Update a name of a checklist")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateAChecklist() {
-
-        String nameOfAFieldToBeUpdated = "name";
-        String valueForAFieldToBeUpdated = "New name for checklist";
-
-        Response response = checklistsSteps.updateAFieldOfCheckList(checklistId, nameOfAFieldToBeUpdated, valueForAFieldToBeUpdated);
+        Response response = getChecklistsSteps().updateAFieldOfCheckList(checklistId, nameOfAFieldToBeUpdated, valueForAFieldToBeUpdated);
 
         String actualNameOfChecklistReceived = response.jsonPath().getString("name");
 
@@ -89,11 +74,7 @@ public class ChecklistsAPITest {
     @Description("Get a 'pos' field on a checklist")
     @Severity(SeverityLevel.NORMAL)
     public void testGetFieldOnAChecklist() {
-
-        String expectedPosOfAChecklist = "16384";
-        String fieldToGetBackFromTheChecklist = "/pos";
-
-        Response response = checklistsSteps.getFieldOnAChecklist(checklistId, fieldToGetBackFromTheChecklist);
+        Response response = getChecklistsSteps().getFieldOnAChecklist(checklistId, fieldToGetBackFromTheChecklist);
         String actualPosOfAChecklistReceivedBack = response.jsonPath().getString("_value");
 
         Assert.assertEquals(actualPosOfAChecklistReceivedBack, expectedPosOfAChecklist);
@@ -105,8 +86,7 @@ public class ChecklistsAPITest {
     @Description("Get a board checklist is on")
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheBoardTheChecklistIsOn() {
-
-        Response response = checklistsSteps.getTheBoardTheChecklistIsOn(checklistId);
+        Response response = getChecklistsSteps().getTheBoardTheChecklistIsOn(checklistId);
         String actualIdOfABoardReceived = response.jsonPath().getString("id");
 
         Assert.assertEquals(actualIdOfABoardReceived, boardId);
@@ -117,8 +97,7 @@ public class ChecklistsAPITest {
     @Description("Get the card checklist is on")
     @Severity(SeverityLevel.NORMAL)
     public void testGetTheCardAChecklistIsOn() {
-
-        Response response = checklistsSteps.getTheCardAChecklistIsOn(checklistId);
+        Response response = getChecklistsSteps().getTheCardAChecklistIsOn(checklistId);
         String actualIdOfACardReceived = response.jsonPath().getString("id");
         actualIdOfACardReceived = actualIdOfACardReceived.substring(1, actualIdOfACardReceived.length() - 1);  //have to remove square brackets
 
@@ -130,13 +109,10 @@ public class ChecklistsAPITest {
     @Description("Get all checkItems presented on a checklist")
     @Severity(SeverityLevel.NORMAL)
     public void testGetCheckitemsOnAChecklist() {
+        Response response = getChecklistsSteps().getCheckitemsOnAChecklist(checklistId);
+        String adtualCheckItemsOnAChecklist = response.body().asString();
 
-        String emptyString = "[]";
-
-        Response response = checklistsSteps.getCheckitemsOnAChecklist(checklistId);
-        String actualCheckItemsOnAChecklist = response.body().asString();
-
-        Assert.assertEquals(actualCheckItemsOnAChecklist, emptyString);
+        Assert.assertEquals(adtualCheckItemsOnAChecklist, emptyString);
     }
 
     @Test(priority = 4)
@@ -144,9 +120,7 @@ public class ChecklistsAPITest {
     @Description("Create new checkItem on a checklist")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateCheckitemOnChecklist() {
-        String nameForNewCheckItem = "Mark";
-
-        Response response = checklistsSteps.createCheckitemOnChecklist(checklistId, nameForNewCheckItem);
+        Response response = getChecklistsSteps().createCheckitemOnChecklist(checklistId, nameForNewCheckItem);
         String actualNameOfNewCheckItem = response.jsonPath().getString("name");
         checkItemId = response.jsonPath().getString("id");
 
@@ -158,8 +132,7 @@ public class ChecklistsAPITest {
     @Description("Get specific checkItem on a checklist")
     @Severity(SeverityLevel.NORMAL)
     public void testGetACheckitemOnAChecklist() {
-
-        Response response = checklistsSteps.getACheckitemOnAChecklist(checklistId, checkItemId);
+        Response response = getChecklistsSteps().getACheckitemOnAChecklist(checklistId, checkItemId);
         String actualCheckItemIdReceived = response.jsonPath().getString("id");
 
         Assert.assertEquals(actualCheckItemIdReceived, checkItemId);
@@ -170,10 +143,7 @@ public class ChecklistsAPITest {
     @Description("Delete specific checkItem from checklist")
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteCheckitemFromChecklist() {
-
-        String expectedStringResult = "[:]";
-
-        Response response = checklistsSteps.deleteCheckitemFromChecklist(checklistId, checkItemId);
+        Response response = getChecklistsSteps().deleteCheckitemFromChecklist(checklistId, checkItemId);
         String emptyBody = response.jsonPath().getString("limits");
 
         Assert.assertEquals(emptyBody, expectedStringResult);
@@ -184,13 +154,9 @@ public class ChecklistsAPITest {
     @Description("Delete specific checkItem from checklist")
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteAChecklist() {
-
-        String expectedStringResult = "[:]";
-
-        Response response = checklistsSteps.deleteAChecklist(checklistId);
+        Response response = getChecklistsSteps().deleteAChecklist(checklistId);
         String emptyBody = response.jsonPath().getString("limits");
 
         Assert.assertEquals(emptyBody, expectedStringResult);
     }
-
 }

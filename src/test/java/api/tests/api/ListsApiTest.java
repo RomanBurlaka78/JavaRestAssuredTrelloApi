@@ -1,5 +1,6 @@
 package api.tests.api;
 
+import api.base.BaseTest;
 import api.controllers.ListsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
@@ -12,27 +13,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static api.base.TestData.ListsTestData.*;
+
 @Epic("API Tests")
 @Feature("Lists Validation")
 @Owner("Group JavaForwardToOffer")
-public class ListsApiTest {
-
-    private final ListsSteps listsSteps = new ListsSteps();
-    private String bordName = "Board for lists";
-    private String boardId;
-    private String toDoListId;
-    private String newCreatedListId;
-    private final String newNameForTheList = "List with Updated name";
+public class ListsApiTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        boardId = listsSteps.createABord(bordName);
-        toDoListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
+        boardId = getListsSteps().createABord(bordName);
+        toDoListId = getListsSteps().getIdOfTheFirstListOnABoard(boardId);
     }
 
     @AfterClass
     public void tearDown() {
-        listsSteps.deleteBoard(boardId);
+        getListsSteps().deleteBoard(boardId);
     }
 
     @Test(priority = 0)
@@ -40,10 +36,8 @@ public class ListsApiTest {
     @Description("Create a new List on a Board")
     @Severity(SeverityLevel.CRITICAL)
     public void testCreateNewList() {
-
-        String nameOfTheList = "List from API";
-        Response response = listsSteps.createList(nameOfTheList, boardId);
-        newCreatedListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
+        Response response = getListsSteps().createList(nameOfTheList, boardId);
+        newCreatedListId = getListsSteps().getIdOfTheFirstListOnABoard(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.path("name"), nameOfTheList);
@@ -54,8 +48,7 @@ public class ListsApiTest {
     @Description("Update a name of the list")
     @Severity(SeverityLevel.CRITICAL)
     public void tesUpdateANameForToDoList() {
-
-        Response response = listsSteps.updateANameForList(toDoListId, newNameForTheList);
+        Response response = getListsSteps().updateANameForList(toDoListId, newNameForTheList);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.jsonPath().getString("name"), newNameForTheList);
@@ -66,8 +59,7 @@ public class ListsApiTest {
     @Description("Get a list from a board with updated name (before 'ToDO' now it is 'Updated name for the list')")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetAList() {
-
-        Response response = listsSteps.getAList(toDoListId);
+        Response response = getListsSteps().getAList(toDoListId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.jsonPath().getString("name"), newNameForTheList);
@@ -78,17 +70,15 @@ public class ListsApiTest {
     @Description("Create a new List on a Board")
     @Severity(SeverityLevel.CRITICAL)
     public void testArchiveAllCardsOnTheList() {
-
         Map<String, String> queryParametersForRequestSpec = new HashMap<>();
         queryParametersForRequestSpec.put("idList", toDoListId);
         queryParametersForRequestSpec.put("name", "nameForCard");
 
-        listsSteps.createACard(queryParametersForRequestSpec);
+        getListsSteps().createACard(queryParametersForRequestSpec);
 
-        Response response = listsSteps.archiveAllCardOnTheList(toDoListId);
+        Response response = getListsSteps().archiveAllCardOnTheList(toDoListId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        //Проверить, что кард был заархивирован можно только в UI -> Menu -> Archived items. Но для этого не удаляй доску.
     }
 
     @Test(priority = 2)
@@ -100,10 +90,10 @@ public class ListsApiTest {
         queryParametersForRequestSpec.put("idList", newCreatedListId);
         queryParametersForRequestSpec.put("name", "nameForCard");
 
-        listsSteps.createACard(queryParametersForRequestSpec);
-        listsSteps.createACard(queryParametersForRequestSpec);
+        getListsSteps().createACard(queryParametersForRequestSpec);
+        getListsSteps().createACard(queryParametersForRequestSpec);
 
-        Response response = listsSteps.moveAllCardsFromOneListToAnother(newCreatedListId, boardId, toDoListId);
+        Response response = getListsSteps().moveAllCardsFromOneListToAnother(newCreatedListId, boardId, toDoListId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -113,8 +103,8 @@ public class ListsApiTest {
     @Description("Archive a list on a board")
     @Severity(SeverityLevel.CRITICAL)
     public void testArchiveAList() {
+        Response response = getListsSteps().archiveAList(toDoListId);
 
-        Response response = listsSteps.archiveAList(toDoListId);
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
@@ -123,8 +113,7 @@ public class ListsApiTest {
     @Description("Unarchived a list on a board")
     @Severity(SeverityLevel.CRITICAL)
     public void testUnArchiveAList() {
-
-        Response response = listsSteps.unArchiveAList(toDoListId);
+        Response response = getListsSteps().unArchiveAList(toDoListId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -134,11 +123,9 @@ public class ListsApiTest {
     @Description("Get all cards available on a list")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetCardsInAList() {
-
-        Response response = listsSteps.getCardsOnAList(toDoListId);
-
-        System.out.println(response.asPrettyString());
+        Response response = getListsSteps().getCardsOnAList(toDoListId);
         List arrayList = response.jsonPath().getList("id");
+
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(arrayList.size(), 2);
     }
@@ -148,14 +135,12 @@ public class ListsApiTest {
     @Description("Move list from one board to another")
     @Severity(SeverityLevel.CRITICAL)
     public void testMoveListFromOneBoardToAnother() {
-        String nameForSecondBoard = "Board_for_moving_lists";
-        String idOfTheSecondBoard = listsSteps.createABord(nameForSecondBoard);
+        String idOfTheSecondBoard = getListsSteps().createABord(nameForSecondBoard);
 
-        Response response = listsSteps.moveListFromOneBoardToAnother(toDoListId, idOfTheSecondBoard);
+        Response response = getListsSteps().moveListFromOneBoardToAnother(toDoListId, idOfTheSecondBoard);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        //Assert can be done with -> Get the Board a List is on
-        listsSteps.deleteBoard(idOfTheSecondBoard);
+        getListsSteps().deleteBoard(idOfTheSecondBoard);
     }
 
     @Test(priority = 5)
@@ -163,9 +148,8 @@ public class ListsApiTest {
     @Description("Update subscribed field of a list")
     @Severity(SeverityLevel.CRITICAL)
     public void testUpdateASubscribedFieldOfAList() {
-        boolean subscribeValue = true;
+        Response response = getListsSteps().updateSubscribedFieldOfAList(newCreatedListId, subscribeValue);
 
-        Response response = listsSteps.updateSubscribedFieldOfAList(newCreatedListId, subscribeValue);
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
@@ -174,13 +158,11 @@ public class ListsApiTest {
     @Description("Update subscribed field of a list")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetActionsOfAList() {
-
-        Response response = listsSteps.getActionsofAList(newCreatedListId);
+        Response response = getListsSteps().getActionsofAList(newCreatedListId);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(arrayList.size(), 3);
-
     }
 
     @Test(priority = 6)
@@ -188,13 +170,9 @@ public class ListsApiTest {
     @Description("Get the Board a List is on")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetABoardAListIsOn() {
+        Response response = getListsSteps().getABoardAListIsOn(newCreatedListId);
 
-        Response response = listsSteps.getABoardAListIsOn(newCreatedListId);
-        System.out.println(response.asPrettyString());
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.jsonPath().getString("id"), boardId);
-
     }
-
-
 }

@@ -29,8 +29,8 @@ public class CardsSteps extends BaseService {
         return response;
     }
 
-    @Step("Delete a card: id card = {cardID}")
-    public Response deleteCard(String cardID) {
+    @Step("Delete a card with id - {'cardID'}")
+    public Response deleteACard(String cardID) {
         Response response = apiClient.delete(CardsEndPoints.CARDS_BASE_PATH + cardID, requestSpecification);
         initRequestSpecification();
         return response;
@@ -79,12 +79,12 @@ public class CardsSteps extends BaseService {
 //        return response;
 //    }
 //
-//    @Step("Get checklists on a card with id - {'cardId'}")
-//    public Response getChecklistsOnACard(String cardId) {
-//        Response response = apiClient.get(PathParameters.CARDS_BASE_PATH + cardId + checklistsEndPoint, requestSpecification);
-//        initRequestSpecification();
-//        return response;
-//    }
+    @Step("Get checklists on a card with id - {'cardId'}")
+    public Response getChecklistsOnACard(String cardId) {
+        Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.CHECKLISTS_ENDPOINT, requestSpecification);
+        initRequestSpecification();
+        return response;
+    }
 
     @Step("Delete an Attachment with id - {'attachmentId'}, from a card with id - {cardID}")
     public Response deleteAnAttachmentOnACard(String cardID, String attachmentId) {
@@ -116,22 +116,22 @@ public class CardsSteps extends BaseService {
     }
 
 
-    @Step("Get list on card: {cardId}")
-    public Response getListCard(String cardId) {
+    @Step("Get list on a card with id - {'cardId'}")
+    public Response getTheListOfACard(String cardId) {
         Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.LISTS_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;
     }
 
-    @Step("Get list on card: {cardId}")
-    public Response getMembersCard(String cardId) {
+    @Step("Get the members of a card with id - {'cardId'}")
+    public Response getTheMembersOfACard(String cardId) {
         Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.MEMBERS_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;
     }
 
-    @Step("Get list on card: {cardId}")
-    public Response getStickersCard(String cardId) {
+    @Step("Get stickers on a card with id - {'cardId'}")
+    public Response getStickersOnACard(String cardId) {
         Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.STICKERS_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;

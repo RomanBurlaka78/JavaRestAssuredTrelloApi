@@ -12,6 +12,8 @@ import io.restassured.specification.RequestSpecification;
 import java.util.List;
 import java.util.Map;
 
+import static api.base.PathParameters.CheckListsPath.CHECKLISTS_BASE_PATH;
+import static api.base.PathParameters.ListsPath.LISTS_BASE_PATH;
 import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
 
 public abstract class BaseService {
@@ -43,7 +45,7 @@ public abstract class BaseService {
     @Step("Get id of the first list on a board")
     public String getIdOfTheFirstListOnABoard(String boardId) {
 
-        Response resp = apiClient.get(BoardEndPoints.BOARDS_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
+        Response resp = apiClient.get(BoardEndPoints.BOARDS_BASE_PATH + boardId + LISTS_BASE_PATH, requestSpecification);
         List arrayList = resp.jsonPath().getList("id");
         initRequestSpecification();
         return (String) arrayList.get(0);
@@ -91,7 +93,7 @@ public abstract class BaseService {
     public Response createAChecklist(String idCard, String nameOfAChecklistBeingCreated) {
         requestSpecification.queryParam("idCard", idCard);
         requestSpecification.queryParam("name", nameOfAChecklistBeingCreated);
-        Response response = apiClient.post(PathParameters.CHECKLISTS_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(CHECKLISTS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }
