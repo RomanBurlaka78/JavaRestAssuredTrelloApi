@@ -23,7 +23,7 @@ public class BoardSteps extends BaseService {
     @Step("Delete board {boardId}")
     public Response deleteABoardFromService(String boardId) {
 
-        Response response = ApiClient.getInstance().delete(BoardEndPoints.BOARDS_BASE_PATH + boardId, requestSpecification);
+        Response response = apiClient.delete(BoardEndPoints.BOARDS_BASE_PATH + boardId, requestSpecification);
         initRequestSpecification();
         return response;
     }

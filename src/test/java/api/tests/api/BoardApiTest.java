@@ -253,7 +253,7 @@ public class BoardApiTest extends BaseTest {
         Response membersResponse = getBoardSteps().getTheMembersOfABoard(BoardTestData.boardId);
         List<String> memberIds = membersResponse.jsonPath().getList("id"); // ИЛИ "members.id"
         System.out.println(memberIds.size());
-        String memberIdToRemove = memberIds.get(0);
+        String memberIdToRemove = memberIds.get(1);
         Response response = getBoardSteps().removeMemberFromBoard(BoardTestData.boardId, memberIdToRemove);
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -265,7 +265,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteABoard() {
         Response response = getBoardSteps().deleteABoardFromService(BoardTestData.boardId);
-
+        System.out.println(response.asPrettyString());
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
