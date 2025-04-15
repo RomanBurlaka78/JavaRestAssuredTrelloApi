@@ -25,7 +25,7 @@ public class CardsApiTest extends BaseTest {
     private String bordName = "Board for cards";
     private String boardId;
     private String listId;
-    private  String attachmentId;
+    private String attachmentId;
 
 
 
