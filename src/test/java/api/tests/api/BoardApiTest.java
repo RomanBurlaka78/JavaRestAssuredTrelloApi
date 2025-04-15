@@ -125,7 +125,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetCardsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getCards(BoardTestData.boardId, PathParameters.CARDS_BASE_PATH);
+        Response response = getBoardSteps().getCards(BoardTestData.boardId, CardsEndPoints.CARDS_BASE_PATH);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -138,7 +138,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetFilteredCardsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getFilteredCards(BoardTestData.boardId, PathParameters.CARDS_BASE_PATH, "all");
+        Response response = getBoardSteps().getFilteredCards(BoardTestData.boardId, CardsEndPoints.CARDS_BASE_PATH, "all");
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);

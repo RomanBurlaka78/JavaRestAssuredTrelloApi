@@ -16,7 +16,7 @@ public class ActionsSteps extends BaseService {
     @Step("Update a comment of an action with value = {updatedCommentForAnAction}")
     public Response updateACommentOfTheAction(String actiontId, String updatedCommentForAnAction) {
         requestSpecification.queryParam("value", updatedCommentForAnAction);
-        Response response = apiClient.put(ActionsEndPoints.ACTIONS_BASE_PATH + actiontId + ActionsEndPoints.textEndPoint, requestSpecification);
+        Response response = apiClient.put(ActionsEndPoints.ACTIONS_BASE_PATH + actiontId + ActionsEndPoints.TEXT_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -37,7 +37,7 @@ public class ActionsSteps extends BaseService {
 
     @Step("Get all existed reactions for action with id - {actionId}")
     public Response getActions_Reactions(String actionId) {
-        Response response = apiClient.get(ActionsEndPoints.ACTIONS_BASE_PATH + actionId + ActionsEndPoints.reactionsEndPoint, requestSpecification);
+        Response response = apiClient.get(ActionsEndPoints.ACTIONS_BASE_PATH + actionId + ActionsEndPoints.REACTIONS_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -45,7 +45,7 @@ public class ActionsSteps extends BaseService {
     @Step("Create reaction for action with id - {actiontId}")
     public Response createReactionForAction(String actiontId) {
         requestSpecification.queryParams("shortName", "grinning");
-        Response response = apiClient.post(ActionsEndPoints.ACTIONS_BASE_PATH + actiontId + ActionsEndPoints.reactionsEndPoint, requestSpecification);
+        Response response = apiClient.post(ActionsEndPoints.ACTIONS_BASE_PATH + actiontId + ActionsEndPoints.REACTIONS_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -53,7 +53,7 @@ public class ActionsSteps extends BaseService {
     @Step("Get reaction with id {idOfReaction}, from action with id - {actionIdAfterCreatingACard}")
     public Response getActionsReaction(String actionIdAfterCreatingACard, String idOfReaction) {
         Response response = apiClient.get(ActionsEndPoints.ACTIONS_BASE_PATH + actionIdAfterCreatingACard +
-                ActionsEndPoints.reactionsEndPoint + idOfReaction, requestSpecification);
+                ActionsEndPoints.REACTIONS_ENDPOINT + idOfReaction, requestSpecification);
         initRequestSpecification();
         return response;
     }
@@ -61,7 +61,7 @@ public class ActionsSteps extends BaseService {
     @Step("Delete reaction with id - {idOfReaction}, from action with id - {actionIdAfterCreatingACard}")
     public Response deleteActionsReaction(String actionIdAfterCreatingACard, String idOfReaction) {
         Response response = apiClient.delete(ActionsEndPoints.ACTIONS_BASE_PATH + actionIdAfterCreatingACard +
-                ActionsEndPoints.reactionsEndPoint + idOfReaction, requestSpecification);
+                ActionsEndPoints.REACTIONS_ENDPOINT + idOfReaction, requestSpecification);
         initRequestSpecification();
         return response;
     }

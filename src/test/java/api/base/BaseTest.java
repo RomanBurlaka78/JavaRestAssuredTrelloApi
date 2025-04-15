@@ -1,6 +1,7 @@
 package api.base;
 
 import api.controllers.BoardSteps;
+import api.controllers.CardsSteps;
 import api.controllers.ui.UiBoardSteps;
 import api.utils.ListeningConfig;
 import org.testng.annotations.Listeners;
@@ -11,6 +12,8 @@ public class BaseTest {
 
     private BoardSteps boardSteps = new BoardSteps();
     private ActionsSteps actionsSteps = new ActionsSteps();
+    private CardsSteps cardsSteps = new CardsSteps();
+
     private UiBoardSteps uiBoardSteps = new UiBoardSteps();
 
     public BoardSteps getBoardSteps() {
@@ -19,6 +22,10 @@ public class BaseTest {
 
     public ActionsSteps getActionsSteps() {
         return actionsSteps;
+    }
+
+    public CardsSteps getCardsSteps() {
+        return cardsSteps;
     }
 
     public UiBoardSteps getUiBoardSteps() {
