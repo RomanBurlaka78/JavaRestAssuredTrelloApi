@@ -2,13 +2,12 @@ package api.base;
 
 final public class PathParameters {
 
-    public final static  class BoardEndPoints {
+    public final static class BoardEndPoints {
 
         public final static String BOARDS_BASE_PATH = "/boards/";
 
         public static String boardStarsEnPoint = "/boardStars";
         public static String MEMBER_SHIPS_ENDPOINT = "/memberships";
-
     }
 
     public  final static class ActionsEndPoints {
@@ -43,7 +42,7 @@ final public class PathParameters {
     }
 
     public final static class LabelsPath {
-
+        public final static String LABELS_BASE_PATH = "/labels/";
     }
 
     public final static class ListsPath {
@@ -51,13 +50,20 @@ final public class PathParameters {
     }
 
     public final static class MembersPath {
+        public final static String MEMBERS_BASE_PATH = "/members/";
 
+        public final static String ACTIONS_ENDPOINT = "/actions";
+        public final static String BOARD_BACKGROUNDS_ENDPOINT = "/boardBackgrounds/";
+        public final static String BOARD_STARS_ENDPOINT = "/boardStars/";
+        public final static String BOARDS_ENDPOINT = "/boards";
+        public final static String BOARDS_INVITED_ENDPOINT = "/boardsInvited";
+        public final static String CARDS_ENDPOINT = "/cards";
     }
 
 
     public final static String CUSTOM_FIELDS_BASE_PATH = "/customFields";
     public final static String LISTS_BASE_PATH = "/lists/";
-    public final static String MEMBERS_BASE_PATH = "/members/";
+
     public final static String CHECKLISTS_BASE_PATH = "/checklists/";
     public final static String LABELS_BASE_PATH = "/labels";
     public final static String ATTACHMENTS_BASE_PATH = "/attachments";
