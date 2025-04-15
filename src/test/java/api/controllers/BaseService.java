@@ -12,6 +12,7 @@ import io.restassured.specification.RequestSpecification;
 import java.util.List;
 import java.util.Map;
 
+import static api.base.PathParameters.CheckListsPath.CHECKLISTS_BASE_PATH;
 import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
 
 public abstract class BaseService {
@@ -91,7 +92,7 @@ public abstract class BaseService {
     public Response createAChecklist(String idCard, String nameOfAChecklistBeingCreated) {
         requestSpecification.queryParam("idCard", idCard);
         requestSpecification.queryParam("name", nameOfAChecklistBeingCreated);
-        Response response = apiClient.post(PathParameters.CHECKLISTS_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(CHECKLISTS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }

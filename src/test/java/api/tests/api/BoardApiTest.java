@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static api.base.PathParameters.CardsEndPoints.CARDS_BASE_PATH;
+import static api.base.PathParameters.CheckListsPath.CHECKLISTS_BASE_PATH;
 import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
 import static api.base.TestData.BoardTestData;
 
@@ -115,7 +116,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetChecklistsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getChecklists(BoardTestData.boardId, PathParameters.CHECKLISTS_BASE_PATH);
+        Response response = getBoardSteps().getChecklists(BoardTestData.boardId, CHECKLISTS_BASE_PATH);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
