@@ -1,11 +1,10 @@
 package api.cucumber.steps;
 
-import api.base.PathParameters;
 import api.base.TestData;
 import api.controllers.BoardSteps;
+import api.controllers.CardsSteps;
 import api.controllers.ListsSteps;
-import api.utils.ApiClient;
-import api.utils.LoggerUtil;
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,15 +14,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SmokeStepDefinitions extends BoardSteps {
     private static final Logger logger = LogManager.getLogger(SmokeStepDefinitions.class);
 
     BoardSteps boardSteps = new BoardSteps();
     ListsSteps listsSteps = new ListsSteps();
+    CardsSteps cardsSteps = new CardsSteps();
     private String boardId;
     private Response responseBord;
     private  Response responseList;
+    private Response responseCard;
     private String  newCreatedListId;
+    private String cardId;
 
 //    @board
     @Given("I have valid Trello API credentials")
@@ -73,7 +78,40 @@ public class SmokeStepDefinitions extends BoardSteps {
 
     }
 
+//    @card
 
+    @When("I have created a list named {string} on the board")
+    public void i_have_created_a_list_named_on_the_board(String listName) {
+
+        Response response = listsSteps.createList(listName, boardId);
+        newCreatedListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.path("name"), listName);
+
+    }
+    @When("I create a card with name {string} on the list")
+    public void i_create_a_card_with_name_on_the_list(String string) {
+        Map<String, String> queryParametersForRequestSpec = new HashMap<>();
+        queryParametersForRequestSpec.put("idList", TestData.CardsTestData.listId);
+
+        responseCard = cardsSteps.createACard(queryParametersForRequestSpec);
+
+
+    }
+    @Then("the response should contain a valid card id")
+    public void the_response_should_contain_a_valid_card_id() {
+        cardId = responseCard.jsonPath().get("id");
+        Assert.assertEquals(responseCard.getStatusCode(), 200);
+    }
+    @Then("the card name should be {string}")
+    public void the_card_name_should_be(String string) {
+
+    }
+    @Then("I delete the parent board")
+    public void i_delete_the_parent_board() {
+
+    }
 
 
 

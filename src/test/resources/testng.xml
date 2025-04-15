@@ -17,4 +17,9 @@
             <class name="api.tests.ui.BoardsUiTest"/>
         </classes>
     </test>
+    <test name="Test Cucumber with xml">
+        <classes>
+            <class name="api.cucumber.runners.CucumberRunnerTest"/>
+        </classes>
+    </test>
 </suite>
