@@ -1,10 +1,12 @@
 package api.controllers;
 
 import api.base.PathParameters;
-import api.base.PathParameters.*;
+import api.base.PathParameters.BoardEndPoints;
 import api.utils.ApiClient;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+
+import static api.base.PathParameters.LabelsPath.LABELS_BASE_PATH;
 
 public class BoardSteps extends BaseService {
 
@@ -45,14 +47,14 @@ public class BoardSteps extends BaseService {
     public Response createLabelOnBoard(String boardId, String nameOfLabel, String color) {
         requestSpecification.queryParam("name", nameOfLabel);
         requestSpecification.queryParam("color", color);
-        Response respone = apiClient.post(BoardEndPoints.BOARDS_BASE_PATH + boardId + PathParameters.LABELS_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(BoardEndPoints.BOARDS_BASE_PATH + boardId + LABELS_BASE_PATH, requestSpecification);
         initRequestSpecification();
-        return respone;
+        return response;
     }
 
     @Step("Get Labels on a Board: id board = {boardId}")
     public Response getLabelsOnBoard(String boardId) {
-        Response response = apiClient.get(BoardEndPoints.BOARDS_BASE_PATH + boardId + PathParameters.LABELS_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(BoardEndPoints.BOARDS_BASE_PATH + boardId + LABELS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }

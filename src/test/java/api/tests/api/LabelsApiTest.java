@@ -1,23 +1,23 @@
 package api.tests.api;
 
+import api.base.BaseTest;
+import api.base.TestData;
 import api.controllers.LabelsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static api.base.TestData.LabelsTestData.*;
 
 @Epic("API Tests")
 @Feature("Labels Validation")
 @Owner("Group JavaForwardToOffer")
-public class LabelsApiTest {
+public class LabelsApiTest extends BaseTest {
 
     private LabelsSteps labelsSteps = new LabelsSteps();
-    private String boardName = "Board for labels";
-    private String boardId;
-    private String labelId;
 
     @BeforeClass
     public void setUp() {
@@ -34,8 +34,6 @@ public class LabelsApiTest {
     @Description("Create a new Label on a Board")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateLabel() {
-        String labelName = "Label from API";
-        String color = "red";
         Response response = labelsSteps.createLabel(labelName, color, boardId);
 
         labelId = response.body().jsonPath().get("id");
@@ -61,8 +59,6 @@ public class LabelsApiTest {
     @Description("Update label")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateLabel() {
-        String newName = "New Label from API";
-        String newColor = "blue";
         Response response = labelsSteps.updateLabel(labelId, newName, newColor);
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -80,23 +76,14 @@ public class LabelsApiTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 1, dataProvider = "createUpdateFieldLabel")
+    @Test(priority = 1, dataProvider = "createUpdateFieldLabel", dataProviderClass = TestData.LabelsTestData.class)
     @Story("Verify update field label")
     @Description("Update field label")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateFieldLabel(String field, String value) {
-
         Response response = labelsSteps.updateFieldLabel(labelId, field, value);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString(field), value);
-    }
-
-    @DataProvider()
-    public Object[][] createUpdateFieldLabel() {
-        return new Object[][]{
-                {"color", "green"},
-                {"name", "Name field Label from API"},
-        };
     }
 }
