@@ -1,6 +1,6 @@
 package api.tests.api;
 
-import api.controllers.MembersSteps;
+import api.base.BaseTest;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -9,33 +9,24 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+import static api.base.TestData.MembersTestData.*;
 import static io.restassured.RestAssured.rootPath;
 
 @Epic("API Tests")
 @Feature("Members Validation")
 @Owner("Group JavaForwardToOffer")
-public class MembersAPITest {
-
-    private final MembersSteps membersSteps = new MembersSteps();
-
-    private final String bordName = "Board for Members";
-    private final String pos = "top";
-    private final String updatePos = "bottom";
-    private String boardId;
-    private String firstMemberId;
-    private String backgroundId;
-    private String starId;
+public class MembersAPITest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        boardId = membersSteps.createABord(bordName);
-        firstMemberId = membersSteps.getTheMembersOfABoard(boardId).jsonPath().getString("id");
+        boardId = getMembersSteps().createABord(BORD_NAME);
+        firstMemberId = getMembersSteps().getTheMembersOfABoard(boardId).jsonPath().getString("id");
         firstMemberId = firstMemberId.substring(1, firstMemberId.length() - 1);
     }
 
     @AfterClass
     public void tearDown() {
-        membersSteps.deleteBoard(boardId);
+        getMembersSteps().deleteBoard(boardId);
     }
 
     @Test
@@ -43,8 +34,7 @@ public class MembersAPITest {
     @Description("Get a member")
     @Severity(SeverityLevel.NORMAL)
     public void testGetAMember() {
-
-        Response response = membersSteps.getAMember(firstMemberId);
+        Response response = getMembersSteps().getAMember(firstMemberId);
         String memberIdReceivedBack = response.jsonPath().getString("id");
 
         Assert.assertEquals(memberIdReceivedBack, firstMemberId);
@@ -55,7 +45,7 @@ public class MembersAPITest {
     @Description("Update member")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateMember() {
-        Response response = membersSteps.updateMember(firstMemberId);
+        Response response = getMembersSteps().updateMember(firstMemberId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -65,7 +55,7 @@ public class MembersAPITest {
     @Description("Get list the actions for a member")
     @Severity(SeverityLevel.NORMAL)
     public void testGetMemberActions() {
-        Response response = membersSteps.getMemberActions(firstMemberId);
+        Response response = getMembersSteps().getMemberActions(firstMemberId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -75,7 +65,7 @@ public class MembersAPITest {
     @Description("Get a member's custom board backgrounds")
     @Severity(SeverityLevel.NORMAL)
     public void testGetMemberCustomBackgrounds() {
-        Response response = membersSteps.getMemberCustomBackgrounds(firstMemberId);
+        Response response = getMembersSteps().getMemberCustomBackgrounds(firstMemberId);
 
         backgroundId = response.body().jsonPath().getString(rootPath + "[0].id");
 
@@ -88,7 +78,7 @@ public class MembersAPITest {
     @Description("Get a member's board background")
     @Severity(SeverityLevel.NORMAL)
     public void testGetBoardBackgroundMember() {
-        Response response = membersSteps.getGetBoardBackgroundMember(firstMemberId, backgroundId);
+        Response response = getMembersSteps().getGetBoardBackgroundMember(firstMemberId, backgroundId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -98,7 +88,7 @@ public class MembersAPITest {
     @Description("Star a new board on behalf of a Member")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateStarBoard() {
-        Response response = membersSteps.getCreateStarBoard(firstMemberId, boardId, pos);
+        Response response = getMembersSteps().getCreateStarBoard(firstMemberId, boardId, POS);
         starId = response.body().jsonPath().getString("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -109,17 +99,17 @@ public class MembersAPITest {
     @Description("Get a specific boardStar")
     @Severity(SeverityLevel.NORMAL)
     public void testGetBoardStarMember() {
-        Response response = membersSteps.getBoardStarMember(firstMemberId, starId);
+        Response response = getMembersSteps().getBoardStarMember(firstMemberId, starId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(dependsOnMethods = "testCreateStarBoard")
+    @Test(priority = 1, dependsOnMethods = "testCreateStarBoard")
     @Story("Verify Update the position of a boardStar of Member")
     @Description("Update the position of a starred board")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdatePositionBoardStarMember() {
-        Response response = membersSteps.updatePositionBoardStarMember(firstMemberId, starId, updatePos);
+        Response response = getMembersSteps().updatePositionBoardStarMember(firstMemberId, starId, UPDATE_POS);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -129,7 +119,7 @@ public class MembersAPITest {
     @Description("Unstar a board")
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteStarBoard() {
-        Response response = membersSteps.deleteStarBoard(firstMemberId, starId);
+        Response response = getMembersSteps().deleteStarBoard(firstMemberId, starId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -139,7 +129,7 @@ public class MembersAPITest {
     @Description("List a member's board stars")
     @Severity(SeverityLevel.NORMAL)
     public void testGetMemberBoardStars() {
-        Response response = membersSteps.getMemberBoardStars(firstMemberId);
+        Response response = getMembersSteps().getMemberBoardStars(firstMemberId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -149,7 +139,7 @@ public class MembersAPITest {
     @Description("Lists the boards that the user is a member of")
     @Severity(SeverityLevel.NORMAL)
     public void testGetBoardsMemberBelongs() {
-        Response response = membersSteps.getBoardsMemberBelongs(firstMemberId);
+        Response response = getMembersSteps().getBoardsMemberBelongs(firstMemberId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -159,7 +149,7 @@ public class MembersAPITest {
     @Description("Get the boards the member has been invited to")
     @Severity(SeverityLevel.NORMAL)
     public void testGetBoardsMemberInvited() {
-        Response response = membersSteps.getBoardsMemberInvited(firstMemberId);
+        Response response = getMembersSteps().getBoardsMemberInvited(firstMemberId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -169,7 +159,7 @@ public class MembersAPITest {
     @Description("Gets the cards a member is on")
     @Severity(SeverityLevel.NORMAL)
     public void testGetCardsMember() {
-        Response response = membersSteps.getCardsMember(firstMemberId);
+        Response response = getMembersSteps().getCardsMember(firstMemberId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }

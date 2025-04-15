@@ -4,8 +4,10 @@ import org.testng.annotations.DataProvider;
 
 final public class TestData {
 
+   private static final String BASE_BOARD_NAME = "Board for ";
+
     public final static class BoardTestData {
-       public final static String BOARD_NAME = "Api Board";
+       public final static String BOARD_NAME = BASE_BOARD_NAME + "Board";
 
        public static String boardId;
        public static String labelId;
@@ -14,7 +16,7 @@ final public class TestData {
 
     public final static class ActionsTestData{
 
-       public final static  String BOARD_NAME = "Board for Actions";
+       public final static  String BOARD_NAME = BASE_BOARD_NAME + "Actions";
 
        public static String boardId;
        public static String toDoListId;
@@ -36,13 +38,13 @@ final public class TestData {
 
     public final static class LabelsTestData{
 
-       public static String boardName = "Board for labels";
+       public static final String BOARD_NAME = BASE_BOARD_NAME + "Labels";
+       public static final String LABEL_NAME = "Label from API";
+       public static final String COLOR = "red";
+       public static final String NEW_NAME = "New Label from API";
+       public static final String NEW_COLOR = "blue";
        public static String boardId;
        public static String labelId;
-       public static String labelName = "Label from API";
-       public static String color = "red";
-       public static String newName = "New Label from API";
-       public static String newColor = "blue";
 
        @DataProvider(name = "createUpdateFieldLabel")
        public Object[][] createUpdateFieldLabel() {
@@ -59,6 +61,13 @@ final public class TestData {
 
     public final static class MembersTestData{
 
+       public static final String BORD_NAME = BASE_BOARD_NAME+ "Members";
+       public static final String POS = "top";
+       public static final String UPDATE_POS = "bottom";
+       public static String boardId;
+       public static String firstMemberId;
+       public static String backgroundId;
+       public static String starId;
     }
 
 

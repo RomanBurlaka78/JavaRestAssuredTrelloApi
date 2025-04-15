@@ -12,6 +12,8 @@ import io.restassured.specification.RequestSpecification;
 import java.util.List;
 import java.util.Map;
 
+import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
+
 public abstract class BaseService {
 
     protected static final Specification specification = new Specification();
@@ -80,7 +82,7 @@ public abstract class BaseService {
 
     public Response getTheMembersOfABoard(String boardId) {
 
-        Response response = apiClient.get(BoardEndPoints.BOARDS_BASE_PATH + boardId + PathParameters.MEMBERS_BASE_PATH, requestSpecification);
+        Response response = apiClient.get(BoardEndPoints.BOARDS_BASE_PATH + boardId + MEMBERS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }

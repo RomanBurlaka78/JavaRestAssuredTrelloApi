@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import static api.base.PathParameters.LabelsPath.LABELS_BASE_PATH;
+import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
 
 public class BoardSteps extends BaseService {
 
@@ -157,7 +158,7 @@ public class BoardSteps extends BaseService {
     public Response removeMemberFromBoard(String boardId, String memberId) {
 
         Response response = ApiClient.getInstance().delete(BoardEndPoints.BOARDS_BASE_PATH + boardId +
-                PathParameters.MEMBERS_BASE_PATH + memberId, requestSpecification);
+                MEMBERS_BASE_PATH + memberId, requestSpecification);
         initRequestSpecification();
         return response;
 

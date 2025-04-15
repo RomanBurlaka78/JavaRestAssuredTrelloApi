@@ -18,7 +18,7 @@ public class LabelsApiTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        boardId = getLabelsSteps().createABord(boardName);
+        boardId = getLabelsSteps().createABord(BOARD_NAME);
     }
 
     @AfterClass
@@ -31,13 +31,13 @@ public class LabelsApiTest extends BaseTest {
     @Description("Create a new Label on a Board")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateLabel() {
-        Response response = getLabelsSteps().createLabel(labelName, color, boardId);
+        Response response = getLabelsSteps().createLabel(LABEL_NAME, COLOR, boardId);
 
         labelId = response.body().jsonPath().get("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.body().jsonPath().get("name"), labelName);
-        Assert.assertEquals(response.body().jsonPath().get("color"), color);
+        Assert.assertEquals(response.body().jsonPath().get("name"), LABEL_NAME);
+        Assert.assertEquals(response.body().jsonPath().get("color"), COLOR);
     }
 
     @Test(priority = 1)
@@ -56,11 +56,11 @@ public class LabelsApiTest extends BaseTest {
     @Description("Update label")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateLabel() {
-        Response response = getLabelsSteps().updateLabel(labelId, newName, newColor);
+        Response response = getLabelsSteps().updateLabel(labelId, NEW_NAME, NEW_COLOR);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.body().jsonPath().getString("name"), newName);
-        Assert.assertEquals(response.body().jsonPath().getString("color"), newColor);
+        Assert.assertEquals(response.body().jsonPath().getString("name"), NEW_NAME);
+        Assert.assertEquals(response.body().jsonPath().getString("color"), NEW_COLOR);
     }
 
     @Test(priority = 2)
