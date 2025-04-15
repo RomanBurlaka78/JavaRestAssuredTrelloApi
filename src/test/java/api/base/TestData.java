@@ -39,7 +39,7 @@ final public class TestData {
        public static String cardId;
        public static String boardId;
        public static String listId;
-       public static String attachmentId;
+       public static String createdAttachmentId;
 
 
 

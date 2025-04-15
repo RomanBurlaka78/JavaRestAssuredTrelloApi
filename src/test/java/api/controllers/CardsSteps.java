@@ -43,13 +43,15 @@ public class CardsSteps extends BaseService {
     }
 
     @Step("Get actions on card: {cardId}, actions = {actions}")
-    public Response getActionsCard(String cardId, String actions) {
-        return apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + ActionsEndPoints.ACTIONS_BASE_PATH, requestSpecification);
+    public Response getActionsOnACard(String cardId, String actions) {
+        return apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.ACTIONS_ENDPOINT, requestSpecification);
     }
 
-    @Step("Get actions on card: {cardId}, attachments = {attachments}")
-    public Response getAttachmentsCard(String cardId) {
-        return apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
+    @Step("Get all attachments from a card with id - {'cardId'}}")
+    public Response getAttachmentsOnACard(String cardId) {
+        Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.ATTACHMENTS_BASE_PATH, requestSpecification);
+        initRequestSpecification();
+        return response;
     }
 
     @Step("Add attachment that is located - {'filePathOfAnAttachment'}, on a card with id - {'cardId'}")
@@ -84,17 +86,9 @@ public class CardsSteps extends BaseService {
 //        return response;
 //    }
 
-
-    @Step("Get Attachment on card: {cardId}, attachments = {attachments}, idAttachment = {idAttachment} ")
-    public Response getSpecificAttachmentsCard(String cardId, String field) {
-        Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + PathParameters.ATTACHMENTS_BASE_PATH, requestSpecification);
-        initRequestSpecification();
-        return response;
-    }
-
-    @Step("Delete a Attachment: id card = {cardID}")
-    public Response deleteAttachmentCard(String cardID, String attachmentId) {
-        Response response = apiClient.delete(CardsEndPoints.CARDS_BASE_PATH + cardID + PathParameters.ATTACHMENTS_BASE_PATH + "/" + attachmentId, requestSpecification);
+    @Step("Delete an Attachment with id - {'attachmentId'}, from a card with id - {cardID}")
+    public Response deleteAnAttachmentOnACard(String cardID, String attachmentId) {
+        Response response = apiClient.delete(CardsEndPoints.CARDS_BASE_PATH + cardID + CardsEndPoints.ATTACHMENTS_BASE_PATH  + attachmentId, requestSpecification);
         initRequestSpecification();
         return response;
     }

@@ -134,9 +134,9 @@ public class ChecklistsAPITest {
         String emptyString = "[]";
 
         Response response = checklistsSteps.getCheckitemsOnAChecklist(checklistId);
-        String adtualCheckItemsOnAChecklist = response.body().asString();
+        String actualCheckItemsOnAChecklist = response.body().asString();
 
-        Assert.assertEquals(adtualCheckItemsOnAChecklist, emptyString);
+        Assert.assertEquals(actualCheckItemsOnAChecklist, emptyString);
     }
 
     @Test(priority = 4)
