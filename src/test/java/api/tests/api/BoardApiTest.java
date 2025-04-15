@@ -13,6 +13,8 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static api.base.PathParameters.CardsEndPoints.CARDS_BASE_PATH;
+import static api.base.PathParameters.CheckListsPath.CHECKLISTS_BASE_PATH;
+import static api.base.PathParameters.ListsPath.LISTS_BASE_PATH;
 import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
 import static api.base.TestData.BoardTestData;
 
@@ -115,7 +117,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetChecklistsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getChecklists(BoardTestData.boardId, PathParameters.CHECKLISTS_BASE_PATH);
+        Response response = getBoardSteps().getChecklists(BoardTestData.boardId, CHECKLISTS_BASE_PATH);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -166,7 +168,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testGetListsOnABoard() {
 
-        Response response = getBoardSteps().getListsOfABoard(BoardTestData.boardId, PathParameters.LISTS_BASE_PATH);
+        Response response = getBoardSteps().getListsOfABoard(BoardTestData.boardId, LISTS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -181,7 +183,7 @@ public class BoardApiTest extends BaseTest {
 
         String expectedResult = "[]";
         String nameOfAFilter = "closed";
-        Response response = getBoardSteps().getFilteredListsOnABoard(BoardTestData.boardId, PathParameters.LISTS_BASE_PATH, nameOfAFilter);
+        Response response = getBoardSteps().getFilteredListsOnABoard(BoardTestData.boardId, LISTS_BASE_PATH, nameOfAFilter);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
