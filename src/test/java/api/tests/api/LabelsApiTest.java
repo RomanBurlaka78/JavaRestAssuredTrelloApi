@@ -2,7 +2,6 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.TestData;
-import api.controllers.LabelsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -17,16 +16,14 @@ import static api.base.TestData.LabelsTestData.*;
 @Owner("Group JavaForwardToOffer")
 public class LabelsApiTest extends BaseTest {
 
-    private LabelsSteps labelsSteps = new LabelsSteps();
-
     @BeforeClass
     public void setUp() {
-        boardId = labelsSteps.createABord(boardName);
+        boardId = getLabelsSteps().createABord(boardName);
     }
 
     @AfterClass
     public void tearDown() {
-        labelsSteps.deleteBoard(boardId);
+        getLabelsSteps().deleteBoard(boardId);
     }
 
     @Test()
@@ -34,7 +31,7 @@ public class LabelsApiTest extends BaseTest {
     @Description("Create a new Label on a Board")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateLabel() {
-        Response response = labelsSteps.createLabel(labelName, color, boardId);
+        Response response = getLabelsSteps().createLabel(labelName, color, boardId);
 
         labelId = response.body().jsonPath().get("id");
 
@@ -48,7 +45,7 @@ public class LabelsApiTest extends BaseTest {
     @Description("Get label")
     @Severity(SeverityLevel.NORMAL)
     public void testGetLabel() {
-        Response response = labelsSteps.getLabel(labelId);
+        Response response = getLabelsSteps().getLabel(labelId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString("id"), labelId);
@@ -59,7 +56,7 @@ public class LabelsApiTest extends BaseTest {
     @Description("Update label")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateLabel() {
-        Response response = labelsSteps.updateLabel(labelId, newName, newColor);
+        Response response = getLabelsSteps().updateLabel(labelId, newName, newColor);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString("name"), newName);
@@ -71,7 +68,7 @@ public class LabelsApiTest extends BaseTest {
     @Description("Delete label")
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteLabel() {
-        Response response = labelsSteps.deleteLabel(labelId);
+        Response response = getLabelsSteps().deleteLabel(labelId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -81,7 +78,7 @@ public class LabelsApiTest extends BaseTest {
     @Description("Update field label")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateFieldLabel(String field, String value) {
-        Response response = labelsSteps.updateFieldLabel(labelId, field, value);
+        Response response = getLabelsSteps().updateFieldLabel(labelId, field, value);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString(field), value);
