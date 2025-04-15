@@ -92,16 +92,16 @@ public class CardsSteps extends BaseService {
         initRequestSpecification();
         return response;
     }
-    @Step("Get custom fields on card: {cardId}, field = {field}")
-    public Response getBoardCard(String cardId) {
-        Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId, requestSpecification);
+    @Step("Get the board the card with id - {'cardId'}, is on")
+    public Response getTheBoardTheCardIsOn(String cardId) {
+        Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.BOARD_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;
     }
 
     @Step("Get checkItems on card: {cardId}, field = {field}")
-    public Response getCheckItemsCard(String cardId) {
-        Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.CHECKITEM_ENDPOINT, requestSpecification);
+    public Response getCheckItemsOnACard(String cardId) {
+        Response response = apiClient.get(CardsEndPoints.CARDS_BASE_PATH + cardId + CardsEndPoints.CHECKITEMSTATES_ENDPOINT, requestSpecification);
         initRequestSpecification();
         return response;
     }
