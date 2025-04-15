@@ -3,6 +3,7 @@ package api.base;
  final public class TestData {
 
     public final static class BoardTestData {
+
        public final static String BOARD_NAME = "Api Board";
 
        public static String boardId;
@@ -27,7 +28,19 @@ package api.base;
        public static String idOfReaction;
 
     }
+
     public final static class CardsTestData{
+
+       public final static  String BOARD_NAME = "Board for cards";
+
+       public static String cardId;
+       public static String boardId;
+       public static String listId;
+       public static String attachmentId;
+
+
+
+
 
     }
     public final static class CheckListsTestData{
