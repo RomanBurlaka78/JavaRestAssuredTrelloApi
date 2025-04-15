@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All test">
+<suite name="All test" >
     <test name="Tests API with xml">
         <classes>
             <class name="api.tests.api.BoardApiTest"/>
@@ -15,6 +15,11 @@
     <test name="Test UI with xml">
         <classes>
             <class name="api.tests.ui.BoardsUiTest"/>
+        </classes>
+    </test>
+    <test name="Test Cucumber with xml">
+        <classes>
+            <class name="api.cucumber.runners.CucumberRunnerTest"/>
         </classes>
     </test>
 </suite>
