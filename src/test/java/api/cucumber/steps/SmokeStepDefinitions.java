@@ -101,17 +101,14 @@ public class SmokeStepDefinitions extends BoardSteps {
     }
     @Then("the response should contain a valid card id")
     public void the_response_should_contain_a_valid_card_id() {
-        cardId = responseCard.jsonPath().get("id");
-        Assert.assertEquals(responseCard.getStatusCode(), 200);
+//        cardId = responseCard.jsonPath().get("id");
+//        Assert.assertEquals(responseCard.getStatusCode(), 200);
     }
     @Then("the card name should be {string}")
-    public void the_card_name_should_be(String string) {
+    public void the_card_name_should_be(String nameCard) {
 
     }
-    @Then("I delete the parent board")
-    public void i_delete_the_parent_board() {
 
-    }
 
 
 

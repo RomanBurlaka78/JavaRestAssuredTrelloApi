@@ -32,7 +32,7 @@ Feature: Smoke Tests [Trello API]
     Then the response status code should be 200
     And the response should contain a valid card id
     And the card name should be "Test Card"
-    And I delete the parent board
+    And I delete the created board
 #
 #  @negative @authentication
 #  Scenario: Attempt to create board with invalid API key
