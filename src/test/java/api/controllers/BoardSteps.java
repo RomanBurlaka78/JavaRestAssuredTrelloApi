@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import static api.base.PathParameters.LabelsPath.LABELS_BASE_PATH;
+import static api.base.PathParameters.ListsPath.LISTS_BASE_PATH;
 import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
 
 public class BoardSteps extends BaseService {
@@ -63,7 +64,7 @@ public class BoardSteps extends BaseService {
     @Step("Create a List on a Board: id board = {boardId}, list name = {nameForList}")
     public Response createListOnBoard(String boardId, String nameForList) {
         requestSpecification.queryParam("name", nameForList);
-        Response response = apiClient.post(BoardEndPoints.BOARDS_BASE_PATH + boardId + PathParameters.LISTS_BASE_PATH, requestSpecification);
+        Response response = apiClient.post(BoardEndPoints.BOARDS_BASE_PATH + boardId + LISTS_BASE_PATH, requestSpecification);
         initRequestSpecification();
         return response;
     }
