@@ -2,7 +2,7 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters.*;
-import api.controllers.CardsSteps;
+import api.base.TestData.*;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -20,36 +20,27 @@ import java.util.Map;
 @Owner("Group JavaForwardToOffer")
 public class CardsApiTest extends BaseTest {
 
-    private CardsSteps cardsSteps = new CardsSteps();
-    private String cardId;
-    private String bordName = "Board for cards";
-    private String boardId;
-    private String listId;
-    private  String attachmentId;
-
-
-
     @BeforeClass
     public void setUp() {
-        boardId = cardsSteps.createABord(bordName);
-        listId = cardsSteps.getIdOfTheFirstListOnABoard(boardId);
+        CardsTestData.boardId = getCardsSteps().createABord(CardsTestData.BOARD_NAME);
+        CardsTestData.listId = getCardsSteps().getIdOfTheFirstListOnABoard(CardsTestData.boardId);
     }
 
     @AfterClass
     public void tearDown() {
-        cardsSteps.deleteBoard(boardId);
+        getCardsSteps().deleteBoard(CardsTestData.boardId);
     }
 
     @Test(priority = 0)
     @Story("Verify cards")
     @Description("Create a new Card")
     @Severity(SeverityLevel.CRITICAL)
-    public void testCreateNewCard() {
+    public void testCreateANewCard() {
         Map<String, String> queryParametersForRequestSpec = new HashMap<>();
-        queryParametersForRequestSpec.put("idList", listId);
+        queryParametersForRequestSpec.put("idList", CardsTestData.listId);
 
-        Response response = cardsSteps.createACard(queryParametersForRequestSpec);
-        cardId = response.jsonPath().get("id");
+        Response response = getCardsSteps().createACard(queryParametersForRequestSpec);
+        CardsTestData.cardId = response.jsonPath().get("id");
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
@@ -57,8 +48,9 @@ public class CardsApiTest extends BaseTest {
     @Story("Verify cards")
     @Description("Get a card")
     @Severity(SeverityLevel.NORMAL)
-    public void testGetCard() {
-        Response response = cardsSteps.getCard(cardId);
+    public void testGetACard() {
+
+        Response response = getCardsSteps().getCard(CardsTestData.cardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -67,52 +59,43 @@ public class CardsApiTest extends BaseTest {
     @Story("Verify cards")
     @Description("Update a card")
     @Severity(SeverityLevel.NORMAL)
-    public void testUpdateCard() {
+    public void testUpdateACard() {
+
         String newCardName = "NewCardName";
-        Response response = cardsSteps.updateCard(cardId, newCardName);
+        Response response = getCardsSteps().updateCard(CardsTestData.cardId, newCardName);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.path("name"), newCardName);
-    }
-
-    @Test(priority = 6)
-    @Story("Verify cards")
-    @Description("Delete a card")
-    @Severity(SeverityLevel.CRITICAL)
-    public void testDeleteCard() {
-        Response response = cardsSteps.deleteCard(cardId);
-
-        Assert.assertEquals(response.getStatusCode(),200);
     }
 
     @Test(priority = 3)
     @Story("Verify field on a cards")
     @Description("Get a field on a card")
     @Severity(SeverityLevel.CRITICAL)
-    public void testGetFieldCard() {
-        Response response = cardsSteps.getFieldCard(cardId);
+    public void testGetAFieldOnACard() {
+        Response response = getCardsSteps().getFieldCard(CardsTestData.cardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
 
     }
 
-    @Test(priority = 5)
+    @Test(priority = 3)
     @Story("Verify actions on a cards")
-    @Description("Get a actions on a card")
+    @Description("Get an actions on a card")
     @Severity(SeverityLevel.CRITICAL)
-    public void testGetActionsCard() {
-        Response response = cardsSteps.getActionsCard(cardId, ActionsEndPoints.ACTIONS_BASE_PATH);
+    public void testGetActionsOnACard() {
+        Response response = getCardsSteps().getActionsCard(CardsTestData.cardId, ActionsEndPoints.ACTIONS_BASE_PATH);
         List arrayList = response.jsonPath().getList("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 5)
+    @Test(priority = 3)
     @Story("Verify attachments on a cards")
     @Description("Get a attachments on a card")
     @Severity(SeverityLevel.CRITICAL)
-    public void testGetAttachmentsCard() {
-        Response response = cardsSteps.getAttachmentsCard(cardId);
+    public void testGetAttachmentsOnACard() {
+        Response response = getCardsSteps().getAttachmentsCard(CardsTestData.cardId);
         List<Map<String, Object>> attachments = response.jsonPath().getList("");
         if (!attachments.isEmpty()) {
             String firstAttachmentId = (String) attachments.get(0).get("id");
@@ -123,65 +106,6 @@ public class CardsApiTest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 5)
-    @Story("Verify specific attachments on a cards")
-    @Description("Get a specific Attachment on a Card")
-    @Severity(SeverityLevel.CRITICAL)
-    public void testGetSpecificAttachmentsCard() {
-        Response allAttachmentsResponse = cardsSteps.getSpecificAttachmentsCard(cardId, attachmentId);
-        List<Map<String, Object>> attachments = allAttachmentsResponse.jsonPath().getList("");
-        if (!attachments.isEmpty()) {
-            String attachmentId = (String) attachments.get(0).get("id");
-            Response response = cardsSteps.getSpecificAttachmentsCard(cardId, attachmentId);
-
-            Assert.assertEquals(response.getStatusCode(), 200);
-            Assert.assertNotNull(response.jsonPath().getString("id"));
-            Assert.assertEquals(response.jsonPath().getString("id"), attachmentId);
-        }
-    }
-
-    @Test(priority = 6)
-    @Story("Verify delete an Attachment on a Card")
-    @Description("Delete an Attachment on a Card")
-    @Severity(SeverityLevel.CRITICAL)
-    public void testAttachmentDeleteCard() {
-        Response allAttachmentsResponse = cardsSteps.getAttachmentsCard(cardId);
-        List<Map<String, Object>> attachments = allAttachmentsResponse.jsonPath().getList("");
-        if (!attachments.isEmpty()) {
-            String attachmentId = (String) attachments.get(0).get("id");
-            Response deleteResponse = cardsSteps.deleteAttachmentCard(cardId, attachmentId);
-
-            Assert.assertEquals(deleteResponse.getStatusCode(), 200);
-
-            Response res = cardsSteps.getSpecificAttachmentsCard(cardId, attachmentId);
-            Assert.assertEquals(res.getStatusCode(), 404);
-        }
-    }
-
-    @Test(priority = 3)
-    @Story("Verify board on a cards")
-    @Description("Get the Board the Card is on")
-    @Severity(SeverityLevel.CRITICAL)
-    public void testGetBoardCard() {
-        Response response = cardsSteps.getBoardCard(cardId);
-
-        Assert.assertEquals(response.getStatusCode(), 200);
-    }
-
-    @Test(priority = 4)
-    @Story("Verify checkItems on a card")
-    @Description("Get the checkItems on a Card")
-    @Severity(SeverityLevel.CRITICAL)
-    public void testGetCheckItemsCard() {
-        Response response = cardsSteps.getCheckItemsCard(cardId);
-        List<Map<String, Object>> item = response.jsonPath().getList("");
-
-//        Assert.assertNotNull(item.get(0).get("idCheckItem")); //не находит айтем
-//        Assert.assertNotNull(item.get(0).get("state"));
-        Assert.assertEquals(response.getStatusCode(), 200);
-
-    }
-
     @Test(priority = 3)
     @Story("Cards")
     @Description("Get all available checkItems on a card")
@@ -190,7 +114,7 @@ public class CardsApiTest extends BaseTest {
 
         String nameForCheckListCreated = "CardsAPITest";
 
-        Response response = cardsSteps.createAChecklist(cardId, nameForCheckListCreated);
+        Response response = getCardsSteps().createAChecklist(CardsTestData.cardId, nameForCheckListCreated);
         String checklistNameReceivedBack = response.jsonPath().getString("name");
 
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -203,30 +127,30 @@ public class CardsApiTest extends BaseTest {
     @Description("Get the Checklists on a Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetChecklistsCard() {
-        Response response = cardsSteps.getChecklistsCard(cardId);
+        Response response = getCardsSteps().getChecklistsCard(CardsTestData.cardId);
         List<Map<String, Object>> checklists = response.jsonPath().getList("");
-            if (!checklists.isEmpty()) {
-                Map<String, Object> firstChecklist = checklists.get(0);
+        if (!checklists.isEmpty()) {
+            Map<String, Object> firstChecklist = checklists.get(0);
 
-                Assert.assertNotNull(firstChecklist.get("id"));
-                Assert.assertNotNull(firstChecklist.get("name"));
-                Assert.assertEquals(response.getStatusCode(), 200);
+            Assert.assertNotNull(firstChecklist.get("id"));
+            Assert.assertNotNull(firstChecklist.get("name"));
+            Assert.assertEquals(response.getStatusCode(), 200);
 
-        List<Map<String, String>> checkItems = (List<Map<String, String>>) firstChecklist.get("checkItems");
+            List<Map<String, String>> checkItems = (List<Map<String, String>>) firstChecklist.get("checkItems");
             if (!checkItems.isEmpty()) {
-               Assert.assertNotNull(checkItems.get(0).get("id"));
-               Assert.assertNotNull(checkItems.get(0).get("name"));
-               Assert.assertNotNull(checkItems.get(0).get("state")); // для теста с items
-               }
+                Assert.assertNotNull(checkItems.get(0).get("id"));
+                Assert.assertNotNull(checkItems.get(0).get("name"));
+                Assert.assertNotNull(checkItems.get(0).get("state")); // для теста с items
             }
         }
+    }
 
     @Test(priority = 3)
     @Story("Verify list of a cards")
     @Description("Get the List of a Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetListCard() {
-        Response response = cardsSteps.getListCard(cardId);
+        Response response = getCardsSteps().getListCard(CardsTestData.cardId);
         List<Map<String, Object>> list = response.jsonPath().getList("");
         Map<String, Object> firstlist = list.get(0);
 
@@ -239,7 +163,7 @@ public class CardsApiTest extends BaseTest {
     @Description("Get the Members of a Card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetMembersCard() {
-        Response response = cardsSteps.getMembersCard(cardId);
+        Response response = getCardsSteps().getMembersCard(CardsTestData.cardId);
         List<Map<String, Object>> members = response.jsonPath().getList("");
         Map<String, Object> firstMember = members.get(0);
 
@@ -253,9 +177,84 @@ public class CardsApiTest extends BaseTest {
     @Description("Get the stickers on a card")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetStickersCard() {
-        Response response = cardsSteps.getStickersCard(cardId);
+        Response response = getCardsSteps().getStickersCard(CardsTestData.cardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+
+
+
+
+    @Test(priority = 5)
+    @Story("Verify specific attachments on a cards")
+    @Description("Get a specific Attachment on a Card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetSpecificAttachmentsCard() {
+        Response allAttachmentsResponse = getCardsSteps().getSpecificAttachmentsCard(CardsTestData.cardId, CardsTestData.attachmentId);
+        List<Map<String, Object>> attachments = allAttachmentsResponse.jsonPath().getList("");
+        if (!attachments.isEmpty()) {
+            String attachmentId = (String) attachments.get(0).get("id");
+            Response response = getCardsSteps().getSpecificAttachmentsCard(CardsTestData.cardId, attachmentId);
+
+            Assert.assertEquals(response.getStatusCode(), 200);
+            Assert.assertNotNull(response.jsonPath().getString("id"));
+            Assert.assertEquals(response.jsonPath().getString("id"), attachmentId);
+        }
+    }
+
+    @Test(priority = 6)
+    @Story("Verify delete an Attachment on a Card")
+    @Description("Delete an Attachment on a Card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testAttachmentDeleteCard() {
+        Response allAttachmentsResponse = getCardsSteps().getAttachmentsCard(CardsTestData.cardId);
+        List<Map<String, Object>> attachments = allAttachmentsResponse.jsonPath().getList("");
+        if (!attachments.isEmpty()) {
+            String attachmentId = (String) attachments.get(0).get("id");
+            Response deleteResponse = getCardsSteps().deleteAttachmentCard(CardsTestData.cardId, attachmentId);
+
+            Assert.assertEquals(deleteResponse.getStatusCode(), 200);
+
+            Response res = getCardsSteps().getSpecificAttachmentsCard(CardsTestData.cardId, attachmentId);
+            Assert.assertEquals(res.getStatusCode(), 404);
+        }
+    }
+
+    @Test(priority = 3)
+    @Story("Verify board on a cards")
+    @Description("Get the Board the Card is on")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetBoardCard() {
+        Response response = getCardsSteps().getBoardCard(CardsTestData.cardId);
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test(priority = 4)
+    @Story("Verify checkItems on a card")
+    @Description("Get the checkItems on a Card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testGetCheckItemsCard() {
+        Response response = getCardsSteps().getCheckItemsCard(CardsTestData.cardId);
+        List<Map<String, Object>> item = response.jsonPath().getList("");
+
+//        Assert.assertNotNull(item.get(0).get("idCheckItem")); //не находит айтем
+//        Assert.assertNotNull(item.get(0).get("state"));
+        Assert.assertEquals(response.getStatusCode(), 200);
+
+    }
+
+
+
+    @Test(priority = 6)
+    @Story("Verify cards")
+    @Description("Delete a card")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testDeleteCard() {
+        Response response = getCardsSteps().deleteCard(CardsTestData.cardId);
+
+        Assert.assertEquals(response.getStatusCode(),200);
     }
 
     }

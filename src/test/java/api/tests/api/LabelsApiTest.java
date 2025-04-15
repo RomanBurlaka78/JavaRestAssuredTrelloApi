@@ -1,32 +1,29 @@
 package api.tests.api;
 
-import api.controllers.LabelsSteps;
+import api.base.BaseTest;
+import api.base.TestData;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static api.base.TestData.LabelsTestData.*;
 
 @Epic("API Tests")
 @Feature("Labels Validation")
 @Owner("Group JavaForwardToOffer")
-public class LabelsApiTest {
-
-    private LabelsSteps labelsSteps = new LabelsSteps();
-    private String boardName = "Board for labels";
-    private String boardId;
-    private String labelId;
+public class LabelsApiTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        boardId = labelsSteps.createABord(boardName);
+        boardId = getLabelsSteps().createABord(BOARD_NAME);
     }
 
     @AfterClass
     public void tearDown() {
-        labelsSteps.deleteBoard(boardId);
+        getLabelsSteps().deleteBoard(boardId);
     }
 
     @Test()
@@ -34,15 +31,13 @@ public class LabelsApiTest {
     @Description("Create a new Label on a Board")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateLabel() {
-        String labelName = "Label from API";
-        String color = "red";
-        Response response = labelsSteps.createLabel(labelName, color, boardId);
+        Response response = getLabelsSteps().createLabel(LABEL_NAME, COLOR, boardId);
 
         labelId = response.body().jsonPath().get("id");
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.body().jsonPath().get("name"), labelName);
-        Assert.assertEquals(response.body().jsonPath().get("color"), color);
+        Assert.assertEquals(response.body().jsonPath().get("name"), LABEL_NAME);
+        Assert.assertEquals(response.body().jsonPath().get("color"), COLOR);
     }
 
     @Test(priority = 1)
@@ -50,7 +45,7 @@ public class LabelsApiTest {
     @Description("Get label")
     @Severity(SeverityLevel.NORMAL)
     public void testGetLabel() {
-        Response response = labelsSteps.getLabel(labelId);
+        Response response = getLabelsSteps().getLabel(labelId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString("id"), labelId);
@@ -61,13 +56,11 @@ public class LabelsApiTest {
     @Description("Update label")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateLabel() {
-        String newName = "New Label from API";
-        String newColor = "blue";
-        Response response = labelsSteps.updateLabel(labelId, newName, newColor);
+        Response response = getLabelsSteps().updateLabel(labelId, NEW_NAME, NEW_COLOR);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.body().jsonPath().getString("name"), newName);
-        Assert.assertEquals(response.body().jsonPath().getString("color"), newColor);
+        Assert.assertEquals(response.body().jsonPath().getString("name"), NEW_NAME);
+        Assert.assertEquals(response.body().jsonPath().getString("color"), NEW_COLOR);
     }
 
     @Test(priority = 2)
@@ -75,28 +68,19 @@ public class LabelsApiTest {
     @Description("Delete label")
     @Severity(SeverityLevel.NORMAL)
     public void testDeleteLabel() {
-        Response response = labelsSteps.deleteLabel(labelId);
+        Response response = getLabelsSteps().deleteLabel(labelId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 1, dataProvider = "createUpdateFieldLabel")
+    @Test(priority = 1, dataProvider = "createUpdateFieldLabel", dataProviderClass = TestData.LabelsTestData.class)
     @Story("Verify update field label")
     @Description("Update field label")
     @Severity(SeverityLevel.NORMAL)
     public void testUpdateFieldLabel(String field, String value) {
-
-        Response response = labelsSteps.updateFieldLabel(labelId, field, value);
+        Response response = getLabelsSteps().updateFieldLabel(labelId, field, value);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().getString(field), value);
-    }
-
-    @DataProvider()
-    public Object[][] createUpdateFieldLabel() {
-        return new Object[][]{
-                {"color", "green"},
-                {"name", "Name field Label from API"},
-        };
     }
 }
