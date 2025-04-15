@@ -104,7 +104,7 @@ public class MembersAPITest extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(priority = 1, dependsOnMethods = "testCreateStarBoard")
+    @Test(dependsOnMethods = "testCreateStarBoard")
     @Story("Verify Update the position of a boardStar of Member")
     @Description("Update the position of a starred board")
     @Severity(SeverityLevel.NORMAL)
