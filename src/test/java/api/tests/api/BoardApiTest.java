@@ -2,9 +2,8 @@ package api.tests.api;
 
 import api.base.BaseTest;
 import api.base.PathParameters;
-import api.base.PathParameters.*;
-import static api.base.TestData.*;
-
+import api.base.PathParameters.ActionsEndPoints;
+import api.base.PathParameters.BoardEndPoints;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
@@ -12,6 +11,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
+
+import static api.base.PathParameters.CardsEndPoints.CARDS_BASE_PATH;
+import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
+import static api.base.TestData.BoardTestData;
 
 @Epic("API Tests")
 @Feature("Board Validation")
@@ -125,7 +128,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetCardsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getCards(BoardTestData.boardId, CardsEndPoints.CARDS_BASE_PATH);
+        Response response = getBoardSteps().getCards(BoardTestData.boardId, CARDS_BASE_PATH);
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -138,7 +141,7 @@ public class BoardApiTest extends BaseTest {
     public void testGetFilteredCardsOnABoard() {
 
         String expectedResult = "[]";
-        Response response = getBoardSteps().getFilteredCards(BoardTestData.boardId, CardsEndPoints.CARDS_BASE_PATH, "all");
+        Response response = getBoardSteps().getFilteredCards(BoardTestData.boardId, CARDS_BASE_PATH, "all");
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().asString(), expectedResult);
@@ -204,7 +207,7 @@ public class BoardApiTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     public void testInviteMemberToBoardViaEmail() {
 
-        Response response = getBoardSteps().inviteMemberToBoardViaEmail(BoardTestData.boardId, PathParameters.MEMBERS_BASE_PATH);
+        Response response = getBoardSteps().inviteMemberToBoardViaEmail(BoardTestData.boardId, MEMBERS_BASE_PATH);
 
         List listOfMembers = response.jsonPath().getList("members.id");
         Assert.assertTrue(listOfMembers.size() == 2);
