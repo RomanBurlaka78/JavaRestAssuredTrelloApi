@@ -15,6 +15,7 @@ public class BaseTest {
     private final LabelsSteps labelsSteps = new LabelsSteps();
     private final MembersSteps membersSteps = new MembersSteps();
     private final ChecklistsSteps checklistsSteps = new ChecklistsSteps();
+    private final ListsSteps listsSteps = new ListsSteps();
 
     public BoardSteps getBoardSteps() {
         return boardSteps;
@@ -22,6 +23,10 @@ public class BaseTest {
 
     public ChecklistsSteps getChecklistsSteps() {
         return checklistsSteps;
+    }
+
+    public ListsSteps getListsSteps() {
+        return listsSteps;
     }
 
     public ActionsSteps getActionsSteps() {

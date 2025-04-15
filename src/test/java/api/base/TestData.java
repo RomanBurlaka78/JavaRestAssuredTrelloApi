@@ -77,6 +77,14 @@ final public class TestData {
 
     public final static class ListsTestData {
 
+        public static final String bordName = "Board for lists";
+        public static final String newNameForTheList = "List with Updated name";
+        public static final String nameOfTheList = "List from API";
+        public static final String nameForSecondBoard = "Board_for_moving_lists";
+        public static String boardId;
+        public static String toDoListId;
+        public static String newCreatedListId;
+        public static boolean subscribeValue = true;
     }
 
     public final static class MembersTestData {
@@ -89,11 +97,4 @@ final public class TestData {
         public static String backgroundId;
         public static String starId;
     }
-
-
-    //    public static String boardId;
-    public static String idList;
-    public static String labelId;
-    public static String cardId;
-    public static String memberId;
 }

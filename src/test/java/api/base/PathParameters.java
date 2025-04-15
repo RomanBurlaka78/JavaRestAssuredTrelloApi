@@ -10,7 +10,7 @@ final public class PathParameters {
         public static String MEMBER_SHIPS_ENDPOINT = "/memberships";
     }
 
-    public  final static class ActionsEndPoints {
+    public final static class ActionsEndPoints {
 
         public final static String ACTIONS_BASE_PATH = "/actions/";
 
@@ -34,7 +34,6 @@ final public class PathParameters {
         public final static String LISTS_ENDPOINT = "/list";
         public final static String MEMBERS_ENDPOINT = "/Members";
         public final static String STICKERS_ENDPOINT = "/stickers";
-
     }
 
     public final static class CheckListsPath {
@@ -50,7 +49,17 @@ final public class PathParameters {
     }
 
     public final static class ListsPath {
+        public final static String LISTS_BASE_PATH = "/lists/";
 
+        public final static String archiveEndPoint = "/archiveAllCards";
+        public final static String moveAllCardsEndPoint = "/moveAllCards";
+        public final static String archiveAListEndPoint = "/closed";
+        public final static String cardsEndPoint = "/cards";
+        public final static String idBoardEndPoint = "/idBoard";
+        public final static String subscribedFieldEndPoint = "/subscribed";
+        public final static String posFieldEndPoint = "/pos";
+        public final static String actionsEndPoint = "/actions";
+        public final static String boardEndPoint = "/board";
     }
 
     public final static class MembersPath {
@@ -66,9 +75,5 @@ final public class PathParameters {
 
 
     public final static String CUSTOM_FIELDS_BASE_PATH = "/customFields";
-    public final static String LISTS_BASE_PATH = "/lists/";
-
-
-    public final static String LABELS_BASE_PATH = "/labels";
     public final static String ATTACHMENTS_BASE_PATH = "/attachments";
 }
