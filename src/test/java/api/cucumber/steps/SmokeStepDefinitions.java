@@ -62,8 +62,8 @@ public class SmokeStepDefinitions extends BoardSteps {
    // @list
 
     @When("I create a list with name {string} on the board")
-    public void i_create_a_list_with_name_on_the_board(String listName) {
-        responseList = listsSteps.createList(listName, boardId);
+    public void i_create_a_list_with_name_on_the_board(String string) {
+        responseList = listsSteps.createList(string, boardId);
 
     }
     @Then("the response should contain a valid list id")
@@ -72,22 +72,22 @@ public class SmokeStepDefinitions extends BoardSteps {
 
     }
     @Then("the list name should be {string}")
-    public void the_list_name_should_be(String listName) {
+    public void the_list_name_should_be(String string) {
         Assert.assertEquals(responseList.getStatusCode(), 200);
-        Assert.assertEquals(responseList.path("name"), listName );
+        Assert.assertEquals(responseList.path("name"), string );
 
     }
 
 //    @card
 
     @When("I have created a list named {string} on the board")
-    public void i_have_created_a_list_named_on_the_board(String listName) {
+    public void i_have_created_a_list_named_on_the_board(String string) {
 
-        Response response = listsSteps.createList(listName, boardId);
+        Response response = listsSteps.createList(string, boardId);
         newCreatedListId = listsSteps.getIdOfTheFirstListOnABoard(boardId);
 
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.path("name"), listName);
+        Assert.assertEquals(response.path("name"), string);
 
     }
     @When("I create a card with name {string} on the list")
@@ -105,7 +105,7 @@ public class SmokeStepDefinitions extends BoardSteps {
 //        Assert.assertEquals(responseCard.getStatusCode(), 200);
     }
     @Then("the card name should be {string}")
-    public void the_card_name_should_be(String nameCard) {
+    public void the_card_name_should_be(String string) {
 
     }
 
