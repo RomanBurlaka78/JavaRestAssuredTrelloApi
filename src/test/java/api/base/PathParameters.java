@@ -28,12 +28,18 @@ final public class PathParameters {
     public final static class CardsEndPoints {
 
         public final static String CARDS_BASE_PATH = "/cards/";
+        public final static String ATTACHMENTS_BASE_PATH = "/attachments/";
+
         public final static String ATTACHMENTS_ENDPOINT = "/attachments/";
-        public final static String CHECKITEM_ENDPOINT = "/checkItemStates";
+        public final static String CHECKITEMSTATES_ENDPOINT = "/checkItemStates";
         public final static String CHECKLISTS_ENDPOINT = "/checklists";
         public final static String LISTS_ENDPOINT = "/list";
         public final static String MEMBERS_ENDPOINT = "/Members";
         public final static String STICKERS_ENDPOINT = "/stickers";
+        public final static String ACTIONS_ENDPOINT = "/attachments/";
+        public final static String BOARD_ENDPOINT = "/board";
+
+
     }
 
     public final static class CheckListsPath {
