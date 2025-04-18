@@ -18,7 +18,7 @@ import static api.base.TestData.*;
 @Feature("Board Validation")
 @Owner("Group JavaForwardToOffer")
 @Tag("ui")
-@Ignore
+
 public class BoardsUiTest extends BaseUiTest {
 
     private BoardSteps boardSteps = new BoardSteps();
@@ -59,7 +59,7 @@ public class BoardsUiTest extends BaseUiTest {
 
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.body().jsonPath().get("id").toString(), BoardTestData.boardId);
-        Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Api Board");
+        Assert.assertEquals(response.body().jsonPath().get("name").toString(), "Board for Board");
 
         uiBoardSteps.getBoardNameUI();
     }
