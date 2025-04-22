@@ -91,6 +91,7 @@ public class BoardApiTest extends BaseTest {
         Response response = getBoardSteps().getAField(BoardTestData.boardId, FIELD_NAME);
         System.out.println(response.body().asString());
         Assert.assertEquals(response.jsonPath().getString("_value"), BoardTestData.BOARD_NAME);
+
     }
 
     @Test(priority = 5)
