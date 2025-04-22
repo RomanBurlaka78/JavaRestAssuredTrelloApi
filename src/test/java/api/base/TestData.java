@@ -1,15 +1,25 @@
 package api.base;
 
+import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 
 final public class TestData {
 
     private static final String BASE_BOARD_NAME = "Board for ";
+    public static Response response;
 
     public final static class BoardTestData {
         public final static String BOARD_NAME = BASE_BOARD_NAME + "Board";
+        public final static String NAME_FOR_LIST = "List test API";
+        public final static String NAME_FOR_A_LABEL = "Api_Label";
+        public final static String COLOR_OF_A_LABEL = "red";
+        public final static String FIELD_NAME = "/name";
+        public final static String EXPECTED_RESULT = "[]";
+        public final static String NAME_OF_A_FILTER = "closed";
+        public final static String NEW_NAME_FOR_A_BOARD = "New BoardApiTest";
 
         public static String boardId;
+        public static String boardName;
         public static String labelId;
         public static String listId;
     }
@@ -38,9 +48,6 @@ final public class TestData {
         public static String boardId;
         public static String listId;
         public static String createdAttachmentId;
-
-
-
     }
 
     public final static class CheckListsTestData {

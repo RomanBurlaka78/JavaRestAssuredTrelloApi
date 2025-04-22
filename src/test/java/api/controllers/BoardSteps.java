@@ -1,6 +1,5 @@
 package api.controllers;
 
-import api.base.PathParameters;
 import api.base.PathParameters.BoardEndPoints;
 import api.utils.ApiClient;
 import io.qameta.allure.Step;
