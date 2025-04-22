@@ -19,7 +19,6 @@ import static api.base.PathParameters.ListsPath.LISTS_BASE_PATH;
 import static api.base.PathParameters.MembersPath.MEMBERS_BASE_PATH;
 import static api.base.TestData.BoardTestData.EXPECTED_RESULT;
 import static api.base.TestData.BoardTestData.boardId;
-import static api.base.TestData.LabelsTestData.*;
 import static api.base.TestData.response;
 
 public class CucumberStepsBoards extends BaseTest {
@@ -153,6 +152,4 @@ public class CucumberStepsBoards extends BaseTest {
     public void checkIsEmpty() {
         Assert.assertEquals(response.body().asString(), EXPECTED_RESULT);
     }
-
-
 }

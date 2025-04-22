@@ -11,6 +11,7 @@ Feature: Cucumber test Labels
     When I create a new board with name "Board Name"
     When I create a new Label on a Board with "<name>" and "<color>"
     Then The response status code should be "<code>"
+    When I delete the created board
 
     @positive
     Examples:
@@ -38,6 +39,7 @@ Scenario: Get Label
   When I create a new Label on a Board with "Label" and "red"
   When I get label
   Then The response status code should be "200"
+  When I delete the created board
 
   Scenario: Update Label
     When I create a new board with name "Board update label"
@@ -45,3 +47,4 @@ Scenario: Get Label
     And I update label name "Name" and color "green"
     Then The response status code should be "200"
     And Check name "Name"
+    When I delete the created board

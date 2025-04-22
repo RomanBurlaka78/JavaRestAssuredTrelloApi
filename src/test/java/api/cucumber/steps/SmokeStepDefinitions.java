@@ -38,15 +38,16 @@ public class SmokeStepDefinitions extends BoardSteps {
 
 
 
-    @When("I create a new board with name {string}")
+    @When("i create a new board with name {string}")
     public void i_create_a_new_board_with_name(String string) {
         responseBord = boardSteps.createBoard(string);
         boardId = responseBord.jsonPath().getString("id");
 
     }
 
-    @Then("the response status code should be {int}")
-    public void the_response_status_code_should_be(Integer status) {
+    @Then("the response status code should be {string}")
+    public void the_response_status_code_should_be(String status) {
+        System.out.println(status);
         Assert.assertEquals(responseBord.getStatusCode(), 200);
     }
 
@@ -55,7 +56,7 @@ public class SmokeStepDefinitions extends BoardSteps {
         Assert.assertTrue(!responseBord.jsonPath().getString("id").isEmpty());
     }
 
-    @Then("I delete the created board")
+    @Then("i delete the created board")
     public void i_delete_the_created_board() {
         responseBord = boardSteps.deleteABoardFromService(boardId);
     }
