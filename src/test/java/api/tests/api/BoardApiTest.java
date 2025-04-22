@@ -210,6 +210,7 @@ public class BoardApiTest extends BaseTest {
     public void testInviteMemberToBoardViaEmail() {
 
         Response response = getBoardSteps().inviteMemberToBoardViaEmail(BoardTestData.boardId, MEMBERS_BASE_PATH);
+        System.out.println(response.asPrettyString());
 
         List listOfMembers = response.jsonPath().getList("members.id");
         Assert.assertTrue(listOfMembers.size() == 2);
