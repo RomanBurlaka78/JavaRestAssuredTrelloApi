@@ -135,6 +135,7 @@ public class BoardSteps extends BaseService {
     @Step("Invite member to a board with id - {'boardId'} via email")
     public Response inviteMemberToBoardViaEmail(String boardId, String membersEndPoint) {
         requestSpecification.param("email", "ironman-968-privet-test@ya.ru");
+        requestSpecification.param("allowBillableGuest", true);
         Response response = apiClient.put(BoardEndPoints.BOARDS_BASE_PATH + boardId + membersEndPoint, requestSpecification);
         initRequestSpecification();
         return response;
