@@ -1,7 +1,6 @@
 package api.tests.api;
 
 import api.base.BaseTest;
-import api.controllers.ListsSteps;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
